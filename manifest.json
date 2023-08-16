@@ -1,0 +1,17 @@
+{
+    "name": "Sapien IA",
+    "short_name": "Sapien IA",
+    "theme_color": "#1e2227",
+    "background_color": "#1e2227",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/sapien/web/",
+    "start_url": "/sapien/web/",
+    "icons": [
+        {
+          "src": "/sapien/icon.png",
+          "type": "image/png",
+          "sizes": "768x768"
+        }
+    ]
+}
