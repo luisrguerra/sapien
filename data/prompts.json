@@ -148,10 +148,5 @@
     "name":"📜 Conte um fato histórico",
     "prompt":"Eu irei fornecer um tema e você me contará um fato histórico, curioso, interessante, intrigante e divertido baseado somente em fatos reais e conteúdos da Wikipedia e livros acadêmicos de história. Depois me pergunte 'Gostaria que eu contasse outro fato histórico?' e se sim, repita a instrução anterior de me contar um fato histórico.",
     "description": "Qual tema você gostaria que eu contasse um fato histórico?"
-  },
-  {
-    "name": "Gerador de carta de candidatura",
-    "prompt": "Eu gostaria que você fizesse uma carta aberta, para um processo seletivo de uma empresa. Eu vou enviar a descrição da vaga e você deve gerar essa carta.",
-    "description": "Gera uma carta de candidatura para você baseada na descrição da vaga."
   }
 ]
