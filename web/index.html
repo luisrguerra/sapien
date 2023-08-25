@@ -222,11 +222,9 @@ async function appendChatMessages(userInput){
 
 /* Funcoes para api do gpt da openai */
 
-function atod (){
-  const hash = "c2sta2lvZExaOZ3B0LTMuNS10dXJibw==Dh1dEwyQllLNnNsRklUM0JsYmtGSmpnMnJrY3lqbjBmcEZvaERmV2dH";
-  const temp = btoa(gpt3_5);
-  const temp2 = hash.replace(temp, "");
-  return atob(temp2);
+function atoc(){
+  const hash = 'eyJhcGlLZXkiOiJzay1raW9kTFo4OHV0TDJCWUs2c2xGSVQzQmxia0ZKamcycmtjeWpuMGZwRm9oRGZXZ0ciLCJiYXNlT3B0aW9ucyI6eyJoZWFkZXJzIjp7IlVzZXItQWdlbnQiOiJPcGVuQUkvTm9kZUpTLzMuMy4wIiwiQXV0aG9yaXphdGlvbiI6IkJlYXJlciBzay1raW9kTFo4OHV0TDJCWUs2c2xGSVQzQmxia0ZKamcycmtjeWpuMGZwRm9oRGZXZ0cifX19';
+  return JSON.parse(atob(hash));
 }
 
 function initializeChat(behavior) {
@@ -265,9 +263,7 @@ async function generateChatMessages(promptText, messages) {
 }
 
 async function configurar(behavior){
-  configuration = new openailib.Configuration({
-    apiKey: atod(),
-  });
+  configuration = new openailib.Configuration(atoc());
   openai = new openailib.OpenAIApi(configuration);
   return initializeChat(behavior);
 }
