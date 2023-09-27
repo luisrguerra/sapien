@@ -138,10 +138,9 @@
 </div> <!-- modal -->
 
 <script type="module">
-import openailib from 'https://cdn.jsdelivr.net/npm/openai@3.3.0/+esm';
+import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.10.0/+esm';
 //console.log("openailib: ",openailib);
 /* variaveis globais */
-let configuration;
 let openai;
 let gptModelName;
 let gptTemperature;
@@ -177,6 +176,10 @@ const modeList = [
 ];
 const promptsList = await getJson("https://luisrguerra.github.io/sapien/data/prompts.json");
 /* fim de constantes globais */
+
+function ztoa(x){
+  return atob(atob(x));
+}
 
 loadPromptSelectOptions('promptSelect',promptsList);
 loadSelectOptions('modelSelect',modelList);
@@ -263,6 +266,7 @@ async function appendChatMessages(userInput){
       appendChatBot(textResponse);
       readMessageWithVoice(textResponse);
     } catch (error) {
+      console.error("Erro ao enviar mensagem para a API da OpenAI:", error);
       appendChatBot("Erro de conexão com a API da OpenAI. Mensagem não enviada.");
     }
     disableLoading();
@@ -274,8 +278,8 @@ async function appendChatMessages(userInput){
 /* Funcoes para api do gpt da openai */
 
 function atoc(){
-  const hash = 'eyJhcGlLZXkiOiJzay1raW9kTFo4OHV0TDJCWUs2c2xGSVQzQmxia0ZKamcycmtjeWpuMGZwRm9oRGZXZ0ciLCJiYXNlT3B0aW9ucyI6eyJoZWFkZXJzIjp7IlVzZXItQWdlbnQiOiJPcGVuQUkvTm9kZUpTLzMuMy4wIiwiQXV0aG9yaXphdGlvbiI6IkJlYXJlciBzay1raW9kTFo4OHV0TDJCWUs2c2xGSVQzQmxia0ZKamcycmtjeWpuMGZwRm9oRGZXZ0cifX19';
-  return JSON.parse(atob(hash));
+  const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MXJhVzlrVEZvNE9IVjBUREpDV1VzMmMyeEdTVlF6UW14aWEwWkthbWN5Y210amVXcHVNR1p3Um05b1JHWlhaMGNpTENKa1lXNW5aWEp2ZFhOc2VVRnNiRzkzUW5KdmQzTmxjaUk2ZEhKMVpYMD0=';
+  return JSON.parse(ztoa(hash));
 }
 
 function initializeChat(behavior) {
@@ -297,7 +301,7 @@ async function completionsChatTextModel(messages) {
       presence_penalty: ,
       */
   };
-  return await openai.createChatCompletion(parameters);
+  return await openai.chat.completions.create(parameters);
 }
 
 async function generateChatMessages(promptText, messages) {
@@ -305,7 +309,7 @@ async function generateChatMessages(promptText, messages) {
   messages.push(prompt);
 
   const apiResponse = await completionsChatTextModel(messages);
-  const textResponse = apiResponse.data.choices[0].message.content;
+  const textResponse = apiResponse.choices[0].message.content;
 
   const assistantResponse = {role: "assistant", content: textResponse};
   messages.push(assistantResponse);
@@ -314,8 +318,7 @@ async function generateChatMessages(promptText, messages) {
 }
 
 async function configurar(behavior){
-  configuration = new openailib.Configuration(atoc());
-  openai = new openailib.OpenAIApi(configuration);
+  openai = new openailib(atoc());
   return initializeChat(behavior);
 }
 
