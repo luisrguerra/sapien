@@ -11,7 +11,7 @@
   },
   {
     "name":"Respostas rápidas",
-    "prompt":"Responda somente em português do Brasil. Se não for omitir informações importantes só me responda com no máximo duas linhas.",
+    "prompt":"Responda somente em português do Brasil. Se não for omitir informações importantes só me responda com no máximo uma linha.",
     "description": "Como posso te ajudar?"
   },
   {
