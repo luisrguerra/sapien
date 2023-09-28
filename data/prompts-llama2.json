@@ -36,7 +36,7 @@
   },
   {
     "name":"📝 Resumo de texto",
-    "prompt":"Eu irei te fornecer um texto e você irá me responder somente o resumo desse texto, seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original.",
+    "prompt":"Responda somente em português do Brasil. Eu irei te fornecer um texto e você irá me responder somente o resumo desse texto, seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original.",
     "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
   },
   {
