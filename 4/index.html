@@ -159,6 +159,8 @@ const modelList = [
   {name:"GPT 4 13/6/23",value:"gpt-4-0613"},
   {name:"GPT 4 14/3/23",value:"gpt-4-0314"},
   {name:"Llama 2 70b chat hf",value:"meta-llama/Llama-2-70b-chat-hf"},
+  {name:"Airoboros l2 70b 1.4.1",value:"jondurbin/airoboros-l2-70b-gpt4-1.4.1"},
+  {name:"Code Llama 34b Instruct hf",value:"codellama/CodeLlama-34b-Instruct-hf"},
 ];
 const modeList = [
   {name:"Normal",value:1},
@@ -229,7 +231,11 @@ function updateTemperature(){
 };
 
 function updatePromptSelectList(){
-  if (modelName === "meta-llama/Llama-2-70b-chat-hf"){
+  if (
+    modelName === "meta-llama/Llama-2-70b-chat-hf" ||
+    modelName === "jondurbin/airoboros-l2-70b-gpt4-1.4.1" ||
+    modelName === "codellama/CodeLlama-34b-Instruct-hf"
+  ){
     currentPromptList = promptsListLlama2;
   }else{
     currentPromptList = promptsListGPT;
@@ -328,7 +334,11 @@ async function generateChatMessages(promptText, messages) {
 }
 
 async function configurar(behavior){
-  if (modelName === "meta-llama/Llama-2-70b-chat-hf"){
+  if (
+    modelName === "meta-llama/Llama-2-70b-chat-hf" ||
+    modelName === "jondurbin/airoboros-l2-70b-gpt4-1.4.1" ||
+    modelName === "codellama/CodeLlama-34b-Instruct-hf"
+  ){
     openai = new openailib(atod());
   }else{
     openai = new openailib(atoc());
