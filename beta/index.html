@@ -142,7 +142,7 @@ import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.10.0/+esm';
 //console.log("openailib: ",openailib);
 /* variaveis globais */
 let openai;
-let gptModelName;
+let modelName;
 let gptTemperature;
 let mensagesObject;
 let loading = false;
@@ -224,8 +224,8 @@ function getModelMode(){
 }
 
 function updateModel(){
-  gptModelName = getModelSelect();
-  console.log("Updated model to:", gptModelName);
+  modelName = getModelSelect();
+  console.log("Updated model to:", modelName);
 };
 
 function updateTemperature(){
@@ -234,7 +234,7 @@ function updateTemperature(){
 };
 
 function updatePromptSelectList(){
-  if (gptModelName === "meta-llama/Llama-2-70b-chat-hf"){
+  if (modelName === "meta-llama/Llama-2-70b-chat-hf"){
     currentPromptList = promptsListLlama2;
   }else{
     currentPromptList = promptsListGPT;
@@ -304,9 +304,9 @@ function initializeChat(behavior) {
 }
 
 async function completionsChatTextModel(messages) {
-  console.log("GPT model:", gptModelName);
+  console.log("Model:", modelName);
   const parameters ={
-      model: gptModelName,
+      model: modelName,
       messages: messages,
       temperature: gptTemperature,
       /*
@@ -333,7 +333,7 @@ async function generateChatMessages(promptText, messages) {
 }
 
 async function configurar(behavior){
-  if (gptModelName === "meta-llama/Llama-2-70b-chat-hf"){
+  if (modelName === "meta-llama/Llama-2-70b-chat-hf"){
     openai = new openailib(atod());
   }else{
     openai = new openailib(atoc());
