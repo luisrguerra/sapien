@@ -174,14 +174,16 @@ const modeList = [
   {name:"Criativo 1.1",value:1.1},
   {name:"Impreciso 1.2",value:1.2},
 ];
-const promptsList = await getJson("https://luisrguerra.github.io/sapien/data/prompts.json");
+const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts.json");
+const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2.json");
+let currentPromptList = promptsListGPT;
 /* fim de constantes globais */
 
 function ztoa(x){
   return atob(atob(x));
 }
 
-loadPromptSelectOptions('promptSelect',promptsList);
+loadPromptSelectOptions('promptSelect',currentPromptList);
 loadSelectOptions('modelSelect',modelList);
 loadSelectOptions('modelMode',modeList);
 updateModel();
@@ -201,11 +203,11 @@ async function getJson(fileName){
 
 /* funcoes da logica do chat */
 async function initializeAsPrompt(number){
-  const promptObj= promptsList[number];
+  const promptObj= currentPromptList[number];
   cleanChat();
   appendChatBot(promptObj.description);
-  const personalidade = promptsList[number].prompt;
-  const promptName = promptsList[number].name;
+  const personalidade = currentPromptList[number].prompt;
+  const promptName = currentPromptList[number].name;
   setPromptModalText(personalidade);
   setPromptModalTitle(promptName);
   mensagesObject = await configurar(personalidade);
@@ -231,9 +233,17 @@ function updateTemperature(){
   console.log("Updated temperature to:", gptTemperature);
 };
 
+function updatePromptSelectList(){
+  if (gptModelName === "meta-llama/Llama-2-70b-chat-hf"){
+    currentPromptList = promptsListLlama2;
+  }else{
+    currentPromptList = promptsListGPT;
+  }
+  loadPromptSelectOptions('promptSelect',currentPromptList);
+}
+
 function promptSelectUpdateBehavior(){
   interruptTextToSpeech();
-  updateModel();
   updateTemperature();
   const promptSelected = getValueByID('promptSelect');
   initializeAsPrompt(promptSelected);
@@ -420,11 +430,12 @@ function createSelectOption(text, value, selected) {
   return option;
 }
 
-function loadPromptSelectOptions(ID, promptsList){
-  const maxItems = promptsList.length;
+function loadPromptSelectOptions(ID, currentPromptList){
+  const maxItems = currentPromptList.length;
   const promptSelect = document.getElementById(ID);
+  promptSelect.innerHTML = "";
   for (let i = 0; i < maxItems; i++) {
-    const name = promptsList[i].name;
+    const name = currentPromptList[i].name;
     let selected = false;
     if(i==0){
       selected = true;
@@ -624,6 +635,8 @@ onChangePromptSelect();
 async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
+    updateModel();
+    updatePromptSelectList();
     promptSelectUpdateBehavior();
   });
 }
