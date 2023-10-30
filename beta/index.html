@@ -288,8 +288,8 @@ async function appendChatMessages(userInput){
       appendChatBot(textResponse);
       readMessageWithVoice(textResponse);
     } catch (error) {
-      console.error("Erro ao enviar mensagem para a API da OpenAI:", error);
-      appendChatBot("Erro de conexão com a API da OpenAI. Mensagem não enviada.");
+      console.error("Erro ao enviar mensagem para o serviço de API:", error);
+      appendChatBot("Erro de conexão com o serviço de API. Mensagem não enviada.");
     }
     disableLoading();
   };
