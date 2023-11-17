@@ -10,6 +10,11 @@
     "description": "Olá! Eu sou o ChatGPT. Como posso te ajudar?"
   },
   {
+    "name":"Respostas pequenas",
+    "prompt":"Se não for omitir informações importantes só me responda com no máximo uma linhas.",
+    "description": "Como posso te ajudar?"
+  },
+  {
     "name":"Respostas rápidas",
     "prompt":"Se não for omitir informações importantes só me responda com no máximo duas linhas.",
     "description": "Como posso te ajudar?"
