@@ -3,32 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>SDXL</title>
+  <!--Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body >
-    <label for="promptInput">Prompt:</label>
-    <input type="text" id="promptInput" placeholder="Prompt">
-    <br><br>
-    <label for="negativePromptInput">Negative Prompt:</label>
-    <input type="text" id="negativePromptInput" placeholder="Negative prompt">
-    <br><br>
-    <label for="authTokenInput">Deepinfra API token:</label>
-    <input type="password" id="authTokenInput" placeholder="Token de autenticação">
-    <br><br>
-    <label for="heightInput">Height:</label>
-    <input type="number" id="heightInput" value="512" placeholder="height">
-    <br><br>
-    <label for="widthInput">Width:</label>
-    <input type="number" id="widthInput" value="512" placeholder="width">
-    <br><br>
-    <label for="numInferenceStepsInput">Number of inference steps:</label>
-    <input type="number" id="numInferenceStepsInput" value="25" placeholder="Number of inference steps">
-    <br><br>
-    <label for="guidanceScaleInput">Guidance Scale:</label>
-    <input type="number" id="guidanceScaleInput" value="7.5" placeholder="guidanceScale">
-    <br><br>
-    <label for="seedInput">Seed:</label>
-    <input type="number" id="seedInput" value="0" placeholder="Seed">
-    <button id="generateButton">Generate image</button>
+    <label for="promptInput" class="form-label">Prompt:</label>
+    <input type="text" id="promptInput" class="form-control" placeholder="Prompt">
+    <br>
+    <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
+    <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
+    <br>
+    <label for="authTokenInput" class="form-label">Deepinfra API token:</label>
+    <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
+    <br>
+    <label for="heightInput" class="form-label">Height:</label>
+    <input type="number" id="heightInput" class="form-control" value="512" placeholder="height">
+    <br>
+    <label for="widthInput" class="form-label">Width:</label>
+    <input type="number" id="widthInput" class="form-control" value="512" placeholder="width">
+    <br>
+    <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
+    <input type="number" id="numInferenceStepsInput" class="form-control" value="25" placeholder="Number of inference steps">
+    <br>
+    <label for="guidanceScaleInput" class="form-label">Guidance Scale:</label>
+    <input type="number" id="guidanceScaleInput" class="form-control" value="7.5" placeholder="guidanceScale">
+    <br>
+    <label for="seedInput" class="form-label">Seed:</label>
+    <input type="number" id="seedInput" class="form-control" value="0" placeholder="Seed">
+    <br>
+    <button id="generateButton" class="btn btn-primary">Generate image</button>
     <br><br>
     <img id="generatedImage" width="512" height="512">
 </body>
@@ -73,7 +77,7 @@ async function generateImage(){
       imageElement.src = data.images[0];
     }
   } catch (error) {
-    console.error('Houve um erro ao fazer a requisição:', error);
+    console.error('There was an error while making the request:', error);
   }
 }
 </script>
