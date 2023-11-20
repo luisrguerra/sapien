@@ -5,9 +5,9 @@
     "description": "Olá! Eu sou o Sapien IA. O seu assistente de inteligência artificial. Eu possuo várias personalidades, você pode selecionar no menu acima. Como posso te ajudar?"
   },
   {
-    "name":"Llama 2",
+    "name":"IA Padrão",
     "prompt":"",
-    "description": "Olá! Eu sou o Llama 2. Como posso te ajudar?"
+    "description": "Olá! Eu sou uma IA assistente. Como posso te ajudar?"
   },
   {
     "name":"Respostas rápidas",
