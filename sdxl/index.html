@@ -20,6 +20,9 @@
     <label for="widthInput">Width:</label>
     <input type="number" id="widthInput" value="512" placeholder="width">
     <br><br>
+    <label for="numInferenceStepsInput">Number of inference steps:</label>
+    <input type="number" id="numInferenceStepsInput" value="25" placeholder="Number of inference steps">
+    <br><br>
     <label for="guidanceScaleInput">Guidance Scale:</label>
     <input type="number" id="guidanceScaleInput" value="7.5" placeholder="guidanceScale">
     <br><br>
@@ -39,6 +42,7 @@ async function generateImage(){
   const height = document.getElementById('heightInput').value;
   const width = document.getElementById('widthInput').value;
   const guidanceScale = document.getElementById('guidanceScaleInput').value;
+  const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
   const seed = document.getElementById('seedInput').value;
 
   const formData = new FormData();
@@ -47,6 +51,7 @@ async function generateImage(){
   formData.append('height', height);
   formData.append('width', width);
   formData.append('guidance_scale', guidanceScale);
+  formData.append('num_inference_steps', numInferenceSteps);
   if (seed > 0){
     formData.append('seed', seed);
   }
