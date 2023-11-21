@@ -17,11 +17,16 @@
     <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
     <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
     <br>
-    <label for="heightInput" class="form-label">Height:</label>
-    <input type="number" id="heightInput" class="form-control" value="512" placeholder="height" max="1024">
-    <br>
-    <label for="widthInput" class="form-label">Width:</label>
-    <input type="number" id="widthInput" class="form-control" value="512" placeholder="width" max="1024">
+    <label for="sizeSelect" class="form-label">Image dimensions:</label>
+    <select id="sizeSelect" class="form-select">
+      <option value="square">Square</option>
+      <option value="portrait">Portrait</option>
+      <option value="landscape">Landscape</option>
+      <option value="stories">Stories</option>
+      <option value="ultrawide">Ultrawide</option>
+      <option value="banner-portrait">Banner portrait</option>
+      <option value="banner-landscape">Banner landscape</option>
+    </select>
     <br>
     <!--Advanced options-->
     <div class="accordion accordion-flush" id="accordionFlushAdvancedOptions">
@@ -72,12 +77,36 @@ async function generateImage(){
   const authToken = document.getElementById('authTokenInput').value;
   const prompt = document.getElementById('promptInput').value;
   const negativePrompt = document.getElementById('negativePromptInput').value;
-  const height = document.getElementById('heightInput').value;
-  const width = document.getElementById('widthInput').value;
+  let height = 512;
+  let width = 512;
+  const size = document.getElementById('sizeSelect').value;
   const guidanceScale = document.getElementById('guidanceScaleInput').value;
   const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
   const seed = document.getElementById('seedInput').value;
   const model = document.getElementById('modelSelect').value;
+
+  if (size === 'square'){
+    height = 512;
+    width = 512;
+  } else if (size === 'portrait'){
+    height = 512;
+    width = 384;
+  } else if (size === 'landscape'){
+    height = 384;
+    width = 512;
+  } else if (size === 'stories'){
+    height = 512;
+    width = 256;
+  } else if (size === 'ultrawide'){
+    height = 256;
+    width = 512;
+  } else if (size === 'banner-portrait'){
+    height = 512;
+    width = 128;
+  } else if (size === 'banner-landscape'){
+    height = 128;
+    width = 512;
+  }
 
   const formData = new FormData();
   formData.append('prompt', prompt);
