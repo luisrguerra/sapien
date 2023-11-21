@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>SDXL</title>
+  <title>Stable Diffusion</title>
   <!--Bootstrap -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,6 +32,14 @@
     <label for="seedInput" class="form-label">Seed:</label>
     <input type="number" id="seedInput" class="form-control" value="0" placeholder="Seed">
     <br>
+    <label for="modelSelect" class="form-label">Model:</label>
+    <select id="modelSelect" class="form-select">
+      <option value="Lykon/DreamShaper">Lykon/DreamShaper</option>
+      <option value="prompthero/openjourney">prompthero/openjourney</option>
+      <option value="XpucT/Deliberate">XpucT/Deliberate</option>
+      <option value="runwayml/stable-diffusion-v1-5">runwayml/stable-diffusion-v1-5</option>
+    </select>
+    <br>
     <button id="generateButton" class="btn btn-primary">Generate image</button>
     <br><br>
     <img id="generatedImage" width="512" height="512">
@@ -48,6 +56,7 @@ async function generateImage(){
   const guidanceScale = document.getElementById('guidanceScaleInput').value;
   const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
   const seed = document.getElementById('seedInput').value;
+  const model = document.getElementById('modelSelect').value;
 
   const formData = new FormData();
   formData.append('prompt', prompt);
@@ -69,8 +78,10 @@ async function generateImage(){
   };
   
   try {
-    const response = await fetch('https://api.deepinfra.com/v1/inference/Lykon/DreamShaper', requestOptions);
+    const url = `https://api.deepinfra.com/v1/inference/${model}`;
+    const response = await fetch(url, requestOptions);
     const data = await response.json();
+    console.log("API response:",data);
     
     if (data.images && data.images.length > 0) {
       const imageElement = document.getElementById('generatedImage');
