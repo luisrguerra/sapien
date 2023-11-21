@@ -5,6 +5,7 @@
   <!-- Melhoria da visualização em smartphones -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stable Diffusion</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!--Bootstrap -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,31 +17,49 @@
     <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
     <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
     <br>
-    <label for="authTokenInput" class="form-label">Deepinfra API token:</label>
-    <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
-    <br>
     <label for="heightInput" class="form-label">Height:</label>
-    <input type="number" id="heightInput" class="form-control" value="512" placeholder="height">
+    <input type="number" id="heightInput" class="form-control" value="512" placeholder="height" max="1024">
     <br>
     <label for="widthInput" class="form-label">Width:</label>
-    <input type="number" id="widthInput" class="form-control" value="512" placeholder="width">
+    <input type="number" id="widthInput" class="form-control" value="512" placeholder="width" max="1024">
     <br>
-    <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
-    <input type="number" id="numInferenceStepsInput" class="form-control" value="25" placeholder="Number of inference steps">
-    <br>
-    <label for="guidanceScaleInput" class="form-label">Guidance Scale:</label>
-    <input type="number" id="guidanceScaleInput" class="form-control" value="7.5" placeholder="guidanceScale">
-    <br>
-    <label for="seedInput" class="form-label">Seed:</label>
-    <input type="number" id="seedInput" class="form-control" value="0" placeholder="Seed">
-    <br>
-    <label for="modelSelect" class="form-label">Model:</label>
-    <select id="modelSelect" class="form-select">
-      <option value="Lykon/DreamShaper">Lykon/DreamShaper</option>
-      <option value="prompthero/openjourney">prompthero/openjourney</option>
-      <option value="XpucT/Deliberate">XpucT/Deliberate</option>
-      <option value="runwayml/stable-diffusion-v1-5">runwayml/stable-diffusion-v1-5</option>
-    </select>
+    <!--Advanced options-->
+    <div class="accordion accordion-flush" id="accordionFlushAdvancedOptions">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Advanced options
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushAdvancedOptions">
+          <br>
+          <!--Number of inference steps-->
+          <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
+          <input type="number" id="numInferenceStepsInput" class="form-control" value="30" placeholder="Number of inference steps" min="0" max="50">
+          <br>
+          <!--Guidance scale-->
+          <label for="guidanceScaleInput" class="form-label">Guidance Scale:</label>
+          <input type="number" id="guidanceScaleInput" class="form-control" value="7" placeholder="guidanceScale" min="4" max="10">
+          <br>
+          <!--Seed-->
+          <label for="seedInput" class="form-label">Seed:</label>
+          <input type="number" id="seedInput" class="form-control" value="0" placeholder="Seed"  min="0">
+          <br>
+          <!--Model-->
+          <label for="modelSelect" class="form-label">Model:</label>
+          <select id="modelSelect" class="form-select">
+            <option value="Lykon/DreamShaper">Lykon/DreamShaper</option>
+            <option value="prompthero/openjourney">prompthero/openjourney</option>
+            <option value="XpucT/Deliberate">XpucT/Deliberate</option>
+            <option value="runwayml/stable-diffusion-v1-5">runwayml/stable-diffusion-v1-5</option>
+          </select>
+          <br>
+          <!--Deepinfra API token-->
+          <label for="authTokenInput" class="form-label">Deepinfra API token:</label>
+          <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
+        </div>
+      </div>
+    </div>    
     <br>
     <button id="generateButton" class="btn btn-primary">Generate image</button>
     <br><br>
