@@ -24,8 +24,6 @@
       <option value="landscape">Landscape</option>
       <option value="stories">Stories</option>
       <option value="ultrawide">Ultrawide</option>
-      <option value="banner-portrait">Banner portrait</option>
-      <option value="banner-landscape">Banner landscape</option>
     </select>
     <br>
     <!--Advanced options-->
@@ -74,7 +72,7 @@
 
 document.getElementById('generateButton').addEventListener('click', generateImage);
 async function generateImage(){
-  const authToken = document.getElementById('authTokenInput').value;
+  const authTokenTemp = document.getElementById('authTokenInput').value;
   const prompt = document.getElementById('promptInput').value;
   const negativePrompt = document.getElementById('negativePromptInput').value;
   let height = 512;
@@ -100,12 +98,6 @@ async function generateImage(){
   } else if (size === 'ultrawide'){
     height = 256;
     width = 512;
-  } else if (size === 'banner-portrait'){
-    height = 512;
-    width = 128;
-  } else if (size === 'banner-landscape'){
-    height = 128;
-    width = 512;
   }
 
   const formData = new FormData();
@@ -118,11 +110,20 @@ async function generateImage(){
   if (seed > 0){
     formData.append('seed', seed);
   }
+
+  if (authTokenTemp){
+    localStorage.setItem('authToken', authTokenTemp);
+  }
+
+  function getAuthToken(){
+    const authToken = localStorage.getItem('authToken');
+    return authToken;
+  }
   
   const requestOptions = {
     method: 'POST',
     headers: {
-      'Authorization': `bearer ${authToken}`,
+      'Authorization': `bearer ${getAuthToken()}`,
     },
     body: formData
   };
