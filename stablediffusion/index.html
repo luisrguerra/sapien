@@ -117,6 +117,10 @@ async function generateImage(){
 
   function getAuthToken(){
     const authToken = localStorage.getItem('authToken');
+    if (!authToken){
+      alert('Please enter your Deepinfra API token.');
+      return;
+    }
     return authToken;
   }
   
@@ -139,6 +143,7 @@ async function generateImage(){
       imageElement.src = data.images[0];
     }
   } catch (error) {
+    alert('There was an error while making the request. Check the console for more information.');
     console.error('There was an error while making the request:', error);
   }
 }
