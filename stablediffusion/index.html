@@ -17,6 +17,15 @@
     <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
     <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
     <br>
+    <label for="styleSelect" class="form-label">Style:</label>
+    <select id="styleSelect" class="form-select">
+      <option value="default">Default</option>
+      <option value="anime">Anime</option>
+      <option value="illustration">Illustration</option>
+      <option value="photo">Photo</option>
+      <option value="painting">Painting</option>
+    </select>
+    <br>
     <label for="sizeSelect" class="form-label">Image dimensions:</label>
     <select id="sizeSelect" class="form-select">
       <option value="square">Square</option>
@@ -73,10 +82,11 @@
 document.getElementById('generateButton').addEventListener('click', generateImage);
 async function generateImage(){
   const authTokenTemp = document.getElementById('authTokenInput').value;
-  const prompt = document.getElementById('promptInput').value;
-  const negativePrompt = document.getElementById('negativePromptInput').value;
+  let prompt = document.getElementById('promptInput').value;
+  let negativePrompt = document.getElementById('negativePromptInput').value;
   let height = 512;
   let width = 512;
+  const style = document.getElementById('styleSelect').value;
   const size = document.getElementById('sizeSelect').value;
   const guidanceScale = document.getElementById('guidanceScaleInput').value;
   const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
@@ -98,6 +108,20 @@ async function generateImage(){
   } else if (size === 'ultrawide'){
     height = 256;
     width = 512;
+  }
+
+  if (style === 'anime'){
+    prompt = prompt + ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,';
+    negativePrompt = negativePrompt + ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,';
+  } else if (style === 'illustration'){
+    prompt = prompt + '';
+    negativePrompt = negativePrompt + '';
+  } else if (style === 'photo'){
+    prompt = prompt + ',sharp image, full hd, 1080p,4k, [8k] ,[uhd], high quality, detailed, high resolution, [high res],[RAW photo], [HDR], [hard shadows], [cinematic shot], [dramatic lighting], [soft lighting], [dslr], professional photographer,photorealistic, realistic,real,';
+    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,';
+  } else if (style === 'painting'){
+    prompt = prompt + ',painting style,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
+    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,';
   }
 
   const formData = new FormData();
