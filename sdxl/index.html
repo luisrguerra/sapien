@@ -104,30 +104,30 @@ async function generateImage(){
     height = 1024;
     width = 1024;
   } else if (size === 'portrait'){
-    height = 512;
-    width = 384;
+    height = 1024;
+    width = 768;
   } else if (size === 'landscape'){
-    height = 384;
-    width = 512;
+    height = 768;
+    width = 1024;
   } else if (size === 'stories'){
-    height = 512;
-    width = 256;
-  } else if (size === 'ultrawide'){
-    height = 256;
+    height = 1024;
     width = 512;
+  } else if (size === 'ultrawide'){
+    height = 512;
+    width = 1024;
   }
 
   if (style === 'anime'){
     prompt = prompt + ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,';
     negativePrompt = negativePrompt + ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,';
   } else if (style === 'illustration'){
-    prompt = prompt + '';
-    negativePrompt = negativePrompt + '';
+    prompt = prompt + ',illustration,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
+    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,nude,porn,naked,nsfw,';
   } else if (style === 'photo'){
     prompt = prompt + ',sharp image, full hd, 1080p,4k, [8k] ,[uhd], high quality, detailed, high resolution, [high res],[RAW photo], [HDR], [hard shadows], [cinematic shot], [dramatic lighting], [soft lighting], [dslr], professional photographer,photorealistic, realistic,real,';
     negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,';
   } else if (style === 'painting'){
-    prompt = prompt + ',painting style,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
+    prompt = prompt + ',(painting style),artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
     negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,';
   }
 
