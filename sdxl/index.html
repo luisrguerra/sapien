@@ -24,6 +24,8 @@
       <option value="illustration">Illustration</option>
       <option value="photo">Photo</option>
       <option value="painting">Painting</option>
+      <option value="renaissance">Renaissance</option>
+      <option value="impressionism">Impressionism</option>
     </select>
     <br>
     <label for="sizeSelect" class="form-label">Image dimensions:</label>
@@ -129,6 +131,12 @@ async function generateImage(){
   } else if (style === 'painting'){
     prompt = prompt + ',(painting style),artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
     negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,';
+  } else if (style === 'renaissance'){
+    prompt = prompt + ',renaissance painting style, [chiaroscuro],[detailed brushwork],[classical beauty],oil on canvas,[classical art],[historical art],oil painting,[fine details],[perspective],[masterpiece],[artwork style],[sharp image],[high resolution],[detailed],[professional style],[frescoes],';
+    negativePrompt = negativePrompt + '(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,';
+  } else if (style === 'impressionism'){
+    prompt = prompt + ',impressionist painting style,[brushstrokes],[loose brushwork style],[natural light],[vibrant colors],[oil on canvas],';
+    negativePrompt = negativePrompt + '(black and white),sepia, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,';
   }
 
   const formData = new FormData();
