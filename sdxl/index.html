@@ -19,7 +19,6 @@
     <br>
     <label for="styleSelect" class="form-label">Style:</label>
     <select id="styleSelect" class="form-select">
-      <option value="Default">Default</option>
     </select>
     <br>
     <label for="sizeSelect" class="form-label">Image dimensions:</label>
@@ -74,34 +73,39 @@
 
 const stylesArray = [
   {
-    name:'anime',
+    name:'Default',
+    prompt: '',
+    negative_prompt: ''
+  },
+  {
+    name:'Anime',
     prompt: ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
-    negativePrompt: ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,'
+    negative_prompt: ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,'
   },
   {
-    name:'photo',
+    name:'Photo',
     prompt: ',sharp image, full hd, 1080p,4k, [8k] ,[uhd], high quality, detailed, high resolution, [high res],[RAW photo], [HDR], [hard shadows], [cinematic shot], [dramatic lighting], [soft lighting], [dslr], professional photographer,photorealistic, realistic,real,',
-    negativePrompt: ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,'
+    negative_prompt: ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,'
   },
   {
-    name:'renaissance',
+    name:'Renaissance',
     prompt: ',renaissance painting style, [chiaroscuro],[detailed brushwork],[classical beauty],oil on canvas,[classical art],[historical art],oil painting,[fine details],[perspective],[masterpiece],[artwork style],[sharp image],[high resolution],[detailed],[professional style],[frescoes],',
-    negativePrompt: ',(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
+    negative_prompt: ',(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
   },
   {
-    name:'impressionism',
+    name:'Impressionism',
     prompt: ',impressionist painting style,[brushstrokes],[loose brushwork style],[natural light],[vibrant colors],[oil on canvas],',
-    negativePrompt: ',(black and white),sepia, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
+    negative_prompt: ',(black and white),sepia, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
   },
   {
-    name:'painting',
+    name:'Painting',
     prompt: ',(painting style),artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,',
-    negativePrompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,'
+    negative_prompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,'
   },
   {
-    name:'illustration',
+    name:'Illustration',
     prompt: ',illustration,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,',
-    negativePrompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,nude,porn,naked,nsfw,'
+    negative_prompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,nude,porn,naked,nsfw,'
   },
 ]
 
@@ -163,7 +167,7 @@ async function generateImage(){
   const selectedStyleObj = stylesArray.find(styleObj => styleObj.name === style);
   if (selectedStyleObj) {
     prompt += selectedStyleObj.prompt;
-    negativePrompt += selectedStyleObj.negativePrompt;
+    negativePrompt += selectedStyleObj.negative_prompt;
   }
   
   const formData = new FormData();
