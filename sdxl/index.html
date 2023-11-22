@@ -19,13 +19,7 @@
     <br>
     <label for="styleSelect" class="form-label">Style:</label>
     <select id="styleSelect" class="form-select">
-      <option value="default">Default</option>
-      <option value="anime">Anime</option>
-      <option value="illustration">Illustration</option>
-      <option value="photo">Photo</option>
-      <option value="painting">Painting</option>
-      <option value="renaissance">Renaissance</option>
-      <option value="impressionism">Impressionism</option>
+      <option value="Default">Default</option>
     </select>
     <br>
     <label for="sizeSelect" class="form-label">Image dimensions:</label>
@@ -78,6 +72,39 @@
 </body>
 <script type="module">
 
+const stylesArray = [
+  {
+    name:'anime',
+    prompt: ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
+    negativePrompt: ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,'
+  },
+  {
+    name:'photo',
+    prompt: ',sharp image, full hd, 1080p,4k, [8k] ,[uhd], high quality, detailed, high resolution, [high res],[RAW photo], [HDR], [hard shadows], [cinematic shot], [dramatic lighting], [soft lighting], [dslr], professional photographer,photorealistic, realistic,real,',
+    negativePrompt: ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,'
+  },
+  {
+    name:'renaissance',
+    prompt: ',renaissance painting style, [chiaroscuro],[detailed brushwork],[classical beauty],oil on canvas,[classical art],[historical art],oil painting,[fine details],[perspective],[masterpiece],[artwork style],[sharp image],[high resolution],[detailed],[professional style],[frescoes],',
+    negativePrompt: ',(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
+  },
+  {
+    name:'impressionism',
+    prompt: ',impressionist painting style,[brushstrokes],[loose brushwork style],[natural light],[vibrant colors],[oil on canvas],',
+    negativePrompt: ',(black and white),sepia, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
+  },
+  {
+    name:'painting',
+    prompt: ',(painting style),artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,',
+    negativePrompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,'
+  },
+  {
+    name:'illustration',
+    prompt: ',illustration,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,',
+    negativePrompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,nude,porn,naked,nsfw,'
+  },
+]
+
 function loadingButton(boolean){
   if (boolean){
     document.getElementById('generateButton').innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
@@ -87,6 +114,20 @@ function loadingButton(boolean){
     document.getElementById('generateButton').disabled = false;
   }
 }
+
+function loadStyleSelect() {
+  const styleSelect = document.getElementById('styleSelect');
+  
+  stylesArray.forEach(style => {
+    const option = document.createElement('option');
+    option.value = style.name;
+    option.textContent = style.name;
+    styleSelect.appendChild(option);
+  });
+}
+loadStyleSelect();
+
+
 
 document.getElementById('generateButton').addEventListener('click', generateImage);
 async function generateImage(){
@@ -119,26 +160,12 @@ async function generateImage(){
     width = 1024;
   }
 
-  if (style === 'anime'){
-    prompt = prompt + ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,';
-    negativePrompt = negativePrompt + ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,';
-  } else if (style === 'illustration'){
-    prompt = prompt + ',illustration,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
-    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,nude,porn,naked,nsfw,';
-  } else if (style === 'photo'){
-    prompt = prompt + ',sharp image, full hd, 1080p,4k, [8k] ,[uhd], high quality, detailed, high resolution, [high res],[RAW photo], [HDR], [hard shadows], [cinematic shot], [dramatic lighting], [soft lighting], [dslr], professional photographer,photorealistic, realistic,real,';
-    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,';
-  } else if (style === 'painting'){
-    prompt = prompt + ',(painting style),artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
-    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,';
-  } else if (style === 'renaissance'){
-    prompt = prompt + ',renaissance painting style, [chiaroscuro],[detailed brushwork],[classical beauty],oil on canvas,[classical art],[historical art],oil painting,[fine details],[perspective],[masterpiece],[artwork style],[sharp image],[high resolution],[detailed],[professional style],[frescoes],';
-    negativePrompt = negativePrompt + '(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,';
-  } else if (style === 'impressionism'){
-    prompt = prompt + ',impressionist painting style,[brushstrokes],[loose brushwork style],[natural light],[vibrant colors],[oil on canvas],';
-    negativePrompt = negativePrompt + '(black and white),sepia, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,';
+  const selectedStyleObj = stylesArray.find(styleObj => styleObj.name === style);
+  if (selectedStyleObj) {
+    prompt += selectedStyleObj.prompt;
+    negativePrompt += selectedStyleObj.negativePrompt;
   }
-
+  
   const formData = new FormData();
   formData.append('prompt', prompt);
   formData.append('negative_prompt', negativePrompt);
