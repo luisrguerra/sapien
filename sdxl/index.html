@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Melhoria da visualização em smartphones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stable Diffusion</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!--Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body style="padding-inline: 0.5em;padding-block: 0.5em;">
+    <label for="promptInput" class="form-label">Prompt:</label>
+    <input type="text" id="promptInput" class="form-control" placeholder="Prompt">
+    <br>
+    <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
+    <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
+    <br>
+    <label for="styleSelect" class="form-label">Style:</label>
+    <select id="styleSelect" class="form-select">
+      <option value="default">Default</option>
+      <option value="anime">Anime</option>
+      <option value="illustration">Illustration</option>
+      <option value="photo">Photo</option>
+      <option value="painting">Painting</option>
+    </select>
+    <br>
+    <label for="sizeSelect" class="form-label">Image dimensions:</label>
+    <select id="sizeSelect" class="form-select">
+      <option value="square">Square</option>
+      <option value="portrait">Portrait</option>
+      <option value="landscape">Landscape</option>
+      <option value="stories">Stories</option>
+      <option value="ultrawide">Ultrawide</option>
+    </select>
+    <br>
+    <!--Advanced options-->
+    <div class="accordion accordion-flush" id="accordionFlushAdvancedOptions">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Advanced options
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushAdvancedOptions">
+          <br>
+          <!--Number of inference steps-->
+          <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
+          <input type="number" id="numInferenceStepsInput" class="form-control" value="30" placeholder="Number of inference steps" min="0" max="50">
+          <br>
+          <!--Guidance scale-->
+          <label for="guidanceScaleInput" class="form-label">Guidance Scale:</label>
+          <input type="number" id="guidanceScaleInput" class="form-control" value="7" placeholder="guidanceScale" min="4" max="10">
+          <br>
+          <!--Seed-->
+          <label for="seedInput" class="form-label">Seed:</label>
+          <input type="number" id="seedInput" class="form-control" value="0" placeholder="Seed"  min="0">
+          <br>
+          <!--Model-->
+          <label for="modelSelect" class="form-label">Model:</label>
+          <select id="modelSelect" class="form-select">
+            <option value="Lykon/DreamShaper">Lykon/DreamShaper</option>
+            <option value="prompthero/openjourney">prompthero/openjourney</option>
+            <option value="XpucT/Deliberate">XpucT/Deliberate</option>
+            <option value="runwayml/stable-diffusion-v1-5">runwayml/stable-diffusion-v1-5</option>
+          </select>
+          <br>
+          <!--Deepinfra API token-->
+          <label for="authTokenInput" class="form-label">Deepinfra API token:</label>
+          <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
+        </div>
+      </div>
+    </div>    
+    <br>
+    <button id="generateButton" class="btn btn-primary">Generate image</button>
+    <br><br>
+    <img id="generatedImage" style="max-width: 90vw;" width="512">
+</body>
+<script type="module">
+
+document.getElementById('generateButton').addEventListener('click', generateImage);
+async function generateImage(){
+  const authTokenTemp = document.getElementById('authTokenInput').value;
+  let prompt = document.getElementById('promptInput').value;
+  let negativePrompt = document.getElementById('negativePromptInput').value;
+  let height = 512;
+  let width = 512;
+  const style = document.getElementById('styleSelect').value;
+  const size = document.getElementById('sizeSelect').value;
+  const guidanceScale = document.getElementById('guidanceScaleInput').value;
+  const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
+  const seed = document.getElementById('seedInput').value;
+  const model = document.getElementById('modelSelect').value;
+
+  if (size === 'square'){
+    height = 512;
+    width = 512;
+  } else if (size === 'portrait'){
+    height = 512;
+    width = 384;
+  } else if (size === 'landscape'){
+    height = 384;
+    width = 512;
+  } else if (size === 'stories'){
+    height = 512;
+    width = 256;
+  } else if (size === 'ultrawide'){
+    height = 256;
+    width = 512;
+  }
+
+  if (style === 'anime'){
+    prompt = prompt + ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,';
+    negativePrompt = negativePrompt + ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,';
+  } else if (style === 'illustration'){
+    prompt = prompt + '';
+    negativePrompt = negativePrompt + '';
+  } else if (style === 'photo'){
+    prompt = prompt + ',sharp image, full hd, 1080p,4k, [8k] ,[uhd], high quality, detailed, high resolution, [high res],[RAW photo], [HDR], [hard shadows], [cinematic shot], [dramatic lighting], [soft lighting], [dslr], professional photographer,photorealistic, realistic,real,';
+    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,';
+  } else if (style === 'painting'){
+    prompt = prompt + ',painting style,artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,';
+    negativePrompt = negativePrompt + ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,';
+  }
+
+  const formData = new FormData();
+  formData.append('prompt', prompt);
+  formData.append('negative_prompt', negativePrompt);
+  formData.append('height', height);
+  formData.append('width', width);
+  formData.append('guidance_scale', guidanceScale);
+  formData.append('num_inference_steps', numInferenceSteps);
+  if (seed > 0){
+    formData.append('seed', seed);
+  }
+
+  if (authTokenTemp){
+    localStorage.setItem('authToken', authTokenTemp);
+  }
+
+  function getAuthToken(){
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken){
+      alert('Please enter your Deepinfra API token.');
+      return;
+    }
+    return authToken;
+  }
+  
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Authorization': `bearer ${getAuthToken()}`,
+    },
+    body: formData
+  };
+  
+  try {
+    const url = `https://api.deepinfra.com/v1/inference/${model}`;
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    console.log("API response:",data);
+    
+    if (data.images && data.images.length > 0) {
+      const imageElement = document.getElementById('generatedImage');
+      imageElement.src = data.images[0];
+    }
+  } catch (error) {
+    alert('There was an error while making the request. Check the console for more information.');
+    console.error('There was an error while making the request:', error);
+  }
+}
+</script>
+</html>
