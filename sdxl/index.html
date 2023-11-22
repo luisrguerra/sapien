@@ -17,18 +17,23 @@
     <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
     <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
     <br>
-    <label for="styleSelect" class="form-label">Style:</label>
-    <select id="styleSelect" class="form-select">
-    </select>
-    <br>
-    <label for="sizeSelect" class="form-label">Image dimensions:</label>
-    <select id="sizeSelect" class="form-select">
-      <option value="square">Square</option>
-      <option value="portrait">Portrait</option>
-      <option value="landscape">Landscape</option>
-      <option value="stories">Stories</option>
-      <option value="ultrawide">Ultrawide</option>
-    </select>
+    <div class="row">
+      <div class="col">
+        <label for="styleSelect" class="form-label">Style:</label>
+        <select id="styleSelect" class="form-select">
+        </select>
+      </div>
+      <div class="col">
+        <label for="sizeSelect" class="form-label">Image dimensions:</label>
+        <select id="sizeSelect" class="form-select">
+          <option value="square">Square</option>
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+          <option value="stories">Stories</option>
+          <option value="ultrawide">Ultrawide</option>
+        </select>
+      </div>
+    </div>
     <br>
     <!--Advanced options-->
     <div class="accordion accordion-flush" id="accordionFlushAdvancedOptions">
@@ -99,7 +104,7 @@ const stylesArray = [
   },
   {
     name:'Painting',
-    prompt: ',(painting style),artwork style,masterpiece,art style,sharp image,high resolution,beautiful,detailed,professional style,',
+    prompt: ',(painting style),artwork style,[masterpiece],art style,[sharp image],[high resolution],[beautiful],[detailed],[professional style],',
     negative_prompt: ',blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,digital painting style,nude,porn,naked,nsfw,'
   },
   {
