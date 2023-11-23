@@ -12,10 +12,10 @@
 </head>
 <body style="padding-inline: 0.5em;padding-block: 0.5em;">
     <label for="promptInput" class="form-label">Prompt:</label>
-    <input type="text" id="promptInput" class="form-control" placeholder="Prompt">
+    <input type="text" id="promptInput" class="form-control" placeholder="Ex: pet">
     <br>
     <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
-    <input type="text" id="negativePromptInput" class="form-control" placeholder="Negative prompt">
+    <input type="text" id="negativePromptInput" class="form-control" placeholder="Ex: cat">
     <br>
     <div class="row">
       <div class="col">
@@ -72,7 +72,9 @@
     <br>
     <button id="generateButton" class="btn btn-primary">Generate image</button>
     <br><br>
-    <img id="generatedImage" style="max-width: 90vw;" width="512">
+    <div class="d-flex justify-content-center">
+      <img id="generatedImage" style="max-width: 90vw;" width="512" class="justify-content-center">
+    </div>
 </body>
 <script type="module">
 
@@ -84,7 +86,7 @@ const stylesArray = [
   },
   {
     name:'Anime',
-    prompt: ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], realistic anime wallpaper,[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
+    prompt: ',realistic anime, realistic manga, [illustration], [artwork], realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], [realistic anime wallpaper],[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
     negative_prompt: ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,'
   },
   {
