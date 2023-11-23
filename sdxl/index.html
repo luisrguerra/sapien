@@ -93,6 +93,11 @@ const stylesArray = [
     negative_prompt: ',blurry, low res, low resolution, low quality,ugly,nude,porn,naked,nsfw,hentai,'
   },
   {
+    name:'Realistic anatomy',
+    prompt: ',realistic anatomy,',
+    negative_prompt: ',amputee, deformed body, long neck, extra fingers, bad body proportions, mutated hands, mutilated, mutation, ugly, fused fingers, malformed limbs, extra heads, morbid, disfigured,'
+  },
+  {
     name:'Renaissance',
     prompt: ',renaissance painting style, [chiaroscuro],[detailed brushwork],[classical beauty],oil on canvas,[classical art],[historical art],oil painting,[fine details],[perspective],[masterpiece],[artwork style],[sharp image],[high resolution],[detailed],[professional style],[frescoes],',
     negative_prompt: ',(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
@@ -120,11 +125,11 @@ const stylesArray = [
   {
     name: "Faded Polaroid Photo",
     prompt: ",Faded Polaroid Photo, analog, old faded photo, old polaroid,",
-    negative_prompt: ",ugly, deformed, noisy, blurry, low contrast, vibrant, colorful,"
+    negative_prompt: ",ugly, deformed, noisy, blurry, low contrast, vibrant, black and white,vibrant colors,"
   },
   {
     name: "Japanese Ink Drawing",
-    prompt: ",Japanese Ink Drawing, ink drawing, inkwash, Japanese Ink Drawing,",
+    prompt: ",Japanese Ink Drawing, ink drawing, inkwash, Japanese Ink Drawing,[masterpiece],[detailed],",
     negative_prompt: ",ugly, deformed, noisy, blurry, low contrast, colorful, vibrant,"
   },
   {
@@ -150,7 +155,7 @@ const stylesArray = [
   {
     name: "Flat 2D Art",
     prompt: ",Flat 2D Art, simple flat color, 2-dimensional, Flat 2D Art Style,",
-    negative_prompt: ",ugly, deformed, noisy, blurry, low contrast, 3D, photo, realistic,"
+    negative_prompt: ",ugly, deformed, noisy, blurry, low contrast, 3D render, photo, realistic,"
   },
   {
     name: "Baroque",
@@ -164,18 +169,18 @@ const stylesArray = [
   },
   {
     name: "Medievalism",
-    prompt: ",Medievalism, inspired by The Middle Ages, medieval art, elaborate patterns and decoration, Medievalism,",
-    negative_prompt: ",ugly, deformed, noisy, blurry, low contrast,"
+    prompt: ",Medievalism, inspired by The Middle Ages, medieval art, [elaborate patterns and decoration], Medievalism,",
+    negative_prompt: ",ugly, deformed, noisy, blurry, low contrast,modern,"
   },
   {
     name: "Pencil Sketch Drawing",
-    prompt: ",Pencil Sketch Drawing, black and white drawing, graphite drawing,",
+    prompt: ",Pencil Sketch Drawing style, black and white drawing, graphite drawing style,",
     negative_prompt: ",ugly, deformed, noisy, blurry, low contrast,"
   },
   {
     name: "3D Model",
-    prompt: ",professional 3d model, octane render, highly detailed, volumetric, dramatic lighting,",
-    negative_prompt: ",ugly, deformed, noisy, low poly, blurry, painting,"
+    prompt: ",professional 3d model,3d render, [octane render], highly detailed, [volumetric], [dramatic lighting],",
+    negative_prompt: ",illustration,photo,ugly, deformed, noisy, low poly, blurry, painting,"
   },
   {
     name: "Analog Film",
@@ -195,7 +200,7 @@ const stylesArray = [
   {
     name: "Pixel art",
     prompt: ",pixel-art, low-res, blocky, pixel art style, 8-bit graphics,",
-    negative_prompt: ",sloppy, messy, blurry, noisy, highly detailed, ultra textured, photo, realistic,"
+    negative_prompt: ",3d render,sloppy, messy, blurry, noisy, highly detailed, ultra textured, photo, realistic,"
   },
 ]
 
