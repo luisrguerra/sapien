@@ -70,3 +70,38 @@ input.form-control::placeholder{
     color: var(--font-color);
     opacity: 0.75;
 }
+
+h2.accordion-header{
+    color: var(--font-color);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+h2.accordion-header:hover,h2.accordion-header:active,h2.accordion-header:focus,h2.accordion-header:visited{
+    background-color: #ffffff10 !important;
+    border-color: #ffffff40 !important;
+    color: var(--font-color) !important;
+    box-shadow: none;
+}
+
+button.accordion-button{
+    color: var(--font-color);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+button.accordion-button:hover,button.accordion-button:active,button.accordion-button:focus,button.accordion-button:visited{
+    background-color: #ffffff10 !important;
+    border-color: #ffffff40 !important;
+    color: var(--font-color) !important;
+}
+
+div.accordion-item{
+    color: var(--font-color);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+div.accordion-item:hover,div.accordion-item:active,div.accordion-item:focus,div.accordion-item:visited{
+    box-shadow: none;
+}
