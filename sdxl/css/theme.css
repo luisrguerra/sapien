@@ -1,0 +1,53 @@
+:root {
+    --font-color: #c9d3e3;
+    --font-color2: white;
+    --background-color: hsla(0, 0%, 100%, 0.09);
+    --background2-color: hsl(218, 14%, 16%);
+    --background3-color: hsl(213, 13%, 14%);
+}
+
+body{
+    color: var(--font-color);
+    background-color:var(--background3-color);
+}
+
+::selection {
+    background: #3D4556;
+    color: #d6e2f4;
+}
+
+button.btn.btn-primary,button.btn.btn-primary:disabled,button.btn.btn-primary:active{
+    box-shadow: none;
+}
+
+button.btn-outline{
+    color: var(--font-color2);
+    border-top-color: hsla(0, 0%, 100%, 0.30);
+    border-inline-color: hsla(0, 0%, 100%, 0.25);
+    border-bottom-color: hsla(0, 0%, 100%, 0.20);
+    border-width: 2px;
+}
+
+button.btn-outline:hover,button.btn-outline:active,button.btn-outline:focus,button.btn-outline:visited{
+    background-color: #ffffff10 !important;
+    border-color: #ffffff40 !important;
+    color: var(--font-color2) !important;
+}
+
+button.btn-outline:disabled{
+    border-color: rgba(255, 255, 255, 0.15);
+}  
+
+select.form-select,select.form-select:disabled{
+    color: var(--font-color);
+    background-color: var(--background3-color);
+    border-color: #ffffff40;
+    border-width: 2px;
+}
+    
+select.form-select:focus,select.form-select:active{
+    color: var(--font-color);
+    background-color: var(--background3-color);
+    border-color: #ffffff7e;
+    box-shadow: none;
+}
