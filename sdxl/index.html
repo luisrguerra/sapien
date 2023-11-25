@@ -63,10 +63,9 @@
           <select style="display: none;" id="modelSelect" class="form-select">
             <option value="stability-ai/sdxl">stability-ai/sdxl</option>
           </select>
-          <br style="display: none;" >
           <!--Deepinfra API token-->
-          <label style="display:none" for="authTokenInput" class="form-label">Deepinfra API token:</label>
-          <input style="display:none" type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
+          <label for="authTokenInput" class="form-label">Custom Deepinfra API token:</label>
+          <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
         </div>
       </div>
     </div>    
@@ -298,19 +297,26 @@ async function generateImage(){
   formData.append('width', width);
   formData.append('guidance_scale', guidanceScale);
   formData.append('num_inference_steps', numInferenceSteps);
+  formData.append('refine', 'base_image_refiner');
   if (seed > 0){
     formData.append('seed', seed);
   }
 
-  if (authTokenTemp){
-    localStorage.setItem('authToken', authTokenTemp);
-  }
-
-  const requestOptions = {
+  let requestOptions = {
     method: 'POST',
     headers: atod(),
     body: formData
   };
+
+  if (authTokenTemp != ''){
+    requestOptions = {
+      method: 'POST',
+      headers: {
+      'Authorization': `bearer ${authTokenTemp}`,
+      },
+      body: formData
+    };
+  }
   
   try {
     loadingButton(true);
