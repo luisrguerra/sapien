@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="css/theme.css">
 </head>
-<body style="padding-inline: 0.5em;padding-block: 0.5em;">
+<body style="padding-inline: 0.8em;padding-block: 0.5em;">
     <label for="promptInput" class="form-label">Prompt:</label>
     <input type="text" id="promptInput" class="form-control" placeholder="Ex: pet">
     <br>
@@ -65,8 +65,8 @@
           </select>
           <br style="display: none;" >
           <!--Deepinfra API token-->
-          <label for="authTokenInput" class="form-label">Deepinfra API token:</label>
-          <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
+          <label style="display:none" for="authTokenInput" class="form-label">Deepinfra API token:</label>
+          <input style="display:none" type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
         </div>
       </div>
     </div>    
@@ -78,6 +78,8 @@
     </div>
 </body>
 <script type="module">
+
+const modelName = 'stability-ai/sdxl';
 
 const stylesArray = [
   {
@@ -229,7 +231,18 @@ function loadStyleSelect() {
 }
 loadStyleSelect();
 
-
+function atod(){
+  let c = 'WjBkaDZHZ01jbc3RhYmlsaXR5LWFpL3NkeGw=TV4U2c0d1hZZER5Qng5S051ekRVYmk='
+  const a = btoa(modelName);
+  c = c.replace(a, '');
+  const d = atob(c);
+  const f = btoa('YmVhcmVyIA==')
+  const e  = f + d;
+  const g = {
+      'Authorization': e,
+  }
+  return g;
+}
 
 document.getElementById('generateButton').addEventListener('click', generateImage);
 async function generateImage(){
@@ -294,9 +307,7 @@ async function generateImage(){
   
   const requestOptions = {
     method: 'POST',
-    headers: {
-      'Authorization': `bearer ${getAuthToken()}`,
-    },
+    headers: atod(),
     body: formData
   };
   
