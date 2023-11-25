@@ -36,7 +36,7 @@ button.btn-outline:hover,button.btn-outline:active,button.btn-outline:focus,butt
 
 button.btn-outline:disabled{
     border-color: rgba(255, 255, 255, 0.15);
-}  
+}
 
 select.form-select,select.form-select:disabled{
     color: var(--font-color);
@@ -85,15 +85,20 @@ h2.accordion-header:hover,h2.accordion-header:active,h2.accordion-header:focus,h
 }
 
 button.accordion-button{
-    color: var(--font-color);
+    color: var(--font-color2);
     background-color: transparent;
     box-shadow: none;
 }
 
-button.accordion-button:hover,button.accordion-button:active,button.accordion-button:focus,button.accordion-button:visited{
-    background-color: #ffffff10 !important;
+button.accordion-button::after{
+    filter: invert(100%);
+}
+
+button.accordion-button:hover,button.accordion-button:active,button.accordion-button:focus,button.accordion-button:visited,button.accordion-button:not(.collapsed){
+    background-color: transparent !important;
     border-color: #ffffff40 !important;
-    color: var(--font-color) !important;
+    color: var(--font-color2) !important;
+    box-shadow: none;
 }
 
 div.accordion-item{
