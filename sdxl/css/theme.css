@@ -85,7 +85,7 @@ h2.accordion-header:hover,h2.accordion-header:active,h2.accordion-header:focus,h
 }
 
 button.accordion-button{
-    color: var(--font-color2);
+    color: var(--font-color);
     background-color: transparent;
     box-shadow: none;
 }

@@ -244,6 +244,16 @@ function atod(){
   return g;
 }
 
+function getAuthToken(){
+  const authToken = localStorage.getItem('authToken');
+  if (!authToken){
+    alert('Please enter your Deepinfra API token.');
+    return;
+  }
+  return authToken;
+}
+  
+
 document.getElementById('generateButton').addEventListener('click', generateImage);
 async function generateImage(){
   const authTokenTemp = document.getElementById('authTokenInput').value;
@@ -296,15 +306,6 @@ async function generateImage(){
     localStorage.setItem('authToken', authTokenTemp);
   }
 
-  function getAuthToken(){
-    const authToken = localStorage.getItem('authToken');
-    if (!authToken){
-      alert('Please enter your Deepinfra API token.');
-      return;
-    }
-    return authToken;
-  }
-  
   const requestOptions = {
     method: 'POST',
     headers: atod(),
