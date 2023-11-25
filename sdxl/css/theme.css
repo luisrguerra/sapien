@@ -110,3 +110,7 @@ div.accordion-item{
 div.accordion-item:hover,div.accordion-item:active,div.accordion-item:focus,div.accordion-item:visited{
     box-shadow: none;
 }
+
+#generatedImage{
+    border-radius: 4px;
+}
