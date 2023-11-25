@@ -71,6 +71,10 @@
  <button id="btnRegenerate" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span class="mdi mdi-refresh"> <span class="unnecessary-text">Regerar</span></span>
  </button>
+ <!-- botao gerar arte -->
+ <button id="btnArtGeneration" class="btn btn-outline-light prompt-button prompt-button-posterior">
+  <span class="mdi mdi-palette"> <span class="unnecessary-text">Arte</span></span>
+ </button>
  <!-- botao de expandir input de texto -->
  <button id="btnExpand" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span id="iconExpand" class="mdi mdi-arrow-expand-up"> <span id="btnExpandText" class="unnecessary-text">Expandir</span></span>
@@ -688,6 +692,16 @@ async function onClickClearChatButton(){
   });
 }
 onClickClearChatButton();
+
+async function onClickGenerateArt(){
+  const button = document.getElementById('btnArtGeneration');
+  button.addEventListener('click', async () => {
+    if(confirm("Deseja acessar o gerador de artes?")){
+      window.location.href = "https://luisrguerra.github.io/sapien/sdxl/index.html";
+    };
+  });
+}
+onClickGenerateArt();
 
 async function onClickRegenerateLastMessageButton(){
   const button = document.getElementById('btnRegenerate');
