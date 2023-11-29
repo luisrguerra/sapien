@@ -9,29 +9,40 @@
   <!--Bootstrap -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Material Design Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <link rel="stylesheet" href="css/theme.css">
 </head>
 <body style="padding-inline: 0.8em;padding-block: 0.5em;">
+    <!-- Navbar -->
+    <nav class="navbar  navbar-light bg-transparent">
+      <div class="container" style="margin-inline:0%;padding-inline: 0px;max-width:100%">
+        <!-- Botão de retornar -->
+        <button class="btn btn-dark" onclick="window.history.back()"><i class="mdi mdi-chevron-left"></i> Retornar</button>
+        <h6 style="color: inherit;margin-inline: auto;">Gerador de imagens</h6>
+      </div>
+    </nav>
     <label for="promptInput" class="form-label">Prompt:</label>
-    <input type="text" id="promptInput" class="form-control" placeholder="Ex: pet" autocomplete="off">
+    <input type="text" id="promptInput" class="form-control" placeholder="Ex: pet (aceita somente palavras em inglês)" autocomplete="off">
     <br>
-    <label for="negativePromptInput" class="form-label">Negative Prompt:</label>
+    <label for="negativePromptInput" class="form-label">Prompt negativo:</label>
     <input type="text" id="negativePromptInput" class="form-control" placeholder="Ex: cat" autocomplete="off">
     <br>
     <div class="row">
       <div class="col">
-        <label for="styleSelect" class="form-label">Style:</label>
+        <label for="styleSelect" class="form-label">Estilo:</label>
         <select id="styleSelect" class="form-select">
         </select>
       </div>
       <div class="col">
-        <label for="sizeSelect" class="form-label">Image dimensions:</label>
+        <label for="sizeSelect" class="form-label">Dimensão da imagem:</label>
         <select id="sizeSelect" class="form-select">
-          <option value="square">Square</option>
-          <option value="portrait">Portrait</option>
-          <option value="landscape">Landscape</option>
+          <option value="square">Quadrado</option>
+          <option value="portrait">Retrato</option>
+          <option value="landscape">Paisagem</option>
           <option value="stories">Stories</option>
-          <option value="ultrawide">Ultrawide</option>
+          <option value="ultrawide">Largo</option>
         </select>
       </div>
     </div>
@@ -41,7 +52,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-            Advanced options
+            Opções avançadas
           </button>
         </h2>
         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushAdvancedOptions">
@@ -78,7 +89,7 @@
       </div>
     </div>    
     <br>
-    <button id="generateButton" class="btn btn-outline">Generate image</button>
+    <button id="generateButton" class="btn btn-outline">Gerar imagem</button>
     <br><br>
     <div class="d-flex justify-content-center">
       <img id="generatedImage" style="max-width: 90vw;" width="512" class="justify-content-center">
