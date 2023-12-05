@@ -17,9 +17,9 @@
 <body style="padding-inline: 0.8em;padding-block: 0.5em;">
     <!-- Navbar -->
     <nav class="navbar  navbar-light bg-transparent">
-      <div class="container" style="margin-inline:0%;padding-inline: 0px;max-width:100%">
+      <div class="container" style="margin-inline:0%;padding-inline: 0px;max-width:93%">
         <!-- Botão de retornar -->
-        <button class="btn btn-dark" onclick="window.history.back()"><i class="mdi mdi-chevron-left"></i> Retornar</button>
+        <button class="btn btn-dark return" onclick="window.history.back()"><i class="mdi mdi-chevron-left"></i> Retornar</button>
         <h6 style="color: inherit;margin-inline: auto;">Gerador de imagens</h6>
       </div>
     </nav>
@@ -77,6 +77,18 @@
             <option value="base_image_refiner">Base image refiner</option>
           </select>
           <br>
+          <!--Sampler-->
+          <label for="samplerSelect" class="form-label">Sampler:</label>
+          <select id="samplerSelect" class="form-select">
+            <option value="DDIM">DDIM</option>
+            <option value="DPMSolverMultistep">DPMSolverMultistep</option>
+            <option value="HeunDiscrete">HeunDiscrete</option>
+            <option value="KarrasDPM">KarrasDPM</option>
+            <option value="K_EULER_ANCESTRAL">K_EULER_ANCESTRAL</option>
+            <option value="K_EULER">K_EULER</option>
+            <option value="PNDM">PNDM</option>
+          </select>
+          <br>
           <!--Model-->
           <label style="display: none;" for="modelSelect" class="form-label">Model:</label>
           <select style="display: none;" id="modelSelect" class="form-select">
@@ -107,6 +119,11 @@ const stylesArray = [
   },
   {
     name:'Anime',
+    prompt: ',anime style, [manga], [illustration], [artwork], [anime wallpaper],[anime fanart], [detailed anime background], anime studio,',
+    negative_prompt: ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,'
+  },
+  {
+    name:'Realistic Anime',
     prompt: ',realistic anime, realistic manga, [illustration], [artwork], realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], [realistic anime wallpaper],[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
     negative_prompt: ',black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,nude,porn,naked,nsfw,hentai,'
   },
@@ -291,6 +308,7 @@ async function generateImage(){
   const seed = document.getElementById('seedInput').value;
   const model = document.getElementById('modelSelect').value;
   const refiner = document.getElementById('refinerSelect').value;
+  const sampler = document.getElementById('samplerSelect').value;
 
   if (size === 'square'){
     height = 1024;
@@ -323,6 +341,7 @@ async function generateImage(){
   formData.append('guidance_scale', guidanceScale);
   formData.append('num_inference_steps', numInferenceSteps);
   formData.append('refine', refiner);
+  formData.append('scheduler', sampler);
   if (seed > 0){
     formData.append('seed', seed);
   }
