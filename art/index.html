@@ -143,6 +143,11 @@ const stylesArray = [
     negative_prompt: ',(black and white),sepia,blurry, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
   },
   {
+    name:'Caravaggio',
+    prompt: ',Caravaggio,Italian Baroque style, [chiaroscuro],[dramatic composition],oil painting,Renaissance art,',
+    negative_prompt: ',nude,porn,naked,nsfw,'
+  },
+  {
     name:'Impressionism',
     prompt: ',impressionist painting style,[brushstrokes],[loose brushwork style],[natural light],[vibrant colors],[oil on canvas],',
     negative_prompt: ',(black and white),sepia, low res, low resolution, low quality,ugly,artist painting,artist drawing,(digital painting style),3d render,photo,nude,porn,naked,nsfw,'
@@ -161,6 +166,11 @@ const stylesArray = [
     name: "Art Nouveau",
     prompt: ",Art Nouveau style,",
     negative_prompt: ",3d render,anime,photo,ugly, deformed, noisy,abstract,visual glitch, low contrast, industrial, mechanical,blurry, low res, low resolution, low quality,"
+  },
+  {
+    name: "Art Nouveau - Harrison Fisher",
+    prompt: ",[Harrison Fisher],[[Gilded Age aesthetics]],",
+    negative_prompt: ",nude,porn,naked,nsfw,[deformed],[morbid],[disfigured],"
   },
   {
     name: "Faded Polaroid Photo",
@@ -369,6 +379,11 @@ async function generateImage(){
     const data = await response.json();
     loadingButton(false);
     console.log("API response:",data);
+
+    if (data.error === "NSFW content detected. Try running it again, or try a different prompt."){
+      alert("A imagem não foi gerada pois foi censurada. Tente outro prompt ou outra seed.");
+      console.error("NSFW content detected. Try running it again, or try a different prompt.");
+    }
     
     if (data.output && data.output.length > 0) {
       const imageElement = document.getElementById('generatedImage');
