@@ -369,6 +369,11 @@ async function generateImage(){
     const data = await response.json();
     loadingButton(false);
     console.log("API response:",data);
+
+    if (data.error === "NSFW content detected. Try running it again, or try a different prompt."){
+      alert("A imagem não foi gerada pois foi censurada. Tente outro prompt ou outra seed.");
+      console.error("NSFW content detected. Try running it again, or try a different prompt.");
+    }
     
     if (data.output && data.output.length > 0) {
       const imageElement = document.getElementById('generatedImage');
