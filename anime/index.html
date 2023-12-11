@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Melhoria da visualização em smartphones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stable Diffusion</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!--Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Material Design Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body style="padding-inline: 0.8em;padding-block: 0.5em;">
+    <!-- Navbar -->
+    <nav class="navbar  navbar-light bg-transparent">
+      <div class="container" style="margin-inline:0%;padding-inline: 0px;max-width:93%">
+        <!-- Botão de retornar -->
+        <button class="btn btn-dark return" onclick="window.history.back()"><i class="mdi mdi-chevron-left"></i> Retornar</button>
+        <h6 style="color: inherit;margin-inline: auto;">Gerador de imagens</h6>
+      </div>
+    </nav>
+    <label for="promptInput" class="form-label">Prompt:</label>
+    <input type="text" id="promptInput" class="form-control" placeholder="Ex: pet (aceita somente palavras em inglês)" autocomplete="off">
+    <br>
+    <label for="negativePromptInput" class="form-label">Prompt negativo:</label>
+    <input type="text" id="negativePromptInput" class="form-control" placeholder="Ex: cat" autocomplete="off">
+    <br>
+    <div class="row">
+      <div class="col">
+        <label for="styleSelect" class="form-label">Estilo:</label>
+        <select id="styleSelect" class="form-select">
+        </select>
+      </div>
+      <div class="col">
+        <label for="sizeSelect" class="form-label">Dimensão da imagem:</label>
+        <select id="sizeSelect" class="form-select">
+          <option value="square">Quadrado</option>
+          <option value="portrait">Retrato</option>
+          <option value="landscape">Paisagem</option>
+          <option value="stories">Stories</option>
+          <option value="ultrawide">Largo</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <!--Advanced options-->
+    <div class="accordion accordion-flush" id="accordionFlushAdvancedOptions">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Opções avançadas
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushAdvancedOptions">
+          <br>
+          <!--Model-->
+          <label for="modelSelect" class="form-label">Model:</label>
+          <select id="modelSelect" class="form-select">
+            <option value="abyssorangemix3AOM3_aom3a1b.safetensors">Abyss orange mix 3</option>
+            <option value="AnythingV5_v5PrtRE.safetensors">Anything V5</option>
+            <option value="pastelmix-better-vae-fp16.safetensors">Pastelmix</option>
+            <option value="meinamix_meinaV11.safetensors">Meinamix V11</option>
+            <option value="cetusMix_Whalefall2.safetensors">CetusMix Whalefall 2</option>
+            <option value="CounterfeitV30_v30.safetensors">Counterfeit V30</option>
+          </select>
+          <br>
+          <!--Number of inference steps-->
+          <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
+          <input type="number" id="numInferenceStepsInput" class="form-control" value="20" placeholder="Number of inference steps" min="8" max="25">
+          <br>
+          <!--Guidance scale-->
+          <label for="guidanceScaleInput" class="form-label">Guidance Scale:</label>
+          <input type="number" id="guidanceScaleInput" class="form-control" value="7" placeholder="guidanceScale" min="4" max="10">
+          <br>
+          <!--Seed-->
+          <label for="seedInput" class="form-label">Seed:</label>
+          <input type="number" id="seedInput" class="form-control" value="0" placeholder="Seed"  min="0">
+          <br>
+          <!--vae-->
+          <label for="vaeSelect" class="form-label">VAE:</label>
+          <select id="vaeSelect" class="form-select">
+            <option value="anything-v4.0.vae.pt">Anything v4</option>
+            <option value="MoistMix.vae.pt">MoistMix</option>
+            <option value="ClearVAE_V2.3.safetensors">ClearVAE V2.3</option>
+          </select>
+          <br>
+          <!--Sampler-->
+          <label for="samplerSelect" class="form-label">Sampler:</label>
+          <select id="samplerSelect" class="form-select">
+            <option value="DPM++ SDE Karras">DPM++ SDE Karras</option>
+            <option value="DPM++ 2M Karras">DPM++ 2M Karras</option>
+            <option value="Euler a">Euler a</option>
+          </select>
+          <br>
+          <!--Deepinfra API token-->
+          <label for="authTokenInput" class="form-label">Custom Deepinfra API token:</label>
+          <input type="password" id="authTokenInput" class="form-control" placeholder="Deepinfra API token">
+        </div>
+      </div>
+    </div>    
+    <br>
+    <button id="generateButton" class="btn btn-outline">Gerar imagem</button>
+    <br><br>
+    <div class="d-flex justify-content-center">
+      <img id="generatedImage" style="max-width: 90vw;" width="512" class="justify-content-center">
+    </div>
+</body>
+<script type="module">
+
+const inferenceName = 'uwulewd/custom-diffusion';
+
+const stylesArray = [
+  {
+    name:'Anime',
+    prompt: '',
+    negative_prompt: ',(EasyNegative:1.1), (bad-hands-5:0.9), (logo), (text),(dialog bubble), (letters),(signature), monochrome,ugly,'
+  },
+  {
+    name:'Anime 2',
+    prompt: ',anime style, [manga], [illustration], [artwork], [anime wallpaper],[anime fanart], [detailed anime background], anime studio,',
+    negative_prompt: ',(EasyNegative:1.1),black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,'
+  },
+  {
+    name:'Anime - Studio Ghibli',
+    prompt: ',studio ghibli,[beautiful anime],',
+    negative_prompt: ',(EasyNegative:1.1),black and white,ugly,deformed,photo,3d render,abstract,noisy,blurry,poorly drawn,(text), (dialog bubble), (letters), [superhero comics],signature,amateur,'
+  },
+  {
+    name:'Only EasyNegative',
+    prompt: '',
+    negative_prompt: ',(EasyNegative:1.1),'
+  },
+  {
+    name:'Default',
+    prompt: '',
+    negative_prompt: ''
+  },
+]
+
+function loadingButton(boolean){
+  if (boolean){
+    document.getElementById('generateButton').innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+    document.getElementById('generateButton').disabled = true;
+  } else {
+    document.getElementById('generateButton').innerHTML = 'Generate image';
+    document.getElementById('generateButton').disabled = false;
+  }
+}
+
+function loadStyleSelect() {
+  const styleSelect = document.getElementById('styleSelect');
+  
+  stylesArray.forEach(style => {
+    const option = document.createElement('option');
+    option.value = style.name;
+    option.textContent = style.name;
+    styleSelect.appendChild(option);
+  });
+}
+loadStyleSelect();
+
+function atod(){
+  let c = 'WjBkaDZHZ01jbTV4U2c0d1hdXd1bGV3ZC9jdXN0b20tZGlmZnVzaW9uZZER5Qng5S051ekRVYmk='
+  const a = btoa(inferenceName);
+  c = c.replace(a, '');
+  const d = atob(c);
+  const f = atob('YmVhcmVyIA==')
+  const e  = f + d;
+  const g = {
+      'Authorization': e,
+  }
+  return g;
+}
+
+function getAuthToken(){
+  const authToken = localStorage.getItem('authToken');
+  if (!authToken){
+    alert('Please enter your Deepinfra API token.');
+    return;
+  }
+  return authToken;
+}
+  
+
+document.getElementById('generateButton').addEventListener('click', generateImage);
+async function generateImage(){
+  const authTokenTemp = document.getElementById('authTokenInput').value;
+  let prompt = document.getElementById('promptInput').value;
+  let negativePrompt = document.getElementById('negativePromptInput').value;
+  let height = 768;
+  let width = 768;
+  const style = document.getElementById('styleSelect').value;
+  const size = document.getElementById('sizeSelect').value;
+  const guidanceScale = document.getElementById('guidanceScaleInput').value;
+  const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
+  const seed = document.getElementById('seedInput').value;
+  const model = document.getElementById('modelSelect').value;
+  const vae = document.getElementById('vaeSelect').value;
+  const sampler = document.getElementById('samplerSelect').value;
+
+  if (size === 'square'){
+    height = 512;
+    width = 512;
+  } else if (size === 'portrait'){
+    height = 512;
+    width = 384;
+  } else if (size === 'landscape'){
+    height = 384;
+    width = 512;
+  } else if (size === 'stories'){
+    height = 512;
+    width = 256;
+  } else if (size === 'ultrawide'){
+    height = 256;
+    width = 512;
+  }
+
+  const selectedStyleObj = stylesArray.find(styleObj => styleObj.name === style);
+  if (selectedStyleObj) {
+    prompt += selectedStyleObj.prompt;
+    negativePrompt += selectedStyleObj.negative_prompt;
+  }
+  
+  const formData = new FormData();
+  formData.append('prompt', prompt);
+  formData.append('negative_prompt', negativePrompt);
+  formData.append('model', model);
+  formData.append('vae', 'anything-v4.0.vae.pt');
+  formData.append('height', height);
+  formData.append('width', width);
+  formData.append('cfg_scale', guidanceScale);
+  formData.append('steps', numInferenceSteps);
+  formData.append('vae', vae);
+  formData.append('sampler_name', sampler);
+  if (seed > 0){
+    formData.append('seed', seed);
+  }
+
+  let requestOptions = {
+    method: 'POST',
+    headers: atod(),
+    body: formData
+  };
+
+  if (authTokenTemp != ''){
+    requestOptions = {
+      method: 'POST',
+      headers: {
+      'Authorization': `bearer ${authTokenTemp}`,
+      },
+      body: formData
+    };
+  }
+  
+  try {
+    loadingButton(true);
+    const url = `https://api.deepinfra.com/v1/inference/${inferenceName}`;
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    loadingButton(false);
+    console.log("API response:",data);
+    
+    if (data.output && data.output.length > 0) {
+      const imageElement = document.getElementById('generatedImage');
+      imageElement.src = data.output[0];
+    }
+  } catch (error) {
+    alert('There was an error while making the request. Check the console for more information.');
+    console.error('There was an error while making the request:', error);
+    loadingButton(false);
+  }
+}
+</script>
+</html>
