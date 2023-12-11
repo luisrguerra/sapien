@@ -68,6 +68,13 @@
             <option value="CounterfeitV30_v30.safetensors">Counterfeit V30</option>
           </select>
           <br>
+          <!--Resolution-->
+          <label for="resolutionSelect" class="form-label">Resolution:</label>
+          <select id="resolutionSelect" class="form-select">
+            <option value=1>1x</option>
+            <option value=2>2x</option>
+          </select>
+          <br>
           <!--Number of inference steps-->
           <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
           <input type="number" id="numInferenceStepsInput" class="form-control" value="20" placeholder="Number of inference steps" min="8" max="25">
@@ -125,8 +132,23 @@ const stylesArray = [
     negative_prompt: ',(EasyNegative:1.1),black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,'
   },
   {
+    name:'Realistic anime',
+    prompt: ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], [realistic anime wallpaper],[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
+    negative_prompt: ',(EasyNegative:1.1),black and white,b&w, monochrome, 3d render, photography, photo, cartoon, abstract art, poorly drawn, ((text)), ((dialog bubble)), ((letters)), cartoon comics, superhero comics, signature, minimalist art, 3d model, amateur anime artist,canvas frame,bad art,'
+  },
+  {
+    name:'Realistic anatomy',
+    prompt: '',
+    negative_prompt: ',(EasyNegative:1.1),black and white,b&w, monochrome, ((text)), ((dialog bubble)), ((letters)), amputee, deformed body,ugly fingers, bad and ugly body proportions,ugly hands, mutated hands, mutilated, mutation, ugly, ugly body, fused fingers, malformed limbs, extra heads, morbid, disfigured,ugly arms,'
+  },
+  {
     name:'Anime - Studio Ghibli',
     prompt: ',studio ghibli,[beautiful anime],',
+    negative_prompt: ',(EasyNegative:1.1),black and white,ugly,deformed,photo,3d render,abstract,noisy,blurry,poorly drawn,(text), (dialog bubble), (letters), [superhero comics],signature,amateur,'
+  },
+  {
+    name:'Anime - Studio Pierrot (Naruto)',
+    prompt: ',Studio Pierrot,[shippuden],',
     negative_prompt: ',(EasyNegative:1.1),black and white,ugly,deformed,photo,3d render,abstract,noisy,blurry,poorly drawn,(text), (dialog bubble), (letters), [superhero comics],signature,amateur,'
   },
   {
@@ -201,6 +223,7 @@ async function generateImage(){
   const model = document.getElementById('modelSelect').value;
   const vae = document.getElementById('vaeSelect').value;
   const sampler = document.getElementById('samplerSelect').value;
+  const resolution = document.getElementById('resolutionSelect').value;
 
   if (size === 'square'){
     height = 512;
@@ -238,6 +261,10 @@ async function generateImage(){
   formData.append('sampler_name', sampler);
   if (seed > 0){
     formData.append('seed', seed);
+  }
+  if(resolution > 1){
+    formData.append('enable_hr', true);
+    formData.append('hr_scale', resolution);
   }
 
   let requestOptions = {
