@@ -127,11 +127,6 @@ const stylesArray = [
     negative_prompt: ',(EasyNegative:1.1), (bad-hands-5:0.9), (logo), (text),(dialog bubble), (letters),(signature), monochrome,ugly,'
   },
   {
-    name:'Anime 2',
-    prompt: ',anime style, [manga], [illustration], [artwork], [anime wallpaper],[anime fanart], [detailed anime background], anime studio,',
-    negative_prompt: ',(EasyNegative:1.1),black and white,b&w, monochrome, 3d render, photography, photo, [cartoon], abstract art, poorly drawn, (text), (dialog bubble), (letters), [cartoon comics], [superhero comics], signature, [minimalist art], 3d model, amateur anime artist,canvas frame,bad art,ugly,'
-  },
-  {
     name:'Realistic anime',
     prompt: ',realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, [realistic anime Deviantart], [realistic anime Artstation], [realistic anime wallpaper],[realistic anime fanart], [realistic anime Pinterest], realistic and detailed anime background, realistic anime shadows,',
     negative_prompt: ',(EasyNegative:1.1),black and white,b&w, monochrome, 3d render, photography, photo, cartoon, abstract art, poorly drawn, ((text)), ((dialog bubble)), ((letters)), cartoon comics, superhero comics, signature, minimalist art, 3d model, amateur anime artist,canvas frame,bad art,'
@@ -152,6 +147,11 @@ const stylesArray = [
     negative_prompt: ',(EasyNegative:1.1),black and white,ugly,deformed,photo,3d render,abstract,noisy,blurry,poorly drawn,(text), (dialog bubble), (letters), [superhero comics],signature,amateur,'
   },
   {
+    name:'Anime - Makoto Shinkai',
+    prompt: ',[Makoto Shinkai],[beautiful anime],',
+    negative_prompt: ',(EasyNegative:1.1),black and white,ugly,deformed,photo,3d render,abstract,noisy,blurry,poorly drawn,(text), (dialog bubble), (letters), [superhero comics],signature,amateur,'
+  },
+  {
     name:'Only EasyNegative',
     prompt: '',
     negative_prompt: ',(EasyNegative:1.1),'
@@ -165,6 +165,16 @@ const stylesArray = [
     name:'Cartoon 2',
     prompt: ',cartoon,cartoonized,animation,toon,comic,',
     negative_prompt: ',(EasyNegative:1.1),(anime),(manga),text,dialog bubble,letters,ugly,deformed,ugly hands,ugly legs,ugly arms, ugly face,'
+  },
+  {
+    name:'Japanese Ink Drawing',
+    prompt: ',Japanese Ink Drawing, inkwash,black nankin ink,black and white,',
+    negative_prompt: ',(EasyNegative:1.1),ugly, low contrast, colorful, vibrant,colors,digital paint,'
+  },
+  {
+    name: "Pencil Sketch Drawing",
+    prompt: ",Pencil Sketch Drawing, black and white drawing, graphite drawing,",
+    negative_prompt: ",(EasyNegative:1.1),ugly, low contrast, colorful, vibrant,colors,digital paint,"
   },
   {
     name:'Default',
