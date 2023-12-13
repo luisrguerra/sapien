@@ -28,3 +28,6 @@
 - Prompt para criação de enunciado de questões
 - Prompt para corrigir formatação de textos
 - Prompt para corrigir texto escaneado por ocr
+
+## 13/12/23
+- Adicionado informações do benchmark MMLU nos nomes dos modelos
