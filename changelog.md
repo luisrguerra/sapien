@@ -30,8 +30,9 @@
 - Prompt para corrigir texto escaneado por ocr
 
 ## 11/12/23
+- Adicionado modelo Yi-34B-Chat
 - Suporte aos modelos de voz da OpenAI
 
 ## 13/12/23
-- Adicionado mistralai/Mixtral-8x7B-Instruct-v0.1
+- Adicionado modelo mistralai/Mixtral-8x7B-Instruct-v0.1
 - Adicionado informações do benchmark MMLU nos nomes dos modelos
