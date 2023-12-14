@@ -36,3 +36,7 @@
 ## 13/12/23
 - Adicionado modelo mistralai/Mixtral-8x7B-Instruct-v0.1
 - Adicionado informações do benchmark MMLU nos nomes dos modelos
+
+## 14/12/23
+- Suporte a api da openrouter
+- Adicionados modelos da família Palm2
