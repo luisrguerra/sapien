@@ -39,4 +39,4 @@
 
 ## 14/12/23
 - Suporte a api da openrouter
-- Adicionados modelos da família Palm2
+- Adicionados modelos da família Palm2 e Claud Instant 1
