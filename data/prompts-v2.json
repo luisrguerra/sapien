@@ -68,7 +68,7 @@
   {
     "name":"🌎 Tradutor para português",
     "method":"evry-user-begin",
-    "prompt":"Traduza o seguinte texto para português do Brasil e não diga mais nada:",
+    "prompt":"Traduza o seguinte texto para português do Brasil e não diga mais nada além da tradução:",
     "description": "Me forneça um texto em para eu traduzir para o português do Brasil"
   },
   {
