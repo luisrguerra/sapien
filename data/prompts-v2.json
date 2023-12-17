@@ -19,13 +19,13 @@
   },
   {
     "name":"Respostas pequenas",
-    "method":"system-prompt",
+    "method":"evry-user-end",
     "prompt":"Se não for omitir informações importantes só me responda com no máximo uma linhas.",
     "description": "Como posso te ajudar?"
   },
   {
     "name":"Respostas rápidas",
-    "method":"system-prompt",
+    "method":"evry-user-end",
     "prompt":"Se não for omitir informações importantes só me responda com no máximo duas linhas.",
     "description": "Como posso te ajudar?"
   },
