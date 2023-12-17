@@ -154,6 +154,8 @@ let mensagesObject;
 let loading = false;
 let expandedChatInput = false;
 let textToSpeechEnabled = false;
+let promptMethod = "system-prompt";
+let currentPrompt='';
 /* fim de variaveis globais */
 /* constantes globais */
 const defaultPrompt = 0;
@@ -279,14 +281,24 @@ async function getJson(fileName){
 
 /* funcoes da logica do chat */
 async function initializeAsPrompt(number){
-  const promptObj= currentPromptList[number];
   cleanChat();
-  appendChatBot(promptObj.description);
-  const personalidade = currentPromptList[number].prompt;
-  const promptName = currentPromptList[number].name;
-  setPromptModalText(personalidade);
+  const promptObj= currentPromptList[number];
+  currentPrompt = promptObj.prompt;
+  const promptName = promptObj.name;
+  const method = promptObj.method;
+  console.log("Current prompt method:", method);
+  //update information
+  setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
-  mensagesObject = await configurar(personalidade);
+  appendChatBot(promptObj.description);
+  //initialize chat conversation
+  if (method === "evry-user-begin"){
+    promptMethod = "evry-user-begin";
+    mensagesObject = await configurar("");
+  }else{
+    promptMethod = "system-prompt";
+    mensagesObject = await configurar(currentPrompt);
+  }
 }
 
 function getModelSelect(){
@@ -784,6 +796,7 @@ onChangeModeSelect();
 async function onClickEnviarButton(){
   const btnEnviar = document.getElementById('btnEnviar');
   btnEnviar.addEventListener('click', async () => {
+
    const userInput = getPrompt();
    appendChatUser(userInput);
    await appendChatMessages (userInput);
