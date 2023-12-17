@@ -291,8 +291,8 @@ async function initializeAsPrompt(number){
   setPromptModalTitle(promptName);
   appendChatBot(promptObj.description);
   //initialize chat conversation
-  if (method === "evry-user-begin"){
-    promptMethod = "evry-user-begin";
+  if (method === "evry-user-begin" || method === "evry-user-end"){
+    promptMethod = method;
     mensagesObject = await configurar("");
   }else{
     promptMethod = "system-prompt";
@@ -798,14 +798,20 @@ async function onClickEnviarButton(){
   btnEnviar.addEventListener('click', async () => {
 
    const userInput = getPrompt();
+
    if (promptMethod === "evry-user-begin"){
      appendChatUser(userInput);
      await appendChatMessages (currentPrompt + userInput);
+   }else if(promptMethod === "evry-user-end"){
+     appendChatUser(userInput);
+     await appendChatMessages (userInput + currentPrompt);
    }else{
     appendChatUser(userInput);
     await appendChatMessages (userInput);
    }
+
    contractChatInput();
+
   });
 }
 onClickEnviarButton();
