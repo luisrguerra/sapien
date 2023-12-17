@@ -801,10 +801,10 @@ async function onClickEnviarButton(){
 
    if (promptMethod === "evry-user-begin"){
      appendChatUser(userInput);
-     await appendChatMessages (currentPrompt + userInput);
+     await appendChatMessages (currentPrompt + "\n" + userInput);
    }else if(promptMethod === "evry-user-end"){
      appendChatUser(userInput);
-     await appendChatMessages (userInput + currentPrompt);
+     await appendChatMessages (userInput + "\n" + currentPrompt);
    }else{
     appendChatUser(userInput);
     await appendChatMessages (userInput);

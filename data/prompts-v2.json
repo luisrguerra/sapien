@@ -13,7 +13,7 @@
   },
   {
     "name":"Em 1 palavra",
-    "method":"system-prompt",
+    "method":"evry-user-end",
     "prompt":"Responda somente com uma palavra ou um token quando for um termo com mais de uma palavra.",
     "description": "Como posso te ajudar?"
   },
