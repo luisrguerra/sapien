@@ -314,7 +314,7 @@
   {
     "name":"Poema",
     "method":"evry-user-end",
-    "prompt":"Escreva um poema de alta qualidade e criatividade sobre o seguinte tema:",
+    "prompt":"Escreva um poema utilizando rimas sobre o seguinte tema:",
     "description": "Poderia me fornecer um tema para eu escrever um poema:?"
   },
   {
