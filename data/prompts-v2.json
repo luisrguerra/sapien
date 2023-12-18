@@ -301,8 +301,8 @@
   },
   {
     "name":"Corrigir formatação",
-    "method":"system-prompt",
-    "prompt":"Você atuará como um corretor de formatação de textos. Eu irei te fornecer textos com problemas de formatação e você transcreverá esses textos corrigindo possíveis erros de formatação mas mantendo o conteúdo do texto. É fundamental que você se mantenha no papel de ser meu corretor de textos com problema de formatação o tempo todo e não saia do papel. ",
+    "method":"evry-user-end",
+    "prompt":"Você atuará como um corretor de formatação de textos. Eu irei te fornecer textos com problemas de formatação e você transcreverá esses textos corrigindo possíveis erros de formatação mas mantendo o conteúdo original do texto. Corrija a formatação do seguinte texto:",
     "description": "Poderia me fornecer textos com problemas de formatação para que eu possa corrigir?"
   },
   {
