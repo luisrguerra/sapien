@@ -78,6 +78,12 @@
     "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
   },
   {
+    "name":"📝 Resumo de texto v2",
+    "method":"evry-user-begin",
+    "prompt":"Ao resumir um texto seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original. Resuma o seguinte texto e não me diga mais nada além do resumo:",
+    "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
+  },
+  {
     "name":"Soluções",
     "method":"system-prompt",
     "prompt":"Você atuará como um solucionador de problemas, eu irei te fornecer um problema e você resolverá ele, me explique o porquê da sua resposta, explique porque as outras possíveis respostas estão incorretas. Responda baseado em fatos reais.",
