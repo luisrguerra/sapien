@@ -154,6 +154,8 @@ let mensagesObject;
 let loading = false;
 let expandedChatInput = false;
 let textToSpeechEnabled = false;
+let promptMethod = "system-prompt";
+let currentPrompt='';
 /* fim de variaveis globais */
 /* constantes globais */
 const defaultPrompt = 0;
@@ -249,8 +251,8 @@ const voiceModelList = [
   {name:"OpenaAI Shimmer",value:"shimmer"},
 ]; */
 
-const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts.json");
-const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2.json");
+const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts-v2.json");
+const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2-v2.json");
 let currentPromptList = promptsListGPT;
 /* fim de constantes globais */
 
@@ -279,14 +281,24 @@ async function getJson(fileName){
 
 /* funcoes da logica do chat */
 async function initializeAsPrompt(number){
-  const promptObj= currentPromptList[number];
   cleanChat();
-  appendChatBot(promptObj.description);
-  const personalidade = currentPromptList[number].prompt;
-  const promptName = currentPromptList[number].name;
-  setPromptModalText(personalidade);
+  const promptObj= currentPromptList[number];
+  currentPrompt = promptObj.prompt;
+  const promptName = promptObj.name;
+  const method = promptObj.method;
+  //update information
+  setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
-  mensagesObject = await configurar(personalidade);
+  appendChatBot(promptObj.description);
+  //initialize chat conversation
+  if (method === "evry-user-begin" || method === "evry-user-end"){
+    promptMethod = method;
+    mensagesObject = await configurar("");
+  }else{
+    promptMethod = "system-prompt";
+    mensagesObject = await configurar(currentPrompt);
+  }
+  console.log("Current prompt method:", promptMethod);
 }
 
 function getModelSelect(){
@@ -784,10 +796,22 @@ onChangeModeSelect();
 async function onClickEnviarButton(){
   const btnEnviar = document.getElementById('btnEnviar');
   btnEnviar.addEventListener('click', async () => {
+
    const userInput = getPrompt();
-   appendChatUser(userInput);
-   await appendChatMessages (userInput);
+
+   if (promptMethod === "evry-user-begin"){
+     appendChatUser(userInput);
+     await appendChatMessages (currentPrompt + "\n" + userInput);
+   }else if(promptMethod === "evry-user-end"){
+     appendChatUser(userInput);
+     await appendChatMessages (userInput + "\n" + currentPrompt);
+   }else{
+    appendChatUser(userInput);
+    await appendChatMessages (userInput);
+   }
+
    contractChatInput();
+
   });
 }
 onClickEnviarButton();
