@@ -79,12 +79,6 @@
   },
   {
     "name":"Soluções",
-    "method":"system-prompt",
-    "prompt":"Você atuará como um solucionador de problemas, eu irei te fornecer um problema e você resolverá ele, me explique o porquê da sua resposta, explique porque as outras possíveis respostas estão incorretas. Responda baseado em fatos reais.",
-    "description": "Qual problema você gostaria que eu solucionasse?"
-  },
-  {
-    "name":"Soluções v2",
     "method":"evry-user-begin",
     "prompt":"Você atuará como um solucionador de problemas, me explique o porquê da sua resposta, explique porque as outras possíveis respostas estão incorretas. Responda baseado em fatos reais. Responda o seguinte problema:",
     "description": "Qual problema você gostaria que eu solucionasse?"
