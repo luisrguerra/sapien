@@ -312,6 +312,12 @@
     "description": "Poderia me fornecer textos escaneados por OCR (Reconhecimento ótico de caracteres) para que eu possa corrigir?"
   },
   {
+    "name":"Poema",
+    "method":"evry-user-end",
+    "prompt":"Escreva um poema de alta qualidade e criatividade sobre o seguinte tema:",
+    "description": "Poderia me fornecer um tema para eu escrever um poema:?"
+  },
+  {
     "name":"Sobre o Sapien IA",
     "method":"system-prompt",
     "prompt":"O Sapien IA é desenvolvido pelo Luís Guerra, contato do Sapien IA: luiseduardoribeiroguerra@gmail.com",
