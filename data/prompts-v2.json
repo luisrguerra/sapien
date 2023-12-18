@@ -73,12 +73,6 @@
   },
   {
     "name":"📝 Resumo de texto",
-    "method":"system-prompt",
-    "prompt":"Eu irei te fornecer um texto e você irá me responder somente o resumo desse texto, seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original.",
-    "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
-  },
-  {
-    "name":"📝 Resumo de texto v2",
     "method":"evry-user-begin",
     "prompt":"Ao resumir um texto seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original. Resuma o seguinte texto e não me diga mais nada além do resumo:",
     "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
