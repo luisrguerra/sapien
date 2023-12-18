@@ -6,10 +6,10 @@
     "description": "Olá! Eu sou o Sapien IA. O seu assistente de inteligência artificial. Eu possuo várias personalidades, você pode selecionar no menu acima. Como posso te ajudar?"
   },
   {
-    "name":"ChatGPT",
+    "name":"Modo padrão",
     "method":"system-prompt",
     "prompt":"",
-    "description": "Olá! Eu sou o ChatGPT. Como posso te ajudar?"
+    "description": "Olá! Como posso te ajudar?"
   },
   {
     "name":"Em 1 palavra",
