@@ -94,6 +94,7 @@
           <select id="modelSelect" class="form-select">
             <option value="stability-ai/sdxl">SDXL</option>
             <option value="sd1.5-cyberrealistic">CyberRealistic</option>
+            <option value="sd1.5-realisticvision">Realistic Vision</option>
           </select>
           <br>
           <!--Deepinfra API token-->
@@ -266,7 +267,8 @@ const stylesArray = [
   },
 ]
 
-async function cyberRealisticApi(parameters) {
+async function segMindApi(parameters) {
+  const modelName = parameters.model;
   const prompt = parameters.prompt;
   const negativePrompt = parameters.negative_prompt;
   const size = parameters.size;
@@ -298,7 +300,7 @@ async function cyberRealisticApi(parameters) {
   }
 
   const segmind = "VTBkZk16aG1aREJoWWpSaU1qSXlOMk0yWWc9PQ==";
-  const url = "https://api.segmind.com/v1/sd1.5-cyberrealistic";
+  const url = "https://api.segmind.com/v1/" + modelName;
 
   const data = {
     "prompt": prompt,
@@ -405,17 +407,18 @@ async function generateImage(){
   try {
     loadingButton(true);
 
-    if (model === 'sd1.5-cyberrealistic'){
+    if (model === 'sd1.5-cyberrealistic' || model ==='sd1.5-realisticvision'){
       let parameters = {
+        model: model,
         prompt: prompt,
-        negative_prompt: ('CyberRealistic_Negative,'+ negativePrompt),
+        negative_prompt: negativePrompt,
         size: size,
         guidance_scale: 5,
         num_inference_steps: numInferenceSteps,
         scheduler: 'dpmpp_2m',
         seed: seed,
       }
-      const imageUrl = await cyberRealisticApi(parameters);
+      const imageUrl = await segMindApi(parameters);
       loadingButton(false);
       const imageElement = document.getElementById('generatedImage');
       imageElement.src = imageUrl;
