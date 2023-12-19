@@ -424,9 +424,9 @@ async function generateImage(){
         prompt: prompt,
         negative_prompt: negativePrompt,
         size: size,
-        guidance_scale: 5,
+        guidance_scale: guidanceScale,
         num_inference_steps: numInferenceSteps,
-        scheduler: 'dpmpp_2m',
+        scheduler: 'UniPC',
         seed: seed,
       }
       const imageUrl = await segMindApi(parameters);
