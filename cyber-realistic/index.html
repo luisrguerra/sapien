@@ -95,6 +95,10 @@
             <option value="stability-ai/sdxl">SDXL</option>
             <option value="sd1.5-cyberrealistic">CyberRealistic</option>
             <option value="sd1.5-realisticvision">Realistic Vision</option>
+            <option value="sd1.5-edgeofrealism">Edge of Realism</option>
+            <option value="sd1.5-epicrealism">Epic Realism</option>
+            <option value="sd1.5-juggernaut">Juggernaut</option>
+            <option value="sd1.5-reliberate">Reliberate</option>
           </select>
           <br>
           <!--Deepinfra API token-->
@@ -407,7 +411,14 @@ async function generateImage(){
   try {
     loadingButton(true);
 
-    if (model === 'sd1.5-cyberrealistic' || model ==='sd1.5-realisticvision'){
+    if (
+      model === 'sd1.5-cyberrealistic' || 
+      model ==='sd1.5-realisticvision' || 
+      model === 'sd1.5-edgeofrealism' || 
+      model === 'sd1.5-juggernaut' ||
+      model === 'sd1.5-reliberate' ||
+      model === 'sd1.5-epicrealism'
+      ){
       let parameters = {
         model: model,
         prompt: prompt,
