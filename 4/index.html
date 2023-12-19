@@ -154,18 +154,11 @@ let mensagesObject;
 let loading = false;
 let expandedChatInput = false;
 let textToSpeechEnabled = false;
+let promptMethod = "system-prompt";
+let currentPrompt='';
 /* fim de variaveis globais */
 /* constantes globais */
 const defaultPrompt = 0;
-
-function getModelArchitecture(modelName) {
-  for (const model of modelList) {
-    if (model.value === modelName) {
-      return model.architecture;
-    }
-  }
-}
-
 const modelList = [
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
@@ -178,7 +171,15 @@ const modelList = [
   {name:"GPT 4 - MMLU: 86.4",value:"gpt-4",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 13/6/23 - MMLU: 86.4",value:"gpt-4-0613",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 14/3/23 - MMLU: 86.4",value:"gpt-4-0314",architecture:'openai',maxLength: 8000},
-  {name:"Yi 34B Chat - MMLU: 73.5",value:"01-ai/Yi-34B-Chat",architecture:'deepinfra',maxLength: 16000},
+  {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
+  {name:"Google Palm 2 Chat Bison",value:"google/palm-2-chat-bison",architecture:'openrouter-gpt-prompt',maxLength: 9000},
+  {name:"Google Palm 2 Codechat Bison",value:"google/palm-2-codechat-bison",architecture:'openrouter-gpt-prompt',maxLength: 7000},
+  {name:"Google Palm 2 Chat Bison 32k",value:"google/palm-2-chat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
+  {name:"Google Palm 2 Codechat Bison 32k",value:"google/palm-2-codechat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
+  {name:"Claude Instant v1",value:"anthropic/claude-instant-v1",architecture:'openrouter',maxLength: 100000},
+  {name:"PPLX 7b Online",value:"perplexity/pplx-7b-online",architecture:'openrouter',maxLength: 4000},
+  {name:"PPLX 7b",value:"perplexity/pplx-7b-chat",architecture:'openrouter',maxLength: 4000},
+  {name:"Yi 34B Chat - MMLU: 73.5",value:"01-ai/Yi-34B-Chat",architecture:'deepinfra',maxLength: 3000},
   {name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
   {name:"Openchat 3.5 - MMLU: 64.3",value:"openchat/openchat_3.5",architecture:'deepinfra',maxLength: 16000},
   {name:"lzlv 70b fp16 hf - MMLU: 70.23",value:"lizpreciatior/lzlv_70b_fp16_hf",architecture:'deepinfra',maxLength: 4000},
@@ -191,6 +192,14 @@ const modelList = [
   {name:"Mistral Lite - MMLU: 50.93",value:"amazon/MistralLite",architecture:'deepinfra',maxLength: 4000},
   {name:"Mistral 7B Instruct v0.1 - MMLU: 55.4",value:"mistralai/Mistral-7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 4000},
 ];
+
+function getModelArchitecture(modelName) {
+  for (const model of modelList) {
+    if (model.value === modelName) {
+      return model.architecture;
+    }
+  }
+}
 
 const modeList = [
   {name:"Normal",value:1},
@@ -212,8 +221,8 @@ const voiceModelList = [
   {name:"OpenaAI Shimmer",value:"shimmer"},
 ];
 
-const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts.json");
-const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2.json");
+const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts-v2.json");
+const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2-v2.json");
 let currentPromptList = promptsListGPT;
 /* fim de constantes globais */
 
@@ -242,14 +251,24 @@ async function getJson(fileName){
 
 /* funcoes da logica do chat */
 async function initializeAsPrompt(number){
-  const promptObj= currentPromptList[number];
   cleanChat();
-  appendChatBot(promptObj.description);
-  const personalidade = currentPromptList[number].prompt;
-  const promptName = currentPromptList[number].name;
-  setPromptModalText(personalidade);
+  const promptObj= currentPromptList[number];
+  currentPrompt = promptObj.prompt;
+  const promptName = promptObj.name;
+  const method = promptObj.method;
+  //update information
+  setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
-  mensagesObject = await configurar(personalidade);
+  appendChatBot(promptObj.description);
+  //initialize chat conversation
+  if (method === "evry-user-begin" || method === "evry-user-end"){
+    promptMethod = method;
+    mensagesObject = await configurar("");
+  }else{
+    promptMethod = "system-prompt";
+    mensagesObject = await configurar(currentPrompt);
+  }
+  console.log("Current prompt method:", promptMethod);
 }
 
 function getModelSelect(){
@@ -290,6 +309,10 @@ function updatePromptSelectList(){
   const modelArchitecture = getModelArchitecture(modelName);
   if (modelArchitecture === "deepinfra"){
     currentPromptList = promptsListLlama2;
+  }else if (modelArchitecture === "openrouter"){
+    currentPromptList = promptsListLlama2;
+  }else if (modelArchitecture === "openrouter-gpt-prompt"){
+    currentPromptList = promptsListGPT;
   }else{
     currentPromptList = promptsListGPT;
   }
@@ -351,6 +374,11 @@ function atod(){
   return JSON.parse(ztoa(hash));
 }
 
+function atoe(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MXZjaTEyTVMweE1qbGtOMlJqTmpWbE5XTmtNV00zWldWaE5XTTBaakV4T0RBMk16YzBOREJqTnprMk5EQTJPRGRtWXpCbU5qZzFNVFF4T1Rrd09HUm1Oakl4TTJGaUlpd2laR0Z1WjJWeWIzVnpiSGxCYkd4dmQwSnliM2R6WlhJaU9uUnlkV1VzSW1KaGMyVlZVa3dpT2lKb2RIUndjem92TDI5d1pXNXliM1YwWlhJdVlXa3ZZWEJwTDNZeEluME5DZz09DQo=';
+  return JSON.parse(ztoa(hash));
+}
+
 function initializeChat(behavior) {
   return [
     {role: "system", content: behavior}
@@ -390,6 +418,10 @@ async function configurar(behavior){
   const modelArchitecture = getModelArchitecture(modelName);
   if (modelArchitecture === "deepinfra"){
     openai = new openailib(atod());
+  }else if (modelArchitecture === "openrouter"){
+    openai = new openailib(atoe());
+  }else if (modelArchitecture === "openrouter-gpt-prompt"){
+    openai = new openailib(atoe());
   }else{
     openai = new openailib(atoc());
   }
@@ -734,10 +766,22 @@ onChangeModeSelect();
 async function onClickEnviarButton(){
   const btnEnviar = document.getElementById('btnEnviar');
   btnEnviar.addEventListener('click', async () => {
+
    const userInput = getPrompt();
-   appendChatUser(userInput);
-   await appendChatMessages (userInput);
+
+   if (promptMethod === "evry-user-begin"){
+     appendChatUser(userInput);
+     await appendChatMessages (currentPrompt + "\n" + userInput);
+   }else if(promptMethod === "evry-user-end"){
+     appendChatUser(userInput);
+     await appendChatMessages (userInput + "\n" + currentPrompt);
+   }else{
+    appendChatUser(userInput);
+    await appendChatMessages (userInput);
+   }
+
    contractChatInput();
+
   });
 }
 onClickEnviarButton();
