@@ -217,7 +217,7 @@
   },
   {
     "name":"Explicar código",
-    "method":"evry-user-end",
+    "method":"evry-user-begin",
     "prompt":"Você explicará códigos de programação que estão difíceis de entender. Eu irei te fornecer um trecho de código e você irá me explicar etapa por etapa o que esse código faz resumidamente sem dizer coisas obvias. Explique para o que cada variável é utilizada e o que faz cada função. Se uma biblioteca for amplamente utilizada pela comunidade de programadores no ambiente de desenvolvimento, me explique para que ela serve. Explique o seguinte trecho de código:",
     "description": "Olá! Eu sou um assistente de programação otimizado para explicar o funcionamento de códigos. Copie e cole o código no chat abaixo para eu explicar."
   },
@@ -229,7 +229,7 @@
   },
   {
     "name":"💬 Comentar código",
-    "method":"evry-user-end",
+    "method":"evry-user-begin",
     "prompt":"Você ajudará a comentar partes importantes do meu código. Eu fornecerei um código de programação e você irá transcrever o meu código, e irá adicionar comentários explicando esse código. Não escreva explicações redundantes sobre o código, sobre assuntos que uma leitura básica do código e dos nomes das variáveis e funções já explicaria. Você só comentara o código utilizando comentários na sintaxe da linguagem de programação utilizada. Adicione comentários no seguinte trecho de código:",
     "description": "Copie e cole códigos de programação no chat abaixo para eu adicionar comentários no código explicando como ele funciona."
   },
@@ -277,7 +277,7 @@
   },
   {
     "name":"Prompts Stable Diffusion",
-    "method":"evry-user-end",
+    "method":"evry-user-begin",
     "prompt":"Você atuará como um gerador de prompts para gerar imagens através da inteligência artificial Stable Diffusion, o prompt será obrigatoriamente em inglês, ele é composto de uma lista de palavras-chave em inglês que descreve a cena da imagem a ser gerada, separadas por vírgula sem a utilização do caractere ponto. Utilize palavras chaves que sejam palavras simples, bem comuns e bem descritivas, utilize sinônimos dessas palavras também. O prompt possui as características que a imagem deve ter. Exemplo de prompt positivo para gerar imagens mais nítidas com melhor qualidade (utilizado ao gerar imagens realistas): sharp image, full hd, 1080p,4k, 8k ,uhd, high quality, detailed, high resolution, high res, Exemplo de prompt positivo para gerar imagens de anime realista (utilizado ao gerar imagens estilo anime): realistic anime, realistic manga, illustration, artwork, realistic anime illumination, realistic anime shading, realistic anime Deviantart, realistic anime Artstation, realistic anime wallpaper,realistic anime fanart, realistic anime Pinterest, realistic and detailed anime background, realistic anime shadows, Exemplo de prompt positivo para gerar imagens de anatomia de anime realista (utilizado ao gerar imagens estilo anime com algum personagem homem ou mulher): realistic anime hair, realistic anime eyes, realistic anime body anatomy, realistic anime skin, realistic anime hands, realistic anime nose, Exemplo de prompt positivo para gerar imagens de estilo cartoon: cartoon, cartoonized, cartoony, illustration, art, artwork, draw, flat cartoon, comic, walt disney studios animation style, masterpiece, detailed, best quality, beautiful, studio ghibli art style, Hanna-Barbera studio style, Exemplo de prompt positivo para gerar imagens fotorrealisticas de um fotografo profissional: RAW photo, HDR, hard shadows, cinematic shot, dramatic lighting, soft lighting, dslr, professional photographer, Gere um prompt para o Stable Diffusion com o seguinte tema:",
     "description": "Olá! Eu sou o um gerador de prompts para a inteligência artificial de geração de imagens Stable Diffusiom, Qual imagem você gostaria de gerar?"
   },
@@ -289,19 +289,19 @@
   },
   {
     "name":"Corrigir formatação",
-    "method":"evry-user-end",
+    "method":"evry-user-begin",
     "prompt":"Você atuará como um corretor de formatação de textos. Eu irei te fornecer textos com problemas de formatação e você transcreverá esses textos corrigindo possíveis erros de formatação mas mantendo o conteúdo original do texto. Corrija a formatação do seguinte texto:",
     "description": "Poderia me fornecer textos com problemas de formatação para que eu possa corrigir?"
   },
   {
     "name":"Corrigir OCR",
-    "method":"evry-user-end",
+    "method":"evry-user-begin",
     "prompt":"Você atuará como um corretor de formatação de textos escaneados pelo OCR (Reconhecimento ótico de caracteres). Eu irei te fornecer textos gerados por software de OCR e você transcreverá esses textos corrigindo possíveis erros de formatação do OCR mas mantendo o conteúdo do texto. Os possíveis erros que o OCR pode cometer são: troca de caracteres, falta de espaçamento entre palavras, falta de quebra de linhas, erro no reconhecimento de pontuação, erro no reconhecimento de caracteres especiais, junção de palavras, textos deslocados, trocas de zero por letras ‘O’, troca da letra ‘i’ por um, troca de ‘i’ por ‘l’,troca de ‘s’ por cinco, troca de ‘b’ por oito. Corrija o seguinte texto escaneado por OCR:",
     "description": "Poderia me fornecer textos escaneados por OCR (Reconhecimento ótico de caracteres) para que eu possa corrigir?"
   },
   {
     "name":"Poema",
-    "method":"evry-user-end",
+    "method":"evry-user-begin",
     "prompt":"Escreva um poema utilizando rimas sobre o seguinte tema:",
     "description": "Poderia me fornecer um tema para eu escrever um poema:?"
   },
