@@ -676,8 +676,8 @@ function setTextByID(text, id){
 }
 
 function setButtonEnviarText(text){
-  const btnEnviar = document.getElementById('btnEnviar');
-  btnEnviar.innerHTML = text;
+  const element = document.getElementById('btnEnviar');
+  element.innerHTML = text;
 }
 
 function setPromptModalText(text){
@@ -795,8 +795,8 @@ async function onChangeModeSelect(){
 onChangeModeSelect();
 
 async function onClickEnviarButton(){
-  const btnEnviar = document.getElementById('btnEnviar');
-  btnEnviar.addEventListener('click', async () => {
+  const element = document.getElementById('btnEnviar');
+  element.addEventListener('click', async () => {
 
    const userInput = getPrompt();
 
