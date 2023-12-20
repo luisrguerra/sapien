@@ -146,7 +146,7 @@
 <script type="module">
 import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.20.1/+esm';
 //console.log("openailib: ",openailib);
-/* variaveis globais */
+/* global variables */
 let openai;
 let modelName;
 let gptTemperature;
@@ -156,7 +156,7 @@ let expandedChatInput = false;
 let textToSpeechEnabled = false;
 let promptMethod = "system-prompt";
 let currentPrompt='';
-/* fim de variaveis globais */
+/* end of global variables */
 /* global constants */
 const defaultPrompt = 0;
 const modelList = [
@@ -280,7 +280,7 @@ async function getJson(fileName){
   }
 };
 
-/* funcoes da logica do chat */
+/* chat logic functions */
 async function initializeAsPrompt(number){
   cleanChat();
   const promptObj= currentPromptList[number];
