@@ -80,7 +80,7 @@
   <span id="iconExpand" class="mdi mdi-arrow-expand-up"> <span id="btnExpandText" class="unnecessary-text">Expandir</span></span>
  </button>
  <!-- send button -->
- <button id="btnEnviar" class="btn btn-primary enviar">
+ <button id="btnSendUserInput" class="btn btn-primary enviar">
   <span class="mdi mdi-send"></span>
  </button>
  <!-- input prompt -->
@@ -647,7 +647,7 @@ function clearInput(){
 }
 
 function disableUserInteraction(){
-  disableByID("btnEnviar");
+  disableByID("btnSendUserInput");
   disableByID("promptSelect");
   disableByID("modelSelect");
   disableByID("modelMode");
@@ -659,7 +659,7 @@ function disableUserInteraction(){
 }
 
 function enableUserInteraction(){
-  enableByID("btnEnviar");
+  enableByID("btnSendUserInput");
   enableByID("promptSelect");
   enableByID("modelSelect");
   enableByID("modelMode");
@@ -676,7 +676,7 @@ function setTextByID(text, id){
 }
 
 function setButtonEnviarText(text){
-  const element = document.getElementById('btnEnviar');
+  const element = document.getElementById('btnSendUserInput');
   element.innerHTML = text;
 }
 
@@ -795,7 +795,7 @@ async function onChangeModeSelect(){
 onChangeModeSelect();
 
 async function onClickEnviarButton(){
-  const element = document.getElementById('btnEnviar');
+  const element = document.getElementById('btnSendUserInput');
   element.addEventListener('click', async () => {
 
    const userInput = getPrompt();
