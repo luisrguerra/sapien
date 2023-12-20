@@ -101,11 +101,11 @@
           <!--Título ao topo da janela à esquerda -->
           <!-- fs-5 define o tamaho do texto -->
           <h1 id="prompt-title" class="modal-title fs-5"></h1>
-          <!-- Botão X de sair à direita -->
+          <!-- "X" close button on the right side -->
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
        </div>
     
-       <!-- corpo, conteúdo do meio -->
+        <!-- body of modal dialog, main content of modal dialog -->
        <div class="modal-body">
           <h4 id="prompt-text"></h4>
        </div>
@@ -114,21 +114,21 @@
   </div> <!-- modal-dialog -->
 </div> <!-- modal -->
 
-<!-- janela tela cheia do menu do seletor de prompts -->
+ <!-- Full screen window of the menu selector prompts -->
 <div class="modal fade" id="promptMenuWindow" tabindex="-1">
- <!-- modal-fullscreen deixa em tela cheia -->
+ <!-- "modal-fullscreen" sets the modal to full screen -->
  <div class="modal-dialog modal-fullscreen">
   <div class="theme modal-content">
     
-  <!-- cabeçalho da janela -->
+  <!-- modal dialog window header -->
   <div class="theme modal-header">
-   <!--Título ao topo da janela à esquerda -->
-   <!-- fs-5 define o tamaho do texto -->
+  <!-- Title at the top of the window on the left side -->
+   <!-- "fs-5" defines the text size -->
    <h1 class="modal-title fs-5">Opções</h1>
-   <!-- Botão X de sair à direita -->
+   <!-- "X" close button on the right side -->
    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
   </div>
-  <!-- corpo, conteúdo do meio -->
+   <!-- modal body, main content of modal -->
   <div class="modal-body">
     <div class="promptMenu">
      <h5 style="text-align: center;">Modelo de inteligência artificial</h5>
@@ -157,7 +157,7 @@ let textToSpeechEnabled = false;
 let promptMethod = "system-prompt";
 let currentPrompt='';
 /* fim de variaveis globais */
-/* constantes globais */
+/* global constants */
 const defaultPrompt = 0;
 const modelList = [
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
@@ -183,14 +183,6 @@ const modelList = [
   {name:"Airoboros l2 70b 2.2.1 - MMLU: 69.79",value:"deepinfra/airoboros-70b",architecture:'deepinfra',maxLength: 4000},
   {name:"Phind CodeLlama 34B v2 - MMLU: 25.76",value:"Phind/Phind-CodeLlama-34B-v2",architecture:'deepinfra',maxLength: 4000},
 ];
-
-function getModelArchitecture(modelName) {
-  for (const model of modelList) {
-    if (model.value === modelName) {
-      return model.architecture;
-    }
-  }
-}
 
 /* const modelList = [
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
@@ -253,8 +245,17 @@ const voiceModelList = [
 
 const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts-v2.json");
 const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2-v2.json");
+/* end of global constants */
+
 let currentPromptList = promptsListGPT;
-/* fim de constantes globais */
+
+function getModelArchitecture(modelName) {
+  for (const model of modelList) {
+    if (model.value === modelName) {
+      return model.architecture;
+    }
+  }
+}
 
 function ztoa(x){
   return atob(atob(x));
@@ -274,7 +275,7 @@ async function getJson(fileName){
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log('Erro ao obter Json',fileName,":", error);
+    console.log('Error getting JSON: ',fileName,":", error);
     return [];
   }
 };
@@ -390,9 +391,9 @@ async function appendChatMessages(userInput){
   };
 };
 
-/* fim de funcoes da logica do chat */
+/* End of chat logic functions */
 
-/* Funcoes para api do gpt da openai */
+/* Functions for llm api */
 
 function atoc(){
   const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MXJhVzlrVEZvNE9IVjBUREpDV1VzMmMyeEdTVlF6UW14aWEwWkthbWN5Y210amVXcHVNR1p3Um05b1JHWlhaMGNpTENKa1lXNW5aWEp2ZFhOc2VVRnNiRzkzUW5KdmQzTmxjaUk2ZEhKMVpYMD0=';
@@ -463,9 +464,9 @@ function lastMessage(messages){
   return messages[messages.length - 1].content;
 }
 
-/* Fim de funcoes para api do gpt da openai */
+/* End of functions for llm api */
 
-/* Funcoes de text to speech */
+/* Text-to-speech functions */
 function interruptTextToSpeech(){
   window.speechSynthesis.cancel();
 }
@@ -545,9 +546,9 @@ function readMessageWithVoice(text){
   }
 }
 
-/* Fim de funcoes de text to speech */
+/* End of text-to-speech functions */
 
-/* Funcoes de manipulacao do DOM */
+/* DOM manipulation functions */
 
 function cleanByID(id){
   const element = document.getElementById(id);
@@ -712,7 +713,7 @@ function replaceClassByID(id, oldClass, newClass){
   element.classList.replace(oldClass, newClass);
 };
 
-//diminuir a area do de escrever a mensagem
+//Decrease the size of the message input area
 function contractChatInput(){
   expandedChatInput = false;
   replaceClassByID(
@@ -738,7 +739,7 @@ function disableTextToSpeech(){
   );
 };
 
-//expandir a area do de escrever a mensagem
+//expand the size of the message input area
 function expandChatInput(){
   expandedChatInput = true;
   replaceClassByID(
@@ -763,9 +764,9 @@ function enableTextToSpeech(){
   );
 };
 
-/* Fim de funcoes de manipulacao do DOM */
+/* End of functions to manipulate the DOM */
 
-/* Funcoes de event listener */
+/* Event listener functions */
 
 async function onChangePromptSelect(){
   const promptSelect = document.getElementById('promptSelect');
@@ -870,7 +871,7 @@ async function onClickTextToSpeechButton(){
 onClickTextToSpeechButton();
 
 
-/* Fim de funcoes de event listener */
+/* End of event listener functions */
 
 
 </script>
