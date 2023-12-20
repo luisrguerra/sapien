@@ -1,6 +1,6 @@
 <head>
   <meta charset="utf-8">
-  <!-- Melhoria da visualização em smartphones -->
+  <!-- Improved viewing on smartphones -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://luisrguerra.github.io/sapien/" />
   <link rel="manifest" href="/sapien/manifest.json">
@@ -17,7 +17,7 @@
     gtag('config', 'G-60KGVZN7DG');
   </script>
 
-  <!-- carrecargar recursos do material dessign -->
+  <!-- load material design resources -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <!--Bootstrap -->
@@ -40,7 +40,7 @@
 <body>
 
 <div id="scroll" class="chatContent">
-  <!-- pular linha -->
+  <!-- break line -->
   <br>
   
   <div class="selectors">
@@ -48,38 +48,38 @@
   <button id="promptMenuButton" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#promptMenuWindow">Opções</button>
   </div>
 
-  <!-- texto terminal -->
+  <!-- terminal text -->
   <div id="terminalContainer"></div>
 
-</div> <!-- fim da div chatContent -->
+</div> <!-- end of chatContent div -->
 
-<!-- campo de input de texto -->
+<!-- text input field -->
 <div id="prompt-container" class="contracted">
 <div style="margin-inline: 1em;">
  <button class="btn btn-outline-light prompt-button"  data-bs-toggle="modal" data-bs-target="#promptViewWindow">
   <span class="mdi mdi-text-account"> <span class="unnecessary-text">Prompt</span></span>
  </button>
- <!-- botao ativar text to speech -->
+ <!-- button activate text to speech -->
  <button id="btnTextToSpeech" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span id="iconTextToSpeech" class="mdi mdi-volume-off"> <span class="unnecessary-text">Voz</span></span>
  </button>
- <!-- botao de limpar chat de mensagens -->
+ <!-- clear message chat button -->
  <button id="btnClearChat" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span class="mdi mdi-delete"> <span class="unnecessary-text">Apagar</span></span>
  </button>
- <!-- botao regerar última mensagem -->
+ <!-- button regenerate last message -->
  <button id="btnRegenerate" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span class="mdi mdi-refresh"> <span class="unnecessary-text">Regerar</span></span>
  </button>
- <!-- botao gerar arte -->
+ <!-- button generate art -->
  <button id="btnArtGeneration" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span class="mdi mdi-palette"> <span class="unnecessary-text">Arte</span></span>
  </button>
- <!-- botao de expandir input de texto -->
+ <!-- expand text input button -->
  <button id="btnExpand" class="btn btn-outline-light prompt-button prompt-button-posterior">
   <span id="iconExpand" class="mdi mdi-arrow-expand-up"> <span id="btnExpandText" class="unnecessary-text">Expandir</span></span>
  </button>
- <!-- botao enviar -->
+ <!-- send button -->
  <button id="btnEnviar" class="btn btn-primary enviar">
   <span class="mdi mdi-send"></span>
  </button>
@@ -90,16 +90,16 @@
 
 </body>
 
-<!-- janela -->
+<!-- modal dialog window -->
 <div class="modal fade" id="promptViewWindow" tabindex="-1">
   <!-- modal-dialog-centered torna centralizado no meio -->
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="theme modal-content">
         
-       <!-- cabeçalho da janela -->
+       <!-- modal dialog window Header -->
        <div class="theme modal-header">
-          <!--Título ao topo da janela à esquerda -->
-          <!-- fs-5 define o tamaho do texto -->
+          <!-- Title at the top of the left of the modal dialog-->
+          <!-- fs-5 defines the text size -->
           <h1 id="prompt-title" class="modal-title fs-5"></h1>
           <!-- "X" close button on the right side -->
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
