@@ -375,6 +375,7 @@ async function generateImage(){
   if (authTokenTemp != ''){
     requestOptions = {
       method: 'POST',
+      mode: 'no-cors',
       headers: {
       'Authorization': `bearer ${authTokenTemp}`,
       },
