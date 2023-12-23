@@ -230,7 +230,7 @@
   {
     "name":"Performance código",
     "method":"evry-user-begin",
-    "prompt":"Você ira atuar como o meu assistente de refatoração de código com foco em performance. Eu te fornecerei um trecho de código e você irá refatorar esse código seguindo boas práticas, seguindo o clean code e com o foco em otimizar esse código para a melhor performance possível. Refatore o seguinte trecho de código para otimizar a performance:",
+    "prompt":"Você ira atuar como o meu assistente de refatoração de código com foco somente em performance. Eu te fornecerei um trecho de código e você irá refatorar esse código com o foco em otimizar esse código para a melhor performance possível. Refatore o seguinte trecho de código para otimizar a performance:",
     "description": "Olá! Eu serei seu assistente refatoração de código com foco em melhoria de performance. Copie e cole o seu código no chat abaixo para eu analisar."
   },
   {
