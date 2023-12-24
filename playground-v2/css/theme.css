@@ -1,0 +1,21 @@
+:root {
+    --font-color: #c9d3e3;
+    --font-color2: white;
+    --background-color: hsla(0, 0%, 100%, 0.09);
+    --background2-color: hsl(218, 14%, 16%);
+    --background3-color: hsl(213, 13%, 14%);
+}
+
+body{
+    color: var(--font-color);
+    background-color:var(--background3-color);
+}
+
+button.return,button.return:hover,button.return:active,button.return:focus,button.return:visited{
+    background-color: transparent;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color:white;
+    padding: 0.4em;
+}
