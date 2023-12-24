@@ -838,63 +838,6 @@ async function onClickGenerateArt(){
 }
 onClickGenerateArt();
 
-/* code of verification of information */
-
-function getAssistantLastReply(){
-  const lastMessageIndex = mensagesObject.length -1;
-  const lastMessage = mensagesObject[lastMessageIndex];
-  if (lastMessage.role === "assistant"){
-    const lastMessageContent = lastMessage.content;
-    return lastMessageContent;
-  }else{
-    return "";
-  }
-}
-
-async function verifyAnswer(textToVeify,modelName,temperature){
-  const systemInstructions = "";
-  const userMessagePrompt = "Você será o meu assistente de verificação de informações para saber se elas são fatos reais ou não. Você deverá identificar se a informação é uma notícia falsa, ou uma afirmação incorreta. Você deverá procura por informações conflitantes com o texto fornecido, procure informações conhecidas que são incompatíveis com o texto fornecido. Você deverá escrever uma reflexão de pelo menos 5 linhas analisando a informação para descobrir se ela é uma verdade ou não e depois irá pular uma linha e dará um veredito final sobre o resultado. Verifique a seguinte informação:\n";
-  const userMessageInstructions = userMessagePrompt + textToVeify;
-  let apiVerifyAnswer = new openailib(atoc());
-  if (modelName === "mistralai/Mixtral-8x7B-Instruct-v0.1"){
-    apiVerifyAnswer = new openailib(atod());
-  }
-  let verifyMessages = initializeChat(systemInstructions);
-  const prompt = {role: "user", content: userMessageInstructions};
-  verifyMessages.push(prompt);
-  console.log("Verification model name:", modelName);
-  console.log("Verification temperature:", temperature);
-  const parameters ={
-      model: modelName,
-      messages: verifyMessages,
-      temperature: 0.25,
-  };
-  const apiResponse = await apiVerifyAnswer.chat.completions.create(parameters);
-  const textResponse = apiResponse.choices[0].message.content;
-  return textResponse;
-}
-
-async function onClickVerifyInformation(){
-  const button = document.getElementById('btnVerifyInformation');
-  button.addEventListener('click', async () => {
-    enableLoading();
-    const verifyModel = ["gpt-3.5-turbo-1106","gpt-3.5-turbo-0613","gpt-3.5-turbo-0301","mistralai/Mixtral-8x7B-Instruct-v0.1"];
-    const randonModelIndex = Math.floor(Math.random() * verifyModel.length);
-    const choosedModel = verifyModel[randonModelIndex];
-    const temperature = Math.round(Math.random() * 10) / 10;
-    const assistantLastReply = getAssistantLastReply();
-    if(assistantLastReply != ""){
-      const verificationResult = await verifyAnswer(assistantLastReply,choosedModel,temperature);
-      const verificationResponse = "Verificação de resultado\nModelo utilizado na verificação: " + choosedModel + "\nTemperatura:" + temperature + "\n\n" + verificationResult;
-      appendChatBot(verificationResponse);
-    }
-    disableLoading();
-  });
-}
-onClickVerifyInformation()
-
-/* end of code of verification of information */
-
 async function onClickRegenerateLastMessageButton(){
   const button = document.getElementById('btnRegenerate');
   button.addEventListener('click', async () => {
@@ -930,6 +873,69 @@ onClickTextToSpeechButton();
 
 
 /* End of event listener functions */
+
+/* code of verification of information */
+
+function getAssistantLastReply(){
+  const lastMessageIndex = mensagesObject.length -1;
+  const lastMessage = mensagesObject[lastMessageIndex];
+  if (lastMessage.role === "assistant"){
+    const lastMessageContent = lastMessage.content;
+    return lastMessageContent;
+  }else{
+    return "";
+  }
+}
+
+async function verifyAnswer(textToVeify,modelName,temperature){
+  const systemInstructions = "";
+  const userMessagePrompt = "Você será o meu assistente de verificação de informações para saber se elas são fatos reais ou não. Você deverá identificar se a informação é uma notícia falsa, ou uma afirmação incorreta. Você deverá procura por informações conflitantes com o texto fornecido, procure informações conhecidas que são incompatíveis com o texto fornecido. Você deverá escrever uma reflexão de pelo menos 5 linhas analisando a informação para descobrir se ela é uma verdade ou não e depois irá pular uma linha e dará um veredito final sobre o resultado. Verifique a seguinte informação:\n";
+  const userMessageInstructions = userMessagePrompt + textToVeify;
+  let apiVerifyAnswer = new openailib(atoc());
+  if (modelName === "mistralai/Mixtral-8x7B-Instruct-v0.1"){
+    apiVerifyAnswer = new openailib(atod());
+  }
+  let verifyMessages = initializeChat(systemInstructions);
+  const prompt = {role: "user", content: userMessageInstructions};
+  verifyMessages.push(prompt);
+  console.log("Verification model name:", modelName);
+  console.log("Verification temperature:", temperature);
+  const parameters ={
+      model: modelName,
+      messages: verifyMessages,
+      temperature: 0.25,
+  };
+  try {
+    const apiResponse = await apiVerifyAnswer.chat.completions.create(parameters);
+  } catch (error) {
+    console.error("Error occurred during API call:", error);
+    const errorMessage = "Erro ao verificar a informação.";
+    return errorMessage;
+  }
+  const textResponse = apiResponse.choices[0].message.content;
+  return textResponse;
+}
+
+async function onClickVerifyInformation(){
+  const button = document.getElementById('btnVerifyInformation');
+  button.addEventListener('click', async () => {
+    enableLoading();
+    const verifyModel = ["gpt-3.5-turbo-1106","gpt-3.5-turbo-0613","gpt-3.5-turbo-0301","mistralai/Mixtral-8x7B-Instruct-v0.1"];
+    const randonModelIndex = Math.floor(Math.random() * verifyModel.length);
+    const choosedModel = verifyModel[randonModelIndex];
+    const temperature = Math.round(Math.random() * 10) / 10;
+    const assistantLastReply = getAssistantLastReply();
+    if(assistantLastReply != ""){
+      const verificationResult = await verifyAnswer(assistantLastReply,choosedModel,temperature);
+      const verificationResponse = "Verificação de resultado\nModelo utilizado na verificação: " + choosedModel + "\nTemperatura:" + temperature + "\n\n" + verificationResult;
+      appendChatBot(verificationResponse);
+    }
+    disableLoading();
+  });
+}
+onClickVerifyInformation()
+
+/* end of code of verification of information */
 
 
 </script>
