@@ -907,13 +907,13 @@ async function verifyAnswer(textToVeify,modelName,temperature){
   };
   try {
     const apiResponse = await apiVerifyAnswer.chat.completions.create(parameters);
+    const textResponse = apiResponse.choices[0].message.content;
+    return textResponse;
   } catch (error) {
     console.error("Error occurred during API call:", error);
     const errorMessage = "Erro ao verificar a informação.";
     return errorMessage;
   }
-  const textResponse = apiResponse.choices[0].message.content;
-  return textResponse;
 }
 
 async function onClickVerifyInformation(){
@@ -927,7 +927,8 @@ async function onClickVerifyInformation(){
     const assistantLastReply = getAssistantLastReply();
     if(assistantLastReply != ""){
       const verificationResult = await verifyAnswer(assistantLastReply,choosedModel,temperature);
-      const verificationResponse = "Verificação de resultado\nModelo utilizado na verificação: " + choosedModel + "\nTemperatura:" + temperature + "\n\n" + verificationResult;
+      const warning = "\n\n Atenção: Este verificador de informações não é preciso e pode cometer muitos erros."
+      const verificationResponse = "Verificação de resultado\nModelo utilizado na verificação: " + choosedModel + "\nTemperatura:" + temperature + "\n\n" + verificationResult + warning;
       appendChatBot(verificationResponse);
     }
     disableLoading();
