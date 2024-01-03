@@ -71,6 +71,13 @@ input.form-control::placeholder{
     opacity: 0.75;
 }
 
+input.form-check-input{
+    border-width: 2px;
+    --bs-border-color: #ffffff40;
+    --bs-form-check-bg: transparent;
+    box-shadow: none !important;
+}
+
 h2.accordion-header{
     color: var(--font-color);
     background-color: transparent;
@@ -111,8 +118,14 @@ div.accordion-item:hover,div.accordion-item:active,div.accordion-item:focus,div.
     box-shadow: none;
 }
 
-#generatedImage{
+img.generatedImage{
     border-radius: 4px;
+    max-width: 90vw;
+}
+
+img.generatedImage#generatedImage2{
+    display: none;
+    margin-left: 1em;
 }
 
 button.return,button.return:hover,button.return:active,button.return:focus,button.return:visited{

@@ -61,9 +61,16 @@
           <label for="numInferenceStepsInput" class="form-label">Number of inference steps:</label>
           <input type="number" id="numInferenceStepsInput" class="form-control" value="20" placeholder="Number of inference steps" min="8" max="25">
           <br>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="imageVariationInput">
+            <label class="form-check-label" for="imageVariationInput">
+              Image variation
+            </label>
+          </div>
+          <br>
           <!--Guidance scale-->
           <label for="guidanceScaleInput" class="form-label">Guidance Scale:</label>
-          <input type="number" id="guidanceScaleInput" class="form-control" value="7.5" placeholder="guidanceScale" min="4" max="10">
+          <input type="number" id="guidanceScaleInput" class="form-control" value=7 placeholder="guidanceScale" min="4" max="10">
           <br>
           <!--Seed-->
           <label for="seedInput" class="form-label">Seed:</label>
@@ -104,7 +111,8 @@
     <button id="generateButton" class="btn btn-outline">Gerar imagem</button>
     <br><br>
     <div class="d-flex justify-content-center">
-      <img id="generatedImage" style="max-width: 90vw;" width="512" class="justify-content-center">
+      <img id="generatedImage" width="512" class="justify-content-center generatedImage">
+      <img id="generatedImage2" width="512" class="justify-content-center generatedImage">
     </div>
     <br>
     <p id="promptInfo"></p>
@@ -361,6 +369,7 @@ async function generateImage(){
   const model = document.getElementById('modelSelect').value;
   const refiner = document.getElementById('refinerSelect').value;
   const sampler = document.getElementById('samplerSelect').value;
+  const imageVariation = document.getElementById('imageVariationInput').checked;
 
   if (size === 'square'){
     height = 1024;
@@ -424,11 +433,52 @@ async function generateImage(){
       element.innerText = `${name}: ${value}`;
     }
   }
+
+  function showElement(id){
+    document.getElementById(id).style.display='block';
+  }
+
+  async function generateImage2(id,guidance,url, requestOptions){
+    let requestOptions2 = requestOptions;
+    if (guidance !== 0){
+      let formData = requestOptions.body;
+      formData.append('guidance_scale', guidance);
+      requestOptions2.body = formData;
+    }
+    loadingButton(true);
+    const response = await fetch(url, requestOptions2);
+    loadingButton(false);
+    const data = await response.json();
+    console.log("API response:",data);
+    if (data.error === "NSFW content detected. Try running it again, or try a different prompt."){
+      alert("A imagem não foi gerada pois foi censurada. Tente outro prompt ou outra seed.");
+      console.error("NSFW content detected. Try running it again, or try a different prompt.");
+    }
+    if (data.output && data.output.length > 0) {
+      const imageElement = document.getElementById(id);
+      imageElement.src = data.output[0];
+      showElement(id);
+    }
+  }
+
+  function hideElement(id){
+    document.getElementById(id).style.display='none';
+  }
   
   try {
     loadingButton(true);
     const url = `https://api.deepinfra.com/v1/inference/${model}`;
     const response = await fetch(url, requestOptions);
+    if (imageVariation === true){
+      await generateImage2(
+        /*id*/'generatedImage2',
+        /*guidance*/5.1,
+        url,
+        requestOptions
+      );
+    }else{
+      hideElement('generatedImage2');
+    }
     const data = await response.json();
     loadingButton(false);
     console.log("API response:",data);
