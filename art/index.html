@@ -106,6 +106,7 @@
     <div class="d-flex justify-content-center">
       <img id="generatedImage" style="max-width: 90vw;" width="512" class="justify-content-center">
     </div>
+    <p id="seedInfo"></p>
 </body>
 <script type="module">
 
@@ -350,7 +351,7 @@ async function generateImage(){
   const size = document.getElementById('sizeSelect').value;
   const guidanceScale = document.getElementById('guidanceScaleInput').value;
   const numInferenceSteps = document.getElementById('numInferenceStepsInput').value;
-  const seed = document.getElementById('seedInput').value;
+  let seed = document.getElementById('seedInput').value;
   const model = document.getElementById('modelSelect').value;
   const refiner = document.getElementById('refinerSelect').value;
   const sampler = document.getElementById('samplerSelect').value;
@@ -387,9 +388,10 @@ async function generateImage(){
   formData.append('num_inference_steps', numInferenceSteps);
   formData.append('refine', refiner);
   formData.append('scheduler', sampler);
-  if (seed > 0){
-    formData.append('seed', seed);
+  if (seed <= 0){
+    seed = Math.floor(Math.random() * 1000000) + 1;
   }
+  formData.append('seed', seed);
 
   let requestOptions = {
     method: 'POST',
@@ -407,6 +409,15 @@ async function generateImage(){
       body: formData
     };
   }
+
+  function setSeedInfo(seed){
+    const seedInfo = document.getElementById('seedInfo');
+    if (seed ===""){
+      seedInfo.innerText = "";
+    }else{
+      seedInfo.innerText = `Seed: ${seed}`;
+    }
+  }
   
   try {
     loadingButton(true);
@@ -420,10 +431,11 @@ async function generateImage(){
       alert("A imagem não foi gerada pois foi censurada. Tente outro prompt ou outra seed.");
       console.error("NSFW content detected. Try running it again, or try a different prompt.");
     }
-    
+    setSeedInfo("");
     if (data.output && data.output.length > 0) {
       const imageElement = document.getElementById('generatedImage');
       imageElement.src = data.output[0];
+      setSeedInfo(seed);
     }
   } catch (error) {
     alert('There was an error while making the request. Check the console for more information.');
