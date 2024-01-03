@@ -106,6 +106,12 @@
     <div class="d-flex justify-content-center">
       <img id="generatedImage" style="max-width: 90vw;" width="512" class="justify-content-center">
     </div>
+    <br>
+    <p id="promptInfo"></p>
+    <p id="negativePromptInfo"></p>
+    <p id="negativePromptInfo"></p>
+    <p id="stepsInfo"></p>
+    <p id="cfgInfo"></p>
     <p id="seedInfo"></p>
 </body>
 <script type="module">
@@ -410,12 +416,12 @@ async function generateImage(){
     };
   }
 
-  function setSeedInfo(seed){
-    const seedInfo = document.getElementById('seedInfo');
-    if (seed ===""){
-      seedInfo.innerText = "";
+  function setInfo(value,name,id){
+    const element = document.getElementById(id);
+    if (value ===""){
+      element.innerText = "";
     }else{
-      seedInfo.innerText = `Seed: ${seed}`;
+      element.innerText = `${name}: ${value}`;
     }
   }
   
@@ -431,11 +437,19 @@ async function generateImage(){
       alert("A imagem não foi gerada pois foi censurada. Tente outro prompt ou outra seed.");
       console.error("NSFW content detected. Try running it again, or try a different prompt.");
     }
-    setSeedInfo("");
+    setInfo("","Prompt","promptInfo");
+    setInfo("","Negative prompt","negativePromptInfo");
+    setInfo("","Steps","stepsInfo");
+    setInfo("","Seed","seedInfo");
+    setInfo("","Guidance Scale","cfgInfo");
     if (data.output && data.output.length > 0) {
       const imageElement = document.getElementById('generatedImage');
       imageElement.src = data.output[0];
-      setSeedInfo(seed);
+      setInfo(prompt,"Prompt","promptInfo");
+      setInfo(negativePrompt,"Negative prompt","negativePromptInfo");
+      setInfo(numInferenceSteps,"Steps","stepsInfo");
+      setInfo(seed,"Seed","seedInfo");
+      setInfo(guidanceScale,"Guidance Scale","cfgInfo");
     }
   } catch (error) {
     alert('There was an error while making the request. Check the console for more information.');
