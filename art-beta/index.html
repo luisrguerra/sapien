@@ -112,6 +112,8 @@
     <br><br>
     <div class="d-flex justify-content-center">
       <img id="generatedImage" width="512" class="justify-content-center generatedImage">
+    </div>
+    <div class="d-flex justify-content-center">
       <img id="generatedImage2" width="512" class="justify-content-center generatedImage">
     </div>
     <br>
@@ -466,41 +468,28 @@ async function generateImage(){
   }
   
   try {
-    loadingButton(true);
     const url = `https://api.deepinfra.com/v1/inference/${model}`;
-    const response = await fetch(url, requestOptions);
+    await generateImage2(
+      /*id*/'generatedImage',
+      /*guidance*/0,
+      /*api*/url,
+      /*post method*/requestOptions
+    );
     if (imageVariation === true){
       await generateImage2(
         /*id*/'generatedImage2',
         /*guidance*/5.1,
-        url,
-        requestOptions
+        /*api*/url,
+        /*post method*/requestOptions
       );
     }else{
       hideElement('generatedImage2');
     }
-    const data = await response.json();
-    loadingButton(false);
-    console.log("API response:",data);
-
-    if (data.error === "NSFW content detected. Try running it again, or try a different prompt."){
-      alert("A imagem não foi gerada pois foi censurada. Tente outro prompt ou outra seed.");
-      console.error("NSFW content detected. Try running it again, or try a different prompt.");
-    }
-    setInfo("","Prompt","promptInfo");
-    setInfo("","Negative prompt","negativePromptInfo");
-    setInfo("","Steps","stepsInfo");
-    setInfo("","Seed","seedInfo");
-    setInfo("","Guidance Scale","cfgInfo");
-    if (data.output && data.output.length > 0) {
-      const imageElement = document.getElementById('generatedImage');
-      imageElement.src = data.output[0];
-      setInfo(prompt,"Prompt","promptInfo");
-      setInfo(negativePrompt,"Negative prompt","negativePromptInfo");
-      setInfo(numInferenceSteps,"Steps","stepsInfo");
-      setInfo(seed,"Seed","seedInfo");
-      setInfo(guidanceScale,"Guidance Scale","cfgInfo");
-    }
+    setInfo(prompt,"Prompt","promptInfo");
+    setInfo(negativePrompt,"Negative prompt","negativePromptInfo");
+    setInfo(numInferenceSteps,"Steps","stepsInfo");
+    setInfo(seed,"Seed","seedInfo");
+    setInfo(guidanceScale,"Guidance Scale","cfgInfo");
   } catch (error) {
     alert('There was an error while making the request. Check the console for more information.');
     console.error('There was an error while making the request:', error);

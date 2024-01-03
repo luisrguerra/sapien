@@ -125,7 +125,7 @@ img.generatedImage{
 
 img.generatedImage#generatedImage2{
     display: none;
-    margin-left: 1em;
+    margin-top: 1em;
 }
 
 button.return,button.return:hover,button.return:active,button.return:focus,button.return:visited{
