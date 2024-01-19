@@ -164,6 +164,7 @@ let currentPrompt='';
 /* global constants */
 const defaultPrompt = 0;
 const modelList = [
+{name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 4000},
@@ -178,7 +179,6 @@ const modelList = [
   {name:"Google Palm 2 Codechat Bison 32k",value:"google/palm-2-codechat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"Claude Instant v1 - MMLU: 73.4",value:"anthropic/claude-instant-v1",architecture:'openrouter',maxLength: 100000},
   {name:"Dolphin 2.6 Mixtral 8x7b",value:"cognitivecomputations/dolphin-2.6-mixtral-8x7b",architecture:'deepinfra',maxLength: 16000},
-  {name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
   {name:"PPLX 7b Online",value:"perplexity/pplx-7b-online",architecture:'openrouter',maxLength: 4000},
   {name:"Nous Capybara 34b",value:"nousresearch/nous-capybara-34b",architecture:'openrouter',maxLength: 32000},
   {name:"Yi 34B Chat - MMLU: 73.5",value:"01-ai/Yi-34B-Chat",architecture:'deepinfra',maxLength: 3000},
@@ -289,6 +289,13 @@ async function initializeAsPrompt(number){
   currentPrompt = promptObj.prompt;
   const promptName = promptObj.name;
   const method = promptObj.method;
+  const defaultPromptModel = promptObj.model;
+  if (defaultPromptModel !== undefined){
+    if (modelList.find(model => model.value === defaultPromptModel)){
+      //document.getElementById('modelSelect').value = defaultPromptModel;
+      //updateModel();
+    }
+  }
   //update information
   setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
