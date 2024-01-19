@@ -775,7 +775,6 @@ async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
     updateModel();
-    updatePromptSelectList();
     promptSelectUpdateBehavior();
   });
 }
