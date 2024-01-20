@@ -164,7 +164,7 @@ let currentPrompt='';
 /* global constants */
 const defaultPrompt = 0;
 const modelList = [
-{name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
+  {name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 4000},
@@ -290,12 +290,6 @@ async function initializeAsPrompt(number){
   const promptName = promptObj.name;
   const method = promptObj.method;
   const defaultPromptModel = promptObj.model;
-  if (defaultPromptModel !== undefined){
-    if (modelList.find(model => model.value === defaultPromptModel)){
-      //document.getElementById('modelSelect').value = defaultPromptModel;
-      //updateModel();
-    }
-  }
   //update information
   setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
