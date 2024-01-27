@@ -164,7 +164,7 @@ let currentPrompt='';
 /* global constants */
 const defaultPrompt = 0;
 const modelList = [
-{name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
+  {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 4000},
@@ -172,7 +172,6 @@ const modelList = [
   {name:"GPT 3.5 16k - MMLU: 71.9",value:"gpt-3.5-turbo-16k",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-16k-0613",architecture:'openai',maxLength: 16000},
-  {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"Google Palm 2 Chat Bison",value:"google/palm-2-chat-bison",architecture:'openrouter-gpt-prompt',maxLength: 9000},
   {name:"Google Palm 2 Codechat Bison",value:"google/palm-2-codechat-bison",architecture:'openrouter-gpt-prompt',maxLength: 7000},
   {name:"Google Palm 2 Chat Bison 32k",value:"google/palm-2-chat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
@@ -180,6 +179,7 @@ const modelList = [
   {name:"Claude Instant v1 - MMLU: 73.4",value:"anthropic/claude-instant-v1",architecture:'openrouter',maxLength: 100000},
   {name:"Dolphin 2.6 Mixtral 8x7b",value:"cognitivecomputations/dolphin-2.6-mixtral-8x7b",architecture:'deepinfra',maxLength: 16000},
   {name:"PPLX 7b Online",value:"perplexity/pplx-7b-online",architecture:'openrouter',maxLength: 4000},
+  {name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
   {name:"Nous Capybara 34b",value:"nousresearch/nous-capybara-34b",architecture:'openrouter',maxLength: 32000},
   {name:"Yi 34B Chat - MMLU: 73.5",value:"01-ai/Yi-34B-Chat",architecture:'deepinfra',maxLength: 3000},
   {name:"Phind CodeLlama 34B v2 - MMLU: 25.76",value:"Phind/Phind-CodeLlama-34B-v2",architecture:'deepinfra',maxLength: 4000},
@@ -246,11 +246,10 @@ const voiceModelList = [
   {name:"OpenaAI Shimmer",value:"shimmer"},
 ]; */
 
-const promptsListGPT = await getJson("https://luisrguerra.github.io/sapien/data/prompts-v2.json");
-const promptsListLlama2 = await getJson("https://luisrguerra.github.io/sapien/data/prompts-llama2-v2.json");
+const promptsList = await getJson("https://luisrguerra.github.io/sapien/data/prompts-v2.json");
 /* end of global constants */
 
-let currentPromptList = promptsListGPT;
+let currentPromptList = promptsList;
 
 function getModelArchitecture(modelName) {
   for (const model of modelList) {
@@ -290,6 +289,7 @@ async function initializeAsPrompt(number){
   currentPrompt = promptObj.prompt;
   const promptName = promptObj.name;
   const method = promptObj.method;
+  const defaultPromptModel = promptObj.model;
   //update information
   setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
@@ -340,16 +340,7 @@ function updateTemperature(){
 };
 
 function updatePromptSelectList(){
-  const modelArchitecture = getModelArchitecture(modelName);
-  if (modelArchitecture === "deepinfra"){
-    currentPromptList = promptsListLlama2;
-  }else if (modelArchitecture === "openrouter"){
-    currentPromptList = promptsListLlama2;
-  }else if (modelArchitecture === "openrouter-gpt-prompt"){
-    currentPromptList = promptsListGPT;
-  }else{
-    currentPromptList = promptsListGPT;
-  }
+  currentPromptList = promptsList;
   loadPromptSelectOptions('promptSelect',currentPromptList);
 }
 
@@ -785,7 +776,6 @@ async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
     updateModel();
-    updatePromptSelectList();
     promptSelectUpdateBehavior();
   });
 }
