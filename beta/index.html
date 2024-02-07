@@ -186,6 +186,9 @@ const modelList = [
   {name:"CodeLlama 70b Instruct hf",value:"codellama/CodeLlama-70b-Instruct-hf",architecture:'deepinfra',maxLength: 16000},
   {name:"Phind CodeLlama 34B v2 OpenRouter - MMLU: 25.76",value:"phind/phind-codellama-34b",architecture:'openrouter',maxLength: 4000},
   {name:"Phind CodeLlama 34B v2 Deepinfra - MMLU: 25.76",value:"Phind/Phind-CodeLlama-34B-v2",architecture:'deepinfra',maxLength: 4000},
+  {name:"Deepseek Coder 33B Instruct - MMLU: 37.2",value:"deepseek-ai/deepseek-coder-33b-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Qwen1.5 72B Chat - MMLU: 77.37",value:"Qwen/Qwen1.5-72B-Chat",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Platypus2 70B Instruct - MMLU: 70.48",value:"garage-bAInd/Platypus2-70B-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
 ];
 
 /* const modelList = [
@@ -227,6 +230,10 @@ const modelList = [
   {name:"Mistral 7B Instruct v0.1 - MMLU: 55.4",value:"mistralai/Mistral-7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 4000},
   {name:"Pygmalion 13b 4bit 128g",value:"DeepInfra/pygmalion-13b-4bit-128g",architecture:'deepinfra',maxLength: 4000},
   {name:"Eagle 7b",value:"recursal/eagle-7b",architecture:'openrouter',maxLength: 10000},
+  {name:"Deepseek Coder 33B Instruct - MMLU: 37.2",value:"deepseek-ai/deepseek-coder-33b-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Qwen1.5 72B Chat - MMLU: 77.37",value:"Qwen/Qwen1.5-72B-Chat",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Platypus2 70B Instruct - MMLU: 70.48",value:"garage-bAInd/Platypus2-70B-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Phi 2",value:"microsoft/phi-2",architecture:'together-gpt-prompt',maxLength: 4000},
 ]; */
 
 const modeList = [
@@ -412,6 +419,11 @@ function atoe(){
   return JSON.parse(ztoa(hash));
 }
 
+function atof(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lJMFlUWTVObU0xWXpoaU9ETXdNemRsTlRZMU5tUTVOMlEwWkRnNU5UTTRaVFkxTXpGbU9XUXpOR1F4WXpVeU1UUmhaR1kzWkRKbE5qazBaVFZtT1dGa0lpd2laR0Z1WjJWeWIzVnpiSGxCYkd4dmQwSnliM2R6WlhJaU9uUnlkV1VzSW1KaGMyVlZVa3dpT2lKb2RIUndjem92TDJGd2FTNTBiMmRsZEdobGNpNTRlWG92ZGpFaWZRPT0=';
+  return JSON.parse(ztoa(hash));
+}
+
 function initializeChat(behavior) {
   return [
     {role: "system", content: behavior}
@@ -455,6 +467,8 @@ async function configurar(behavior){
     openai = new openailib(atoe());
   }else if (modelArchitecture === "openrouter-gpt-prompt"){
     openai = new openailib(atoe());
+  }else if (modelArchitecture === "together-gpt-prompt"){
+    openai = new openailib(atof());
   }else{
     openai = new openailib(atoc());
   }
