@@ -909,8 +909,8 @@ async function verifyAnswer(textToVeify,modelName,temperature){
   const userMessagePrompt = "Você será o meu assistente de verificação de informações para saber se elas são fatos reais ou não. Você deverá identificar se a informação é uma notícia falsa, ou uma afirmação incorreta. Você deverá procura por informações conflitantes com o texto fornecido, procure informações conhecidas que são incompatíveis com o texto fornecido. Você deverá escrever uma reflexão de pelo menos 5 linhas analisando a informação para descobrir se ela é uma verdade ou não e depois irá pular uma linha e dará um veredito final sobre o resultado. Verifique a seguinte informação:\n";
   const userMessageInstructions = userMessagePrompt + textToVeify;
   let apiVerifyAnswer = new openailib(atoc());
-  if (modelName === "mistralai/Mixtral-8x7B-Instruct-v0.1"){
-    apiVerifyAnswer = new openailib(atod());
+  if (modelName === "google/gemini-pro"){
+    apiVerifyAnswer = new openailib(atoe());
   }
   let verifyMessages = initializeChat(systemInstructions);
   const prompt = {role: "user", content: userMessageInstructions};
@@ -942,7 +942,7 @@ async function onClickVerifyInformation(){
       "gpt-3.5-turbo-1106",
       "gpt-3.5-turbo-0613",
       "gpt-3.5-turbo-0301",
-      "mistralai/Mixtral-8x7B-Instruct-v0.1"
+      "google/gemini-pro"
     ];
     const randonModelIndex = Math.floor(Math.random() * verifyModel.length);
     const choosedModel = verifyModel[randonModelIndex];
