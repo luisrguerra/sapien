@@ -165,9 +165,10 @@ let currentPrompt='';
 const defaultPrompt = 0;
 const modelList = [
   {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
-  {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
+  {name:"GPT 3.5 25/1/24",value:"gpt-3.5-turbo-0125",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 4000},
+  {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 1/3/23 - MMLU: 71.1",value:"gpt-3.5-turbo-0301",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 16k - MMLU: 71.9",value:"gpt-3.5-turbo-16k",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 16000},
@@ -186,6 +187,9 @@ const modelList = [
   {name:"CodeLlama 70b Instruct hf",value:"codellama/CodeLlama-70b-Instruct-hf",architecture:'deepinfra',maxLength: 16000},
   {name:"Phind CodeLlama 34B v2 OpenRouter - MMLU: 25.76",value:"phind/phind-codellama-34b",architecture:'openrouter',maxLength: 4000},
   {name:"Phind CodeLlama 34B v2 Deepinfra - MMLU: 25.76",value:"Phind/Phind-CodeLlama-34B-v2",architecture:'deepinfra',maxLength: 4000},
+  {name:"Deepseek Coder 33B Instruct - MMLU: 37.2",value:"deepseek-ai/deepseek-coder-33b-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Qwen1.5 72B Chat - MMLU: 77.37",value:"Qwen/Qwen1.5-72B-Chat",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Platypus2 70B Instruct - MMLU: 70.48",value:"garage-bAInd/Platypus2-70B-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
 ];
 
 /* const modelList = [
@@ -227,6 +231,10 @@ const modelList = [
   {name:"Mistral 7B Instruct v0.1 - MMLU: 55.4",value:"mistralai/Mistral-7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 4000},
   {name:"Pygmalion 13b 4bit 128g",value:"DeepInfra/pygmalion-13b-4bit-128g",architecture:'deepinfra',maxLength: 4000},
   {name:"Eagle 7b",value:"recursal/eagle-7b",architecture:'openrouter',maxLength: 10000},
+  {name:"Deepseek Coder 33B Instruct - MMLU: 37.2",value:"deepseek-ai/deepseek-coder-33b-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Qwen1.5 72B Chat - MMLU: 77.37",value:"Qwen/Qwen1.5-72B-Chat",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Platypus2 70B Instruct - MMLU: 70.48",value:"garage-bAInd/Platypus2-70B-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Phi 2",value:"microsoft/phi-2",architecture:'together-gpt-prompt',maxLength: 4000},
 ]; */
 
 const modeList = [
@@ -398,7 +406,7 @@ async function appendChatMessages(userInput){
 /* Functions for llm api */
 
 function atoc(){
-  const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MXJhVzlrVEZvNE9IVjBUREpDV1VzMmMyeEdTVlF6UW14aWEwWkthbWN5Y210amVXcHVNR1p3Um05b1JHWlhaMGNpTENKa1lXNW5aWEp2ZFhOc2VVRnNiRzkzUW5KdmQzTmxjaUk2ZEhKMVpYMD0=';
+  const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MDRSVGRCTjNWSFVrVjVWRUpUU2paUFVFaGxlVlF6UW14aWEwWktXa2xwVFdobmRXZ3pXVWxzTTJ0VlpURlJZVzhpTENKa1lXNW5aWEp2ZFhOc2VVRnNiRzkzUW5KdmQzTmxjaUk2ZEhKMVpYMD0=';
   return JSON.parse(ztoa(hash));
 }
 
@@ -409,6 +417,11 @@ function atod(){
 
 function atoe(){
   const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MXZjaTEyTVMweE1qbGtOMlJqTmpWbE5XTmtNV00zWldWaE5XTTBaakV4T0RBMk16YzBOREJqTnprMk5EQTJPRGRtWXpCbU5qZzFNVFF4T1Rrd09HUm1Oakl4TTJGaUlpd2laR0Z1WjJWeWIzVnpiSGxCYkd4dmQwSnliM2R6WlhJaU9uUnlkV1VzSW1KaGMyVlZVa3dpT2lKb2RIUndjem92TDI5d1pXNXliM1YwWlhJdVlXa3ZZWEJwTDNZeEluME5DZz09DQo=';
+  return JSON.parse(ztoa(hash));
+}
+
+function atof(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lJMFlUWTVObU0xWXpoaU9ETXdNemRsTlRZMU5tUTVOMlEwWkRnNU5UTTRaVFkxTXpGbU9XUXpOR1F4WXpVeU1UUmhaR1kzWkRKbE5qazBaVFZtT1dGa0lpd2laR0Z1WjJWeWIzVnpiSGxCYkd4dmQwSnliM2R6WlhJaU9uUnlkV1VzSW1KaGMyVlZVa3dpT2lKb2RIUndjem92TDJGd2FTNTBiMmRsZEdobGNpNTRlWG92ZGpFaWZRPT0=';
   return JSON.parse(ztoa(hash));
 }
 
@@ -455,6 +468,8 @@ async function configurar(behavior){
     openai = new openailib(atoe());
   }else if (modelArchitecture === "openrouter-gpt-prompt"){
     openai = new openailib(atoe());
+  }else if (modelArchitecture === "together-gpt-prompt"){
+    openai = new openailib(atof());
   }else{
     openai = new openailib(atoc());
   }
@@ -894,8 +909,8 @@ async function verifyAnswer(textToVeify,modelName,temperature){
   const userMessagePrompt = "Você será o meu assistente de verificação de informações para saber se elas são fatos reais ou não. Você deverá identificar se a informação é uma notícia falsa, ou uma afirmação incorreta. Você deverá procura por informações conflitantes com o texto fornecido, procure informações conhecidas que são incompatíveis com o texto fornecido. Você deverá escrever uma reflexão de pelo menos 5 linhas analisando a informação para descobrir se ela é uma verdade ou não e depois irá pular uma linha e dará um veredito final sobre o resultado. Verifique a seguinte informação:\n";
   const userMessageInstructions = userMessagePrompt + textToVeify;
   let apiVerifyAnswer = new openailib(atoc());
-  if (modelName === "mistralai/Mixtral-8x7B-Instruct-v0.1"){
-    apiVerifyAnswer = new openailib(atod());
+  if (modelName === "google/gemini-pro"){
+    apiVerifyAnswer = new openailib(atoe());
   }
   let verifyMessages = initializeChat(systemInstructions);
   const prompt = {role: "user", content: userMessageInstructions};
@@ -922,7 +937,13 @@ async function onClickVerifyInformation(){
   const button = document.getElementById('btnVerifyInformation');
   button.addEventListener('click', async () => {
     enableLoading();
-    const verifyModel = ["gpt-3.5-turbo-1106","gpt-3.5-turbo-0613","gpt-3.5-turbo-0301","mistralai/Mixtral-8x7B-Instruct-v0.1"];
+    const verifyModel = [
+      "gpt-3.5-turbo-0125",
+      "gpt-3.5-turbo-1106",
+      "gpt-3.5-turbo-0613",
+      "gpt-3.5-turbo-0301",
+      "google/gemini-pro"
+    ];
     const randonModelIndex = Math.floor(Math.random() * verifyModel.length);
     const choosedModel = verifyModel[randonModelIndex];
     const temperature = Math.round(Math.random() * 10) / 10;
