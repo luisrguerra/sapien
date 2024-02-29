@@ -57,18 +57,21 @@
   {
     "name":"🌎 Tradutor para espanhol",
     "method":"evry-user-begin",
+    "model":"gpt-3.5-turbo-0613",
     "prompt":"Ao traduzir textos para o espanhol procure utilizar uma linguagem mais próxima do espanhol internacional. Traduza o seguinte texto para o espanhol e não diga mais nada além da tradução:",
     "description": "Me forneça um texto em para eu traduzir para o espanhol"
   },
   {
     "name":"🌎 Tradutor para português",
     "method":"evry-user-begin",
+    "model":"gpt-3.5-turbo-0613",
     "prompt":"Traduza o seguinte texto para português do Brasil e não diga mais nada além da tradução:",
     "description": "Me forneça um texto em para eu traduzir para o português do Brasil"
   },
   {
     "name":"🌎 Tradutor para inglês",
     "method":"evry-user-begin",
+    "model":"gpt-3.5-turbo-0613",
     "prompt":"Ao traduzir um texto para inglês utilize uma linguagem simples, de forma que um estrangeiro que entenda o básico de inglês consiga entender com clareza. Traduza o seguinte texto para inglês e não diga mais nada além da tradução:",
     "description": "Me forneça um texto em para eu traduzir para o inglês americano"
   },
