@@ -152,6 +152,7 @@ import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.20.1/+esm';
 //console.log("openailib: ",openailib);
 /* global variables */
 let openai;
+const defaultModel = "google/gemini-pro";
 let modelName;
 let gptTemperature;
 let mensagesObject;
@@ -164,6 +165,7 @@ let currentPrompt='';
 /* global constants */
 const defaultPrompt = 0;
 const modelList = [
+  {name:"Padrão",value:"",architecture:'',maxLength: 0},
   {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 25/1/24",value:"gpt-3.5-turbo-0125",architecture:'openai',maxLength: 4000},
@@ -326,7 +328,10 @@ async function initializeAsPrompt(number){
 }
 
 function getModelSelect(){
-  const modelSelected = getValueByID('modelSelect');
+  let modelSelected = getValueByID('modelSelect');
+  if (modelSelected === ""){
+    modelSelected = defaultModel;
+  }
   return modelSelected;
 }
 
