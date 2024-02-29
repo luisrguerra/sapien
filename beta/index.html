@@ -161,6 +161,7 @@ let expandedChatInput = false;
 let textToSpeechEnabled = false;
 let promptMethod = "system-prompt";
 let currentPrompt='';
+let promptPreferedModel = "";
 /* end of global variables */
 /* global constants */
 const defaultPrompt = 0;
@@ -289,7 +290,6 @@ loadPromptSelectOptions('promptSelect',currentPromptList);
 loadSelectOptions('modelSelect',modelList);
 loadSelectOptions('modelMode',modeList);
 loadSelectOptions('voiceModelSelect',voiceModelList);
-updateModel();
 updateTemperature();
 initializeAsPrompt(defaultPrompt);
 
@@ -309,6 +309,8 @@ async function initializeAsPrompt(number){
   cleanChat();
   const promptObj= currentPromptList[number];
   currentPrompt = promptObj.prompt;
+  promptPreferedModel = promptObj.model;
+  updateModel();
   const promptName = promptObj.name;
   const method = promptObj.method;
   const defaultPromptModel = promptObj.model;
@@ -345,15 +347,13 @@ function getVoiceModelSelect(){
   return voiceModelSelected;
 }
 
-function updateMaxLength(){
-  modelName = getModelSelect();
-  const model = modelList.find(model => model.value === modelName);
-  document.getElementById('formterminal').maxLength = model.maxLength;
-}
-
 
 function updateModel(){
-  modelName = getModelSelect();
+  if (promptPreferedModel === "" || promptPreferedModel === undefined) {
+    modelName = getModelSelect();
+  }else{
+    modelName = promptPreferedModel;
+  }
   const model = modelList.find(model => model.value === modelName);
   document.getElementById('formterminal').maxLength = model.maxLength;
   console.log("Updated model to:", modelName);
@@ -807,7 +807,6 @@ onChangePromptSelect();
 async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
-    updateModel();
     promptSelectUpdateBehavior();
   });
 }
