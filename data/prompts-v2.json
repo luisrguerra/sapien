@@ -75,6 +75,7 @@
   {
     "name":"📝 Resumo de texto",
     "method":"evry-user-begin",
+    "model":"gpt-3.5-turbo-0301",
     "prompt":"Ao resumir um texto seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original. Resuma o seguinte texto e não me diga mais nada além do resumo:",
     "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
   },
