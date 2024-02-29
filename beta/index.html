@@ -349,10 +349,15 @@ function getVoiceModelSelect(){
 
 
 function updateModel(){
+  let modelSelected = getValueByID('modelSelect');
   if (promptPreferedModel === "" || promptPreferedModel === undefined) {
     modelName = getModelSelect();
   }else{
-    modelName = promptPreferedModel;
+    if (modelSelected === "" || !modelSelected) {
+      modelName = promptPreferedModel;
+    }else{
+      modelName = getModelSelect();
+    }
   }
   const model = modelList.find(model => model.value === modelName);
   document.getElementById('formterminal').maxLength = model.maxLength;
