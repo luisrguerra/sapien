@@ -152,6 +152,7 @@ import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.20.1/+esm';
 //console.log("openailib: ",openailib);
 /* global variables */
 let openai;
+const defaultModel = "google/gemini-pro";
 let modelName;
 let gptTemperature;
 let mensagesObject;
@@ -160,10 +161,12 @@ let expandedChatInput = false;
 let textToSpeechEnabled = false;
 let promptMethod = "system-prompt";
 let currentPrompt='';
+let promptPreferedModel = "";
 /* end of global variables */
 /* global constants */
 const defaultPrompt = 0;
 const modelList = [
+  {name:"Padrão",value:"",architecture:'',maxLength: 0},
   {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 25/1/24",value:"gpt-3.5-turbo-0125",architecture:'openai',maxLength: 4000},
@@ -287,7 +290,6 @@ loadPromptSelectOptions('promptSelect',currentPromptList);
 loadSelectOptions('modelSelect',modelList);
 loadSelectOptions('modelMode',modeList);
 loadSelectOptions('voiceModelSelect',voiceModelList);
-updateModel();
 updateTemperature();
 initializeAsPrompt(defaultPrompt);
 
@@ -307,6 +309,8 @@ async function initializeAsPrompt(number){
   cleanChat();
   const promptObj= currentPromptList[number];
   currentPrompt = promptObj.prompt;
+  promptPreferedModel = promptObj.model;
+  updateModel();
   const promptName = promptObj.name;
   const method = promptObj.method;
   const defaultPromptModel = promptObj.model;
@@ -326,7 +330,10 @@ async function initializeAsPrompt(number){
 }
 
 function getModelSelect(){
-  const modelSelected = getValueByID('modelSelect');
+  let modelSelected = getValueByID('modelSelect');
+  if (modelSelected === ""){
+    modelSelected = defaultModel;
+  }
   return modelSelected;
 }
 
@@ -340,15 +347,18 @@ function getVoiceModelSelect(){
   return voiceModelSelected;
 }
 
-function updateMaxLength(){
-  modelName = getModelSelect();
-  const model = modelList.find(model => model.value === modelName);
-  document.getElementById('formterminal').maxLength = model.maxLength;
-}
-
 
 function updateModel(){
-  modelName = getModelSelect();
+  let modelSelected = getValueByID('modelSelect');
+  if (promptPreferedModel === "" || promptPreferedModel === undefined) {
+    modelName = getModelSelect();
+  }else{
+    if (modelSelected === "" || !modelSelected) {
+      modelName = promptPreferedModel;
+    }else{
+      modelName = getModelSelect();
+    }
+  }
   const model = modelList.find(model => model.value === modelName);
   document.getElementById('formterminal').maxLength = model.maxLength;
   console.log("Updated model to:", modelName);
@@ -802,7 +812,6 @@ onChangePromptSelect();
 async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
-    updateModel();
     promptSelectUpdateBehavior();
   });
 }
