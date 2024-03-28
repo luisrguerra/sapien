@@ -152,6 +152,7 @@ import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.20.1/+esm';
 //console.log("openailib: ",openailib);
 /* global variables */
 let openai;
+const defaultModel = "google/gemini-pro-1.5";
 let modelName;
 let gptTemperature;
 let mensagesObject;
@@ -160,6 +161,7 @@ let expandedChatInput = false;
 let textToSpeechEnabled = false;
 let promptMethod = "system-prompt";
 let currentPrompt='';
+let promptPreferedModel = "";
 /* end of global variables */
 /* global constants */
 const defaultPrompt = 0;
@@ -178,6 +180,7 @@ const modelList = [
   {name:"GPT 4 - MMLU: 86.4",value:"gpt-4",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 13/6/23 - MMLU: 86.4",value:"gpt-4-0613",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 14/3/23 - MMLU: 86.4",value:"gpt-4-0314",architecture:'openai',maxLength: 8000},
+  {name:"Google Gemini Pro 1.5",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
   {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"Google Palm 2 Chat Bison",value:"google/palm-2-chat-bison",architecture:'openrouter-gpt-prompt',maxLength: 9000},
   {name:"Google Palm 2 Codechat Bison",value:"google/palm-2-codechat-bison",architecture:'openrouter-gpt-prompt',maxLength: 7000},
@@ -185,8 +188,12 @@ const modelList = [
   {name:"Google Palm 2 Codechat Bison 32k",value:"google/palm-2-codechat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"Claude 3 Opus - MMLU: 86.8",value:"anthropic/claude-3-opus",architecture:'openrouter',maxLength: 200000},
   {name:"Claude 3 Sonnet - MMLU: 79.0",value:"anthropic/claude-3-sonnet",architecture:'openrouter',maxLength: 200000},
-  {name:"Claude Instant v1 - MMLU: 73.4",value:"anthropic/claude-instant-v1",architecture:'openrouter',maxLength: 100000},
-  {name:"Claude Instant Older v1 - MMLU: 73.4",value:"anthropic/claude-instant-1.0",architecture:'openrouter',maxLength: 9000},
+  {name:"Claude 3 Haiku - MMLU: 75.2",value:"anthropic/claude-3-haiku",architecture:'openrouter',maxLength: 100000},
+  {name:"Claude Instant v1.2",value:"anthropic/claude-instant-1.2",architecture:'openrouter',maxLength: 100000},
+  {name:"Claude Instant v1.1",value:"anthropic/claude-instant-1.1",architecture:'openrouter',maxLength: 9000},
+  {name:"Claude Instant v1.0 - MMLU: 73.4",value:"anthropic/claude-instant-1",architecture:'openrouter',maxLength: 100000},
+  {name:"Perplexity: Sonar 8x7B Online",value:"perplexity/sonar-medium-online",architecture:'openrouter',maxLength: 12000},
+  {name:"Perplexity: Sonar 7B Online",value:"perplexity/sonar-small-online",architecture:'openrouter',maxLength: 16000},
   {name:"PPLX 7b Online",value:"perplexity/pplx-7b-online",architecture:'openrouter',maxLength: 4000},
   {name:"PPLX 7b",value:"perplexity/pplx-7b-chat",architecture:'openrouter',maxLength: 4000},
   {name:"Dolphin 2.6 Mixtral 8x7b",value:"cognitivecomputations/dolphin-2.6-mixtral-8x7b",architecture:'deepinfra',maxLength: 16000},
@@ -211,16 +218,25 @@ const modelList = [
   {name:"Qwen1.5 72B Chat - MMLU: 77.37",value:"Qwen/Qwen1.5-72B-Chat",architecture:'together-gpt-prompt',maxLength: 4000},
   {name:"Platypus2 70B Instruct - MMLU: 70.48",value:"garage-bAInd/Platypus2-70B-instruct",architecture:'together-gpt-prompt',maxLength: 4000},
   {name:"Phi 2",value:"microsoft/phi-2",architecture:'together-gpt-prompt',maxLength: 4000},
+  {name:"Sapien IA 1.0",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8umFawLA",architecture:'openai',maxLength: 4000},
+  {name:"Sapien IA 1.1",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8vcpPD8I",architecture:'openai',maxLength: 4000},
+  {name:"GPT 3.5 MetaMathQA 300",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8vFgyzKd",architecture:'openai',maxLength: 4000},
 ];
 
 const modeList = [
-  {name:"Normal",value:1},
-  {name:"Invariável 0",value:0},
-  {name:"Cabeça dura 0.25",value:0.25},
-  {name:"Pouco criativo 0.5",value:0.5},
-  {name:"Pouco criativo 0.75",value:0.75},
-  {name:"Criativo 1.1",value:1.1},
-  {name:"Impreciso 1.2",value:1.2},
+  {name:"Normal 100%",value:1},
+  {name:"Invariável 0%",value:0},
+  {name:"Cabeça dura 10%",value:0.1},
+  {name:"Cabeça dura 20%",value:0.2},
+  {name:"Cabeça dura 30%",value:0.3},
+  {name:"Pouco criativo 40%",value:0.4},
+  {name:"Pouco criativo 50%",value:0.5},
+  {name:"Pouco criativo 60%",value:0.6},
+  {name:"Normal 70%",value:0.7},
+  {name:"Normal 80%",value:0.8},
+  {name:"Normal 90%",value:0.9},
+  {name:"Criativo 110%",value:1.1},
+  {name:"Impreciso 120%",value:1.2},
 ];
 
 const voiceModelList = [
@@ -259,7 +275,6 @@ loadPromptSelectOptions('promptSelect',currentPromptList);
 loadSelectOptions('modelSelect',modelList);
 loadSelectOptions('modelMode',modeList);
 loadSelectOptions('voiceModelSelect',voiceModelList);
-updateModel();
 updateTemperature();
 initializeAsPrompt(defaultPrompt);
 
@@ -279,6 +294,8 @@ async function initializeAsPrompt(number){
   cleanChat();
   const promptObj= currentPromptList[number];
   currentPrompt = promptObj.prompt;
+  promptPreferedModel = promptObj.model;
+  updateModel();
   const promptName = promptObj.name;
   const method = promptObj.method;
   const defaultPromptModel = promptObj.model;
@@ -298,7 +315,10 @@ async function initializeAsPrompt(number){
 }
 
 function getModelSelect(){
-  const modelSelected = getValueByID('modelSelect');
+  let modelSelected = getValueByID('modelSelect');
+  if (modelSelected === ""){
+    modelSelected = defaultModel;
+  }
   return modelSelected;
 }
 
@@ -312,15 +332,18 @@ function getVoiceModelSelect(){
   return voiceModelSelected;
 }
 
-function updateMaxLength(){
-  modelName = getModelSelect();
-  const model = modelList.find(model => model.value === modelName);
-  document.getElementById('formterminal').maxLength = model.maxLength;
-}
-
 
 function updateModel(){
-  modelName = getModelSelect();
+  let modelSelected = getValueByID('modelSelect');
+  if (promptPreferedModel === "" || promptPreferedModel === undefined) {
+    modelName = getModelSelect();
+  }else{
+    if (modelSelected === "" || !modelSelected) {
+      modelName = promptPreferedModel;
+    }else{
+      modelName = getModelSelect();
+    }
+  }
   const model = modelList.find(model => model.value === modelName);
   document.getElementById('formterminal').maxLength = model.maxLength;
   console.log("Updated model to:", modelName);
@@ -774,7 +797,6 @@ onChangePromptSelect();
 async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
-    updateModel();
     promptSelectUpdateBehavior();
   });
 }
@@ -885,7 +907,13 @@ async function verifyAnswer(textToVeify,modelName,temperature){
   const userMessagePrompt = "Você será o meu assistente de verificação de informações para saber se elas são fatos reais ou não. Você deverá identificar se a informação é uma notícia falsa, ou uma afirmação incorreta. Você deverá procura por informações conflitantes com o texto fornecido, procure informações conhecidas que são incompatíveis com o texto fornecido. Você deverá escrever uma reflexão de pelo menos 5 linhas analisando a informação para descobrir se ela é uma verdade ou não e depois irá pular uma linha e dará um veredito final sobre o resultado. Verifique a seguinte informação:\n";
   const userMessageInstructions = userMessagePrompt + textToVeify;
   let apiVerifyAnswer = new openailib(atoc());
-  if (modelName === "google/gemini-pro"){
+  if (
+    modelName === "google/gemini-pro" || 
+    modelName === "anthropic/claude-3-haiku" || 
+    modelName === "anthropic/claude-instant-1.2" ||
+    modelName === "anthropic/claude-instant-1.1" ||
+    modelName === "anthropic/claude-instant-1"
+  ){
     apiVerifyAnswer = new openailib(atoe());
   }
   let verifyMessages = initializeChat(systemInstructions);
@@ -918,7 +946,11 @@ async function onClickVerifyInformation(){
       "gpt-3.5-turbo-1106",
       "gpt-3.5-turbo-0613",
       "gpt-3.5-turbo-0301",
-      "google/gemini-pro"
+      "google/gemini-pro",
+      "anthropic/claude-3-haiku",
+      "anthropic/claude-instant-1.2",
+      "anthropic/claude-instant-1.1",
+      "anthropic/claude-instant-1"
     ];
     const randonModelIndex = Math.floor(Math.random() * verifyModel.length);
     const choosedModel = verifyModel[randonModelIndex];
