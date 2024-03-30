@@ -167,8 +167,8 @@ let promptPreferedModel = "";
 const defaultPrompt = 0;
 const modelList = [
   {name:"Padrão",value:"",architecture:'',maxLength: 0},
-  {name:"Google Gemini Pro 1.5",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
-  {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
+  {name:"Google Gemini Pro 1.5 - MMLU: 81.9",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
+  {name:"Google Gemini Pro - MMLU: 71.8",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"GPT 3.5 - MMLU: 71.9",value:"gpt-3.5-turbo",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 25/1/24",value:"gpt-3.5-turbo-0125",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 4000},
@@ -211,8 +211,8 @@ const modelList = [
   {name:"GPT 4 - MMLU: 86.4",value:"gpt-4",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 13/6/23 - MMLU: 86.4",value:"gpt-4-0613",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 14/3/23 - MMLU: 86.4",value:"gpt-4-0314",architecture:'openai',maxLength: 8000},
-  {name:"Google Gemini Pro 1.5",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
-  {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
+  {name:"Google Gemini Pro 1.5 - MMLU: 81.9",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
+  {name:"Google Gemini Pro - MMLU: 71.8",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"Google Palm 2 Chat Bison",value:"google/palm-2-chat-bison",architecture:'openrouter-gpt-prompt',maxLength: 9000},
   {name:"Google Palm 2 Codechat Bison",value:"google/palm-2-codechat-bison",architecture:'openrouter-gpt-prompt',maxLength: 7000},
   {name:"Google Palm 2 Chat Bison 32k",value:"google/palm-2-chat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
@@ -939,7 +939,7 @@ async function verifyAnswer(textToVeify,modelName,temperature){
   const userMessageInstructions = userMessagePrompt + textToVeify;
   let apiVerifyAnswer = new openailib(atoc());
   if (
-    modelName === "google/gemini-pro" || 
+    modelName === "google/gemini-pro-1.5" || 
     modelName === "anthropic/claude-3-haiku" || 
     modelName === "anthropic/claude-instant-1.2" ||
     modelName === "anthropic/claude-instant-1.1" ||
@@ -976,8 +976,7 @@ async function onClickVerifyInformation(){
       "gpt-3.5-turbo-0125",
       "gpt-3.5-turbo-1106",
       "gpt-3.5-turbo-0613",
-      "gpt-3.5-turbo-0301",
-      "google/gemini-pro",
+      "google/gemini-pro-1.5",
       "anthropic/claude-3-haiku",
       "anthropic/claude-instant-1.2",
       "anthropic/claude-instant-1.1",
