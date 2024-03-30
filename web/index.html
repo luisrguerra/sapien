@@ -111,6 +111,7 @@
     
         <!-- body of modal dialog, main content of modal dialog -->
        <div class="modal-body">
+          <h6>Default model: <span id="prompt-default-model"></span></h6>
           <h4 id="prompt-text"></h4>
        </div>
    
@@ -333,6 +334,7 @@ async function initializeAsPrompt(number){
   //update information
   setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
+  setPromptDefaultModel(defaultPromptModel);
   appendChatBot(promptObj.description);
   //initialize chat conversation
   if (method === "evry-user-begin" || method === "evry-user-end"){
@@ -731,6 +733,13 @@ function setButtonEnviarText(text){
 
 function setPromptModalText(text){
   setTextByID(text, 'prompt-text');
+}
+
+function setPromptDefaultModel(text){
+  if (text === undefined){
+    text = defaultModel;
+  }
+  setTextByID(text, 'prompt-default-model');
 }
 
 function setPromptModalTitle(text){
