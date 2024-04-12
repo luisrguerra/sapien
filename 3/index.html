@@ -111,6 +111,7 @@
     
         <!-- body of modal dialog, main content of modal dialog -->
        <div class="modal-body">
+          <h6>Default model: <span id="prompt-default-model"></span></h6>
           <h4 id="prompt-text"></h4>
        </div>
    
@@ -152,7 +153,7 @@ import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.20.1/+esm';
 //console.log("openailib: ",openailib);
 /* global variables */
 let openai;
-const defaultModel = "google/gemini-pro-1.5";
+const defaultModel = "anthropic/claude-3-haiku";
 let modelName;
 let gptTemperature;
 let mensagesObject;
@@ -175,13 +176,14 @@ const modelList = [
   {name:"GPT 3.5 16k - MMLU: 71.9",value:"gpt-3.5-turbo-16k",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-16k-0613",architecture:'openai',maxLength: 16000},
+  {name:"GPT-4 Turbo Preview 9/4/24",value:"gpt-4-turbo-2024-04-09",architecture:'openai',maxLength: 32000},
   {name:"GPT-4 Turbo Preview 25/1/24 - MMLU: 86.4",value:"gpt-4-0125-preview",architecture:'openai',maxLength: 32000},
   {name:"GPT-4 Turbo Preview 6/11/23 - MMLU: 86.4",value:"gpt-4-1106-preview",architecture:'openai',maxLength: 32000},
   {name:"GPT 4 - MMLU: 86.4",value:"gpt-4",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 13/6/23 - MMLU: 86.4",value:"gpt-4-0613",architecture:'openai',maxLength: 8000},
   {name:"GPT 4 14/3/23 - MMLU: 86.4",value:"gpt-4-0314",architecture:'openai',maxLength: 8000},
-  {name:"Google Gemini Pro 1.5",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
-  {name:"Google Gemini Pro",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
+  {name:"Google Gemini Pro 1.5 - MMLU: 81.9",value:"google/gemini-pro-1.5",architecture:'openrouter-gpt-prompt',maxLength: 200000},
+  {name:"Google Gemini Pro - MMLU: 71.8",value:"google/gemini-pro",architecture:'openrouter-gpt-prompt',maxLength: 32000},
   {name:"Google Palm 2 Chat Bison",value:"google/palm-2-chat-bison",architecture:'openrouter-gpt-prompt',maxLength: 9000},
   {name:"Google Palm 2 Codechat Bison",value:"google/palm-2-codechat-bison",architecture:'openrouter-gpt-prompt',maxLength: 7000},
   {name:"Google Palm 2 Chat Bison 32k",value:"google/palm-2-chat-bison-32k",architecture:'openrouter-gpt-prompt',maxLength: 32000},
@@ -197,6 +199,7 @@ const modelList = [
   {name:"PPLX 7b Online",value:"perplexity/pplx-7b-online",architecture:'openrouter',maxLength: 4000},
   {name:"PPLX 7b",value:"perplexity/pplx-7b-chat",architecture:'openrouter',maxLength: 4000},
   {name:"Dolphin 2.6 Mixtral 8x7b",value:"cognitivecomputations/dolphin-2.6-mixtral-8x7b",architecture:'deepinfra',maxLength: 16000},
+  {name:"Mixtral 8x22B",value:"mistralai/mixtral-8x22b",architecture:'openrouter',maxLength: 64000},
   {name:"Mixtral 8x7B Instruct v0.1 - MMLU: 71.82",value:"mistralai/Mixtral-8x7B-Instruct-v0.1",architecture:'deepinfra',maxLength: 16000},
   {name:"Nous Capybara 34b",value:"nousresearch/nous-capybara-34b",architecture:'openrouter',maxLength: 32000},
   {name:"Yi 34B Chat - MMLU: 73.5",value:"01-ai/Yi-34B-Chat",architecture:'deepinfra',maxLength: 3000},
@@ -220,6 +223,8 @@ const modelList = [
   {name:"Phi 2",value:"microsoft/phi-2",architecture:'together-gpt-prompt',maxLength: 4000},
   {name:"Sapien IA 1.0",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8umFawLA",architecture:'openai',maxLength: 4000},
   {name:"Sapien IA 1.1",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8vcpPD8I",architecture:'openai',maxLength: 4000},
+  {name:"Física 180 GPT3.5 25/1/24",value:"ft:gpt-3.5-turbo-0125:sapien-ia:fisica-180-haiku:98sGG330",architecture:'openai',maxLength: 4000},
+  {name:"Física 240 GPT3.5 25/1/24",value:"ft:gpt-3.5-turbo-0125:sapien-ia:nuclear-fusion-240:99eFIfRV",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 MetaMathQA 300",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8vFgyzKd",architecture:'openai',maxLength: 4000},
 ];
 
@@ -302,6 +307,7 @@ async function initializeAsPrompt(number){
   //update information
   setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
+  setPromptDefaultModel(defaultPromptModel);
   appendChatBot(promptObj.description);
   //initialize chat conversation
   if (method === "evry-user-begin" || method === "evry-user-end"){
@@ -702,6 +708,13 @@ function setPromptModalText(text){
   setTextByID(text, 'prompt-text');
 }
 
+function setPromptDefaultModel(text){
+  if (text === undefined){
+    text = defaultModel;
+  }
+  setTextByID(text, 'prompt-default-model');
+}
+
 function setPromptModalTitle(text){
   setTextByID(text, 'prompt-title');
 }
@@ -908,7 +921,7 @@ async function verifyAnswer(textToVeify,modelName,temperature){
   const userMessageInstructions = userMessagePrompt + textToVeify;
   let apiVerifyAnswer = new openailib(atoc());
   if (
-    modelName === "google/gemini-pro" || 
+    modelName === "google/gemini-pro-1.5" || 
     modelName === "anthropic/claude-3-haiku" || 
     modelName === "anthropic/claude-instant-1.2" ||
     modelName === "anthropic/claude-instant-1.1" ||
@@ -945,8 +958,7 @@ async function onClickVerifyInformation(){
       "gpt-3.5-turbo-0125",
       "gpt-3.5-turbo-1106",
       "gpt-3.5-turbo-0613",
-      "gpt-3.5-turbo-0301",
-      "google/gemini-pro",
+      "google/gemini-pro-1.5",
       "anthropic/claude-3-haiku",
       "anthropic/claude-instant-1.2",
       "anthropic/claude-instant-1.1",
