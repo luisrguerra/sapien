@@ -24,23 +24,55 @@
 
     <h3>Buscas Online</h3>
     <div class="mb-3">
-        <label for="inputTextArea" class="form-label">Input:</label>
-        <textarea type="text" class="form-control" id="inputTextArea" name="inputTextArea" rows="10"></textarea>
-    </div>
-    <div class="mb-3">
-        <label for="attemptsNumber" class="form-label">Número de buscas:</label>
-        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="3" value="3">
-        <p>O número máximo de buscas é 3.</p>
+        <label for="inputTextArea" class="form-label">Pergunta:</label>
+        <textarea type="text" class="form-control" id="inputTextArea" name="inputTextArea" rows="6"></textarea>
     </div>
     <button id="generate" class="btn btn-primary">Gerar respostas</button>
     <br><br>
-    <h5>Resultado das buscas na internet:</h5>
-    <div id="solutionsDiv">
-        <p>Respostas ainda não geradas.</p>
-    </div>
     <h5>Resposta final:</h5>
     <p id="finalAnswer">Resposta final ainda não gerada.</p>
+
+    <!-- acordiao do resultado das buscas na internet -->
+    <div class="accordion" id="accordionSearch">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading1">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+            Resultado das buscas na internet
+          </button>
+        </h2>
+        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionSearch">
+          <div class="accordion-body">
+            <div class="accordion-body">
+              <div id="solutionsDiv">
+                <p>Respostas ainda não geradas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- fim de acordiao do resultado das buscas na internet -->
+
     <br>
+
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+            Opções
+          </button>
+        </h2>
+        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="mb-3">
+              <label for="attemptsNumber" class="form-label">Número de buscas:</label>
+              <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="3" value="3">
+              <p>O número máximo de buscas é 3.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 
