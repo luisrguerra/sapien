@@ -22,19 +22,19 @@
 </style>
 <body style="margin-inline: 3em;margin-block: 2em;">
 
-    <h3>Tree of Thoughts</h3>
+    <h3>Buscas Online</h3>
     <div class="mb-3">
         <label for="inputTextArea" class="form-label">Input:</label>
         <textarea type="text" class="form-control" id="inputTextArea" name="inputTextArea" rows="10"></textarea>
     </div>
     <div class="mb-3">
-        <label for="attemptsNumber" class="form-label">Número de soluções:</label>
-        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="3" value="2">
-        <p>O número máximo de soluções é 3.</p>
+        <label for="attemptsNumber" class="form-label">Número de buscas:</label>
+        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="3" value="3">
+        <p>O número máximo de buscas é 3.</p>
     </div>
     <button id="generate" class="btn btn-primary">Gerar respostas</button>
     <br><br>
-    <h5>Soluções:</h5>
+    <h5>Resultado das buscas na internet:</h5>
     <div id="solutionsDiv">
         <p>Respostas ainda não geradas.</p>
     </div>
@@ -48,7 +48,7 @@
 import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.10.0/+esm';
 
 let openai;
-let modelName = "gpt-4-turbo-2024-04-09";
+let modelName = "gpt-3.5-turbo-0125";
 let gptTemperature = 1;
 
 function ztoa(x){
@@ -89,9 +89,11 @@ async function completionsChatTextModel(messages) {
     //deepinfra
     openai = new openailib(atod());
   }else if(
-      modelName == "anthropic/claude-3-sonnet" ||
+      modelName == "anthropic/claude-3-haiku" ||
+      modelName == "google/gemini-pro" ||
+      modelName == "cohere/command-r" ||
       modelName == "perplexity/pplx-70b-online" ||
-      modelName == "google/gemini-pro-1.5"
+      modelName == "qwen/qwen-72b-chat"
     ){
     //openrouter
     openai = new openailib(atoe());
@@ -177,8 +179,8 @@ function appendSolutionAttempt(text) {
 
 async function generateAnswerAttempt(){
    const inputText = getInputText();
-   const prompt = "Resolva em até 4 linhas: " + inputText;
-   let  messages = initializeChat("Você atuará como um resolevedor de problemas, perguntas e etc.");
+   const prompt = "Responda em até 4 linhas: " + inputText;
+   let  messages = initializeChat("Utilize um estilo de escrita direto ao ponto. Você atuará como um buscador de informações.");
    messages = await generateChatMessages(prompt, messages);
    const answer = lastMessage(messages);
    appendSolutionAttempt(answer);
@@ -198,9 +200,9 @@ function clearFinalAnswer() {
 function getFinalAnswerPrompt(answersAttempts,question){
     let prompt = "";
     for (let i = 1; i <= answersAttempts.length; i++) {
-        prompt += `Proposta de resolução ${i}: ${answersAttempts[i - 1]}\n\n`;
+        prompt += `Resultado da busca online ${i}: ${answersAttempts[i - 1]}\n\n`;
     }
-    const beforePrompt = "Se fizer sentido lógico utilize as propostas de solução do problema para encontrar a resposta. Resolva o seguinte problema:";
+    const beforePrompt = "Se fizer sentido lógico reaproveite as propostas de resultado de busca. Resolva o seguinte problema/pergunta:";
     prompt += `${beforePrompt} ${question}`;
     console.log("Prompt final:\n",prompt);
     return prompt;
@@ -208,12 +210,7 @@ function getFinalAnswerPrompt(answersAttempts,question){
 
 function randomModel(){
   const models = [
-    "gpt-4-0125-preview",
-    "gpt-4-1106-preview",
-    "gpt-4-turbo-2024-04-09",
-    "anthropic/claude-3-sonnet",
-    "google/gemini-pro-1.5",
-    /*"perplexity/pplx-70b-online",*/
+    "perplexity/pplx-70b-online",
   ];
   const randomIndex = Math.floor(Math.random() * models.length);
   modelName = models[randomIndex];
@@ -233,8 +230,8 @@ generateButton.addEventListener("click", async function() {
         answersAttempts.push(answer);
     }
     const finalAnswerPrompt = getFinalAnswerPrompt(answersAttempts, getInputText());
-    let  messages = initializeChat("Você atuará como um resolvedor de problemas/perguntas e etc..., que poderá utilizar algumas propostas de soluções para ajudar com a sua resposta, você deve utilizar essas propostas de solução somente se ela fizer sentido para a resolução do problema.");
-    modelName = "gpt-4-turbo-2024-04-09";
+    let  messages = initializeChat("Você atuará como um resolvedor de problemas/perguntas e etc..., que poderá utilizar algumas propostas de resultados de buscas na internet para ajudar com a sua resposta, você deve utilizar essas propostas de resultado de busca somente se ela fizer sentido para a resolução do problema.");
+    modelName = "gpt-3.5-turbo-0125";
     const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
     document.getElementById("finalAnswer").textContent = lastMessage(finalAnswer);
     enableButtonById("generate");
