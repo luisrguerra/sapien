@@ -89,6 +89,7 @@ async function completionsChatTextModel(messages) {
     openai = new openailib(atod());
   }else if(
       modelName == "anthropic/claude-3-sonnet" ||
+      modelName == "perplexity/pplx-70b-online" ||
       modelName == "google/gemini-pro-1.5"
     ){
     //openrouter
@@ -211,6 +212,7 @@ function randomModel(){
     "gpt-4-turbo-2024-04-09",
     "anthropic/claude-3-sonnet",
     "google/gemini-pro-1.5",
+    /*"perplexity/pplx-70b-online",*/
   ];
   const randomIndex = Math.floor(Math.random() * models.length);
   modelName = models[randomIndex];
