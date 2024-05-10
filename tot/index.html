@@ -88,7 +88,8 @@ async function completionsChatTextModel(messages) {
     //deepinfra
     openai = new openailib(atod());
   }else if(
-      modelName == "anthropic/claude-3-haiku"
+      modelName == "anthropic/claude-3-haiku" ||
+      modelName == "google/gemini-pro"
     ){
     //openrouter
     openai = new openailib(atoe());
@@ -199,7 +200,15 @@ function getFinalAnswerPrompt(answersAttempts,question){
 }
 
 function randomModel(){
-  const models = ["gpt-3.5-turbo-0125", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0613","anthropic/claude-3-haiku","meta-llama/Meta-Llama-3-70B-Instruct","microsoft/WizardLM-2-8x22B"];
+  const models = [
+    "gpt-3.5-turbo-0125",
+    "gpt-3.5-turbo-1106",
+    "gpt-3.5-turbo-0613",
+    "anthropic/claude-3-haiku",
+    "meta-llama/Meta-Llama-3-70B-Instruct",
+    "microsoft/WizardLM-2-8x22B",
+    "google/gemini-pro"
+  ];
   const randomIndex = Math.floor(Math.random() * models.length);
   modelName = models[randomIndex];
   console.log("Modelo selecionado:", modelName);
