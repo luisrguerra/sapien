@@ -233,6 +233,7 @@ generateButton.addEventListener("click", async function() {
     let answersAttempts = [];
     for (let i = 0; i < getAttemptsNumber(); i++) {
         randomModel();
+        appendSolutionAttempt("Modelo utilizado: " + modelName);
         const answer = await generateAnswerAttempt();
         answersAttempts.push(answer);
     }
