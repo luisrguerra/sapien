@@ -82,7 +82,8 @@ function initializeChat(behavior) {
 
 async function completionsChatTextModel(messages) {
   if(
-      modelName == "meta-llama/Meta-Llama-3-70B-Instruct"
+      modelName == "meta-llama/Meta-Llama-3-70B-Instruct" ||
+      modelName == "microsoft/WizardLM-2-8x22B"
     ){
     //deepinfra
     openai = new openailib(atod());
@@ -198,7 +199,7 @@ function getFinalAnswerPrompt(answersAttempts,question){
 }
 
 function randomModel(){
-  const models = ["gpt-3.5-turbo-0125", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0613","anthropic/claude-3-haiku","meta-llama/Meta-Llama-3-70B-Instruct"];
+  const models = ["gpt-3.5-turbo-0125", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-0613","anthropic/claude-3-haiku","meta-llama/Meta-Llama-3-70B-Instruct","microsoft/WizardLM-2-8x22B"];
   const randomIndex = Math.floor(Math.random() * models.length);
   modelName = models[randomIndex];
   console.log("Modelo selecionado:", modelName);
