@@ -19,6 +19,9 @@
     .breakline {
         white-space: pre-wrap;
     }
+    p{
+      white-space: pre-wrap;
+    }
 </style>
 <body style="margin-inline: 1.5em;margin-block: 1em;">
 
@@ -29,15 +32,32 @@
     </div>
     <div class="mb-3">
         <label for="attemptsNumber" class="form-label">Número de soluções:</label>
-        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="3" value="2">
+        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="4" value="2">
         <p>O número máximo de soluções é 3.</p>
     </div>
     <button id="generate" class="btn btn-primary">Gerar respostas</button>
     <br><br>
-    <h5>Soluções:</h5>
-    <div id="solutionsDiv">
-        <p>Respostas ainda não geradas.</p>
+
+    <div class="accordion" id="accordionSearch">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading1">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+            Propostas de solução
+          </button>
+        </h2>
+        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionSearch">
+          <div class="accordion-body">
+            <div class="accordion-body">
+              <div id="solutionsDiv">
+                  <p>Respostas ainda não geradas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <br>
+
     <h5>Resposta final:</h5>
     <p id="finalAnswer">Resposta final ainda não gerada.</p>
     <br>
@@ -178,7 +198,7 @@ function appendSolutionAttempt(text) {
 
 async function generateAnswerAttempt(){
    const inputText = getInputText();
-   const prompt = "Me responda desenvolvendo o raciocínio lógico detalhadamente: " + inputText;
+   const prompt = "Me responda: " + inputText;
    let  messages = initializeChat("Você atuará como um resolevedor de problemas, perguntas e etc.");
    messages = await generateChatMessages(prompt, messages);
    const answer = lastMessage(messages);
@@ -201,7 +221,7 @@ function getFinalAnswerPrompt(answersAttempts,question){
     for (let i = 1; i <= answersAttempts.length; i++) {
         prompt += `Proposta de resolução ${i}: ${answersAttempts[i - 1]}\n\n`;
     }
-    const beforePrompt = "Se fizer sentido lógico utilize as propostas de solução para encontrar a resposta. Me responda:";
+    const beforePrompt = "Ao selecionar uma solução preferida diga no veridito final exatamente <none>,<impasse>,<solution1>,<solution2>,<solution3>,...Avalie as propostas de resposta e me diga qual é a melhor solução para o problema para o seguinte texto: ";
     prompt += `${beforePrompt} ${question}`;
     console.log("Prompt final:\n",prompt);
     return prompt;
@@ -213,7 +233,7 @@ function randomModel(){
     "gpt-3.5-turbo-1106",
     "gpt-3.5-turbo-0613",
     "anthropic/claude-3-haiku",
-    /*"meta-llama/Meta-Llama-3-70B-Instruct",*/
+    "meta-llama/Meta-Llama-3-70B-Instruct",
     /*"microsoft/WizardLM-2-8x22B",*/
     /*"google/gemini-pro",*/
     /*"cohere/command-r",*/
@@ -222,6 +242,34 @@ function randomModel(){
   const randomIndex = Math.floor(Math.random() * models.length);
   modelName = models[randomIndex];
   console.log("Modelo selecionado:", modelName);
+}
+
+function getVerifyFinalAnswer(answer,solutionsArray){
+    const finalAnswer = answer.toLowerCase();
+    if(finalAnswer.includes("<none>")){
+        return "Nenhuma solução foi selecionada.";
+    }
+    else if(finalAnswer.includes("<impasse>")){
+        return "Houve um impasse na seleção da solução.";
+    }
+    else if(finalAnswer.includes("<solution1>")){
+        const solution = "Solução 1:\n"+ solutionsArray[0];
+        return solution;
+    }
+    else if(finalAnswer.includes("<solution2>")){
+        const solution = "Solução 2:\n"+ solutionsArray[1];
+        return solution;
+    }
+    else if(finalAnswer.includes("<solution3>")){
+        const solution = "Solução 3:\n"+ solutionsArray[2];
+        return solution;
+    }else if(finalAnswer.includes("<solution4>")){
+        const solution = "Solução 4:\n"+ solutionsArray[3];
+        return solution;
+    }
+    else{
+        return "Nenhuma solução foi selecionada.";
+    }
 }
 
 const generateButton = document.getElementById("generate");
@@ -239,9 +287,11 @@ generateButton.addEventListener("click", async function() {
     }
     const finalAnswerPrompt = getFinalAnswerPrompt(answersAttempts, getInputText());
     let  messages = initializeChat("Você atuará como um resolvedor de problemas/perguntas e etc..., que poderá utilizar algumas propostas de soluções para ajudar com a sua resposta, você deve utilizar essas propostas de solução somente se ela fizer sentido para a resolução do problema.");
-    modelName = "gpt-3.5-turbo-0613";
+    modelName = "gpt-3.5-turbo-0125";
     const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
-    document.getElementById("finalAnswer").textContent = lastMessage(finalAnswer);
+    const finalAnswerText = lastMessage(finalAnswer);
+    const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
+    document.getElementById("finalAnswer").textContent = verifyFinalAnswer;
     enableButtonById("generate");
     changeButtonTextById("Gerar respostas", "generate");
 });
