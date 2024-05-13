@@ -221,7 +221,7 @@ function getFinalAnswerPrompt(answersAttempts,question){
     for (let i = 1; i <= answersAttempts.length; i++) {
         prompt += `Proposta de resolução ${i}: ${answersAttempts[i - 1]}\n\n`;
     }
-    const beforePrompt = "Ao selecionar uma solução preferida diga no veridito final exatamente <none>,<impasse>,<solution1>,<solution2>,<solution3>,...Avalie as propostas de resposta e me diga qual é a melhor solução para o problema para o seguinte texto: ";
+    const beforePrompt = "Ao selecionar uma solução preferida diga no veridito um dos códigos <none>,<impasse>,<solution1>,<solution2>,<solution3>,...Avalie as propostas de resposta e me diga qual é a melhor solução para o problema para o seguinte texto: ";
     prompt += `${beforePrompt} ${question}`;
     console.log("Prompt final:\n",prompt);
     return prompt;
