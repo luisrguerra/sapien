@@ -73,7 +73,8 @@
 import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.10.0/+esm';
 
 let openai;
-let modelName = "gpt-4o";
+const defaultModel = "meta-llama/Meta-Llama-3-70B-Instruct";
+let modelName = defaultModel;
 let gptTemperature = 1;
 
 function ztoa(x){
@@ -249,7 +250,7 @@ function getFinalAnswerPromptGabarito(answersAttempts,question,gabarito){
 
 function randomModel(){
   const models = [
-    "gpt-4o",
+    defaultModel,
     /*"gpt-3.5-turbo-1106",*/
     /*"gpt-3.5-turbo-0613",*/
     /*"anthropic/claude-3-haiku",*/
@@ -320,7 +321,7 @@ generateButton.addEventListener("click", async function() {
       finalAnswerPrompt = getFinalAnswerPrompt(answersAttempts, getInputText());
     }
     let  messages = initializeChat("Você atuará como um avaliador de respostas, escolhendo a melhor solução para o problema/pergunta/etc...Você utilizará códigos para avaliar a melhor solução.");
-    modelName = "gpt-4o";
+    modelName = defaultModel;
     const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
     const finalAnswerText = lastMessage(finalAnswer);
     const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
