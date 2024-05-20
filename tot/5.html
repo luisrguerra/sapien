@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Sapien IA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- carrecargar recursos do material dessign -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!--Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-fHY2UiQlipUq0dEabSM4s+phmn+bcxSYzXP4vAXItBvBHU7zAM/mkhCZjtBEIJexhOMzZbgFlPLuErlJF2b+0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Material Design Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.min.css" integrity="sha512-LX0YV/MWBEn2dwXCYgQHrpa9HJkwB+S+bnBpifSOTO1No27TqNMKYoAn6ff2FBh03THAzAiiCwQ+aPX+/Qt/Ow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    .breakline {
+        white-space: pre-wrap;
+    }
+    p{
+      white-space: pre-wrap;
+    }
+</style>
+<body style="margin-inline: 1.5em;margin-block: 1em;">
+
+    <h3>Tree of Thoughts</h3>
+    <div class="mb-3">
+        <label for="inputTextArea" class="form-label">Input:</label>
+        <textarea type="text" class="form-control" id="inputTextArea" name="inputTextArea" rows="10"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="attemptsNumber" class="form-label">Número de soluções:</label>
+        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="4" value="2">
+        <p>O número máximo de soluções é 3.</p>
+    </div>
+    <button id="generate" class="btn btn-primary">Gerar respostas</button>
+    <br><br>
+
+    <div class="accordion" id="accordionSearch">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading1">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+            Propostas de solução
+          </button>
+        </h2>
+        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionSearch">
+          <div class="accordion-body">
+            <div class="accordion-body">
+              <div id="solutionsDiv">
+                  <p>Respostas ainda não geradas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <h5>Resposta final:</h5>
+    <p id="finalAnswer">Resposta final ainda não gerada.</p>
+    <br>
+
+</body>
+
+<script type="module">
+import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.10.0/+esm';
+
+let openai;
+let modelName = "gpt-4o";
+let gptTemperature = 1;
+
+function ztoa(x){
+  return atob(atob(x));
+}
+
+function atoc(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MDRSVGRCTjNWSFVrVjVWRUpUU2paUFVFaGxlVlF6UW14aWEwWktXa2xwVFdobmRXZ3pXVWxzTTJ0VlpURlJZVzhpTENKa1lXNW5aWEp2ZFhOc2VVRnNiRzkzUW5KdmQzTmxjaUk2ZEhKMVpYMD0=';
+  return JSON.parse(ztoa(hash));
+}
+
+function atod(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lKTk9GaG5lRko0UlZVMFNFZFRabkZMZFZaR2NtdzRVVXhLU1RFd05qZE5WU0lzSW1SaGJtZGxjbTkxYzJ4NVFXeHNiM2RDY205M2MyVnlJanAwY25WbExDSmlZWE5sVlZKTUlqb2lhSFIwY0hNNkx5OWhjR2t1WkdWbGNHbHVabkpoTG1OdmJTOTJNUzl2Y0dWdVlXa2lmUT09';
+  return JSON.parse(ztoa(hash));
+}
+
+function atoe(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lKemF5MXZjaTEyTVMweE1qbGtOMlJqTmpWbE5XTmtNV00zWldWaE5XTTBaakV4T0RBMk16YzBOREJqTnprMk5EQTJPRGRtWXpCbU5qZzFNVFF4T1Rrd09HUm1Oakl4TTJGaUlpd2laR0Z1WjJWeWIzVnpiSGxCYkd4dmQwSnliM2R6WlhJaU9uUnlkV1VzSW1KaGMyVlZVa3dpT2lKb2RIUndjem92TDI5d1pXNXliM1YwWlhJdVlXa3ZZWEJwTDNZeEluME5DZz09DQo=';
+  return JSON.parse(ztoa(hash));
+}
+
+function atof(){
+  const hash = 'ZXlKaGNHbExaWGtpT2lJMFlUWTVObU0xWXpoaU9ETXdNemRsTlRZMU5tUTVOMlEwWkRnNU5UTTRaVFkxTXpGbU9XUXpOR1F4WXpVeU1UUmhaR1kzWkRKbE5qazBaVFZtT1dGa0lpd2laR0Z1WjJWeWIzVnpiSGxCYkd4dmQwSnliM2R6WlhJaU9uUnlkV1VzSW1KaGMyVlZVa3dpT2lKb2RIUndjem92TDJGd2FTNTBiMmRsZEdobGNpNTRlWG92ZGpFaWZRPT0=';
+  return JSON.parse(ztoa(hash));
+}
+
+function initializeChat(behavior) {
+  return [
+    {role: "system", content: behavior}
+  ];
+}
+
+async function completionsChatTextModel(messages) {
+  if(
+      modelName == "meta-llama/Meta-Llama-3-70B-Instruct" ||
+      modelName == "microsoft/WizardLM-2-8x22B"
+    ){
+    //deepinfra
+    openai = new openailib(atod());
+  }else if(
+      modelName == "anthropic/claude-3-haiku" ||
+      modelName == "google/gemini-pro" ||
+      modelName == "cohere/command-r" ||
+      modelName == "qwen/qwen-72b-chat"
+    ){
+    //openrouter
+    openai = new openailib(atoe());
+  }else{
+    openai = new openailib(atoc());
+  }
+  console.log("Model:", modelName);
+  console.log("Temperature:", gptTemperature);
+  const parameters ={
+      model: modelName,
+      messages: messages,
+      temperature: gptTemperature,
+      /*
+      max_tokens: ,
+      top_p: ,
+      frequency_penalty: ,
+      presence_penalty: ,
+      */
+  };
+  return await openai.chat.completions.create(parameters);
+}
+
+
+async function generateChatMessages(promptText, messages) {
+    const prompt = {
+        role: "user",
+        content: promptText
+    };
+    messages.push(prompt);
+
+    console.log("Carregando resposta do GPT");
+    let apiResponse;
+    try {
+       apiResponse = await completionsChatTextModel(messages);
+    } catch (error) {
+        alert("Erro ao carregar resposta da API.");
+        console.error(error);
+    }
+
+    const textResponse = apiResponse.choices[0].message.content;
+    console.log("textResponse: ",textResponse);
+    const assistantResponse = {
+        role: "assistant",
+        content: textResponse
+    };
+    messages.push(assistantResponse);
+    console.log("assistantResponse: ",assistantResponse);
+    return messages;
+}
+
+function lastMessage(messages){
+  return messages[messages.length - 1].content;
+}
+
+function changeButtonTextById(text, id) {
+    const button = document.getElementById(id);
+    button.innerText = text;
+}
+function enableButtonById(id) {
+    const button = document.getElementById(id);
+    button.disabled = false;
+}
+
+function disableButtonById(id) {
+    const button = document.getElementById(id);
+    button.disabled = true;
+}
+
+function getAttemptsNumber() {
+    return document.getElementById("attemptsNumber").value;
+}
+
+function getInputText() {
+    return document.getElementById("inputTextArea").value;
+}
+
+function appendSolutionAttempt(text) {
+    const solutionsDiv = document.getElementById("solutionsDiv");
+    const pElement = document.createElement("p");
+    pElement.textContent = text;
+    solutionsDiv.appendChild(pElement);
+}
+
+async function generateAnswerAttempt(){
+   const inputText = getInputText();
+   const prompt = "Me responda: " + inputText;
+   let  messages = initializeChat("Você atuará como um resolevedor de problemas, perguntas e etc.");
+   messages = await generateChatMessages(prompt, messages);
+   const answer = lastMessage(messages);
+   appendSolutionAttempt(answer);
+   return answer;
+}
+
+function clearSolutionsDiv() {
+    const contentElement = document.getElementById("solutionsDiv");
+    contentElement.innerHTML = "";
+}
+
+function clearFinalAnswer() {
+    const contentElement = document.getElementById("finalAnswer");
+    contentElement.innerHTML = "";
+}
+
+function getFinalAnswerPrompt(answersAttempts,question){
+    let prompt = "";
+    for (let i = 1; i <= answersAttempts.length; i++) {
+        prompt += `Proposta de resolução ${i}: ${answersAttempts[i - 1]}\n\n`;
+    }
+    const beforePrompt = "Ao selecionar uma solução preferida diga no veridito um dos códigos <none>,<impasse>,<solution1>,<solution2>,<solution3>,...Avalie as propostas de resposta e me diga qual é a melhor solução para o problema para o seguinte texto: ";
+    prompt += `${beforePrompt} ${question}`;
+    console.log("Prompt final:\n",prompt);
+    return prompt;
+}
+
+function randomModel(){
+  const models = [
+    "gpt-4o",
+    /*"gpt-3.5-turbo-1106",*/
+    /*"gpt-3.5-turbo-0613",*/
+    /*"anthropic/claude-3-haiku",*/
+    /*"meta-llama/Meta-Llama-3-70B-Instruct",*/
+    /*"microsoft/WizardLM-2-8x22B",*/
+    /*"google/gemini-pro",*/
+    /*"cohere/command-r",*/
+    /*"qwen/qwen-72b-chat",*/
+  ];
+  const randomIndex = Math.floor(Math.random() * models.length);
+  modelName = models[randomIndex];
+  console.log("Modelo selecionado:", modelName);
+}
+
+function getVerifyFinalAnswer(answer,solutionsArray){
+    const finalAnswer = answer.toLowerCase();
+    if(finalAnswer.includes("<none>")){
+        return "Nenhuma solução foi selecionada.";
+    }
+    else if(finalAnswer.includes("<impasse>")){
+        return "Houve um impasse na seleção da solução.";
+    }
+    else if(finalAnswer.includes("<solution1>")){
+        const solution = "Solução 1:\n"+ solutionsArray[0];
+        return solution;
+    }
+    else if(finalAnswer.includes("<solution2>")){
+        const solution = "Solução 2:\n"+ solutionsArray[1];
+        return solution;
+    }
+    else if(finalAnswer.includes("<solution3>")){
+        const solution = "Solução 3:\n"+ solutionsArray[2];
+        return solution;
+    }else if(finalAnswer.includes("<solution4>")){
+        const solution = "Solução 4:\n"+ solutionsArray[3];
+        return solution;
+    }
+    else{
+        return "Nenhuma solução foi selecionada.";
+    }
+}
+
+const generateButton = document.getElementById("generate");
+generateButton.addEventListener("click", async function() {
+    clearSolutionsDiv();
+    clearFinalAnswer();
+    disableButtonById("generate");
+    changeButtonTextById("Gerando respostas...", "generate");
+    let answersAttempts = [];
+    for (let i = 0; i < getAttemptsNumber(); i++) {
+        randomModel();
+        appendSolutionAttempt("Modelo utilizado: " + modelName);
+        const answer = await generateAnswerAttempt();
+        answersAttempts.push(answer);
+    }
+    const finalAnswerPrompt = getFinalAnswerPrompt(answersAttempts, getInputText());
+    let  messages = initializeChat("Você atuará como um resolvedor de problemas/perguntas e etc..., que poderá utilizar algumas propostas de soluções para ajudar com a sua resposta, você deve utilizar essas propostas de solução somente se ela fizer sentido para a resolução do problema.");
+    modelName = "gpt-3.5-turbo-0125";
+    const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
+    const finalAnswerText = lastMessage(finalAnswer);
+    const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
+    document.getElementById("finalAnswer").textContent = verifyFinalAnswer;
+    enableButtonById("generate");
+    changeButtonTextById("Gerar respostas", "generate");
+});
+
+</script>
+
+
+
+
+</html>
