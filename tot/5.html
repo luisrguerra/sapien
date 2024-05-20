@@ -286,8 +286,8 @@ generateButton.addEventListener("click", async function() {
         answersAttempts.push(answer);
     }
     const finalAnswerPrompt = getFinalAnswerPrompt(answersAttempts, getInputText());
-    let  messages = initializeChat("Você atuará como um resolvedor de problemas/perguntas e etc..., que poderá utilizar algumas propostas de soluções para ajudar com a sua resposta, você deve utilizar essas propostas de solução somente se ela fizer sentido para a resolução do problema.");
-    modelName = "gpt-3.5-turbo-0125";
+    let  messages = initializeChat("Você atuará como um avaliador de respostas, escolhendo a melhor solução para o problema/pergunta/etc...Você utilizará códigos para avaliar a melhor solução.");
+    modelName = "gpt-4o";
     const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
     const finalAnswerText = lastMessage(finalAnswer);
     const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
