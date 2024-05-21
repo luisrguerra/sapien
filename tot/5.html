@@ -75,6 +75,27 @@
         </div>
       </div>
     </div>
+    
+    <br>
+
+    <div class="accordion" id="accordionVerdict">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+            Veredito
+          </button>
+        </h2>
+        <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionVerdict">
+          <div class="accordion-body">
+            <div class="accordion-body">
+              <div id="verdictDiv">
+                  <p>Veredito final ainda não gerado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <br>
 
     <h5>Resposta final:</h5>
@@ -307,6 +328,14 @@ function getVerifyFinalAnswer(answer,solutionsArray){
     }
 }
 
+function setFinalVeredict(answer){
+    const contentElement = document.getElementById("verdictDiv");
+    contentElement.innerHTML = "";
+    const pElement = document.createElement("p");
+    pElement.textContent = answer;
+    contentElement.appendChild(pElement);
+}
+
 const generateButton = document.getElementById("generate");
 generateButton.addEventListener("click", async function() {
     modelName = document.getElementById("modelSelect").value;
@@ -338,6 +367,7 @@ generateButton.addEventListener("click", async function() {
     let  messages = initializeChat("Você atuará como um avaliador de respostas, escolhendo a melhor solução para o problema/pergunta/etc...Você utilizará códigos para avaliar a melhor solução.");
     const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
     const finalAnswerText = lastMessage(finalAnswer);
+    setFinalVeredict(finalAnswerText);
     const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
     document.getElementById("finalAnswer").textContent = verifyFinalAnswer;
     enableButtonById("generate");
