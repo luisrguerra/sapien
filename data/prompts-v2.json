@@ -401,7 +401,7 @@
     "name":"Remover formatação",
     "method":"evry-user-begin",
     "model":"gpt-3.5-turbo-0125",
-    "prompt":"Não altere mais que um quinto do texto original. Remova a formatação especial do seguinte texto:",
+    "prompt":"Exemplo1:\"( V - E + F = 2 \")Resposta1:V - E + F = 2. Não altere mais que um quinto do texto original. Remova a formatação especial do seguinte texto:",
     "description": "Poderia me fornecer textos com formatação especial como Latex para que eu possa corrigir?"
   },
   {
