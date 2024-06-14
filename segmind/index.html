@@ -93,6 +93,7 @@
           <label for="modelSelect" class="form-label">Model:</label>
           <select id="modelSelect" class="form-select">
             <option value="stability-ai/sdxl">SDXL</option>
+            <option value="sdxl1.0-yamers-realistic">Yamers Realistic</option>
             <option value="sd1.5-cyberrealistic">CyberRealistic</option>
             <option value="sd1.5-realisticvision">Realistic Vision</option>
             <option value="sd1.5-edgeofrealism">Edge of Realism</option>
@@ -286,24 +287,41 @@ async function segMindApi(parameters) {
     seed = -1;
   }
 
-  if (size === 'square'){
+  const isSDXL = modelName === 'sdxl1.0-yamers-realistic';
+
+  if (size === 'square' && isSDXL === false){
     height = 512;
     width = 512;
-  } else if (size === 'portrait'){
+  } else if (size === 'portrait' && isSDXL === false){
     height = 512;
     width = 384;
-  } else if (size === 'landscape'){
+  } else if (size === 'landscape' && isSDXL === false){
     height = 384;
     width = 512;
-  } else if (size === 'stories'){
+  } else if (size === 'stories' && isSDXL === false){
     height = 512;
     width = 256;
-  } else if (size === 'ultrawide'){
+  } else if (size === 'ultrawide' && isSDXL === false){
     height = 256;
     width = 512;
+  } else if (size === 'square' && isSDXL === true){
+    height = 1024;
+    width = 1024;
+  } else if (size === 'portrait' && isSDXL === true){
+    height = 1024;
+    width = 768;
+  } else if (size === 'landscape' && isSDXL === true){
+    height = 768;
+    width = 1024;
+  } else if (size === 'stories' && isSDXL === true){
+    height = 1024;
+    width = 512;
+  } else if (size === 'ultrawide' && isSDXL === true){
+    height = 512;
+    width = 1024;
   }
 
-  const segmind = "VTBkZk16aG1aREJoWWpSaU1qSXlOMk0yWWc9PQ==";
+  const segmind = "VTBkZk16bGpNRFV5T1RNNVpEVmlaakZpTkE9PQ==";
   const url = "https://api.segmind.com/v1/" + modelName;
 
   const data = {
@@ -412,6 +430,7 @@ async function generateImage(){
     loadingButton(true);
 
     if (
+      model === 'sdxl1.0-yamers-realistic' ||
       model === 'sd1.5-cyberrealistic' || 
       model ==='sd1.5-realisticvision' || 
       model === 'sd1.5-edgeofrealism' || 
