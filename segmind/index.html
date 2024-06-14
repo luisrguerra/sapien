@@ -93,7 +93,8 @@
           <label for="modelSelect" class="form-label">Model:</label>
           <select id="modelSelect" class="form-select">
             <option value="stability-ai/sdxl">SDXL</option>
-            <option value="sdxl1.0-yamers-realistic">Yamers Realistic</option>
+            <option value="sdxl1.0-yamers-realistic">Yamers Realistic SDXL</option>
+            <option value="sdxl1.0-samaritan-3d">Samaritan 3D SDXL</option>
             <option value="sd1.5-cyberrealistic">CyberRealistic</option>
             <option value="sd1.5-realisticvision">Realistic Vision</option>
             <option value="sd1.5-edgeofrealism">Edge of Realism</option>
@@ -287,7 +288,7 @@ async function segMindApi(parameters) {
     seed = -1;
   }
 
-  const isSDXL = modelName === 'sdxl1.0-yamers-realistic';
+  const isSDXL = modelName === 'sdxl1.0-yamers-realistic' || modelName === "sdxl1.0-samaritan-3d";
 
   if (size === 'square' && isSDXL === false){
     height = 512;
@@ -431,6 +432,7 @@ async function generateImage(){
 
     if (
       model === 'sdxl1.0-yamers-realistic' ||
+      model === 'sdxl1.0-samaritan-3d' ||
       model === 'sd1.5-cyberrealistic' || 
       model ==='sd1.5-realisticvision' || 
       model === 'sd1.5-edgeofrealism' || 
