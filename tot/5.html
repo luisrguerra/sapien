@@ -37,17 +37,18 @@
     </div>
     <div class="mb-3">
         <label for="attemptsNumber" class="form-label">Número de soluções:</label>
-        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="4" value="2">
-        <p>O número máximo de soluções é 3.</p>
+        <input type="number" class="form-control" id="attemptsNumber" name="attemptsNumber" min="1" max="4" value="3">
+        <p>O número máximo de soluções é 4.</p>
     </div>
     <div class="mb-3">
         <label for="modelSelect" class="form-label">Modelo:</label>
         <select class="form-select" id="modelSelect" name="modelSelect">
+            <option value="meta-llama/Meta-Llama-3-70B-Instruct">Meta-Llama-3-70B-Instruct</option>
             <option value="gpt-4o">GPT-4o</option>
             <option value="gpt-3.5-turbo-0125">gpt-3.5-turbo-0125</option>
             <option value="gpt-3.5-turbo-1106">gpt-3.5-turbo-1106</option>
-            <option value="meta-llama/Meta-Llama-3-70B-Instruct">Meta-Llama-3-70B-Instruct</option>
-            <option value="microsoft/WizardLM-2-8x22B">WizardLM-2-8x22B</option>
+            <option value="Qwen/Qwen2-72B-Instruct">Qwen2-72B-Instruct</option>
+            <option value="microsoft/Phi-3-medium-4k-instruct">Phi-3-medium-4k-instruct</option>
             <option value="anthropic/claude-3-haiku">Claude-3-haiku</option>
             <option value="google/gemini-pro">Gemini-pro</option>
             <option value="cohere/command-r">Command-r</option>
@@ -145,7 +146,8 @@ function initializeChat(behavior) {
 async function completionsChatTextModel(messages) {
   if(
       modelName == "meta-llama/Meta-Llama-3-70B-Instruct" ||
-      modelName == "microsoft/WizardLM-2-8x22B"
+      modelName == "Qwen/Qwen2-72B-Instruct" ||
+      modelName == "microsoft/Phi-3-medium-4k-instruct"
     ){
     //deepinfra
     openai = new openailib(atod());
@@ -290,7 +292,8 @@ function randomModel(){
     /*"gpt-3.5-turbo-0613",*/
     /*"anthropic/claude-3-haiku",*/
     /*"meta-llama/Meta-Llama-3-70B-Instruct",*/
-    /*"microsoft/WizardLM-2-8x22B",*/
+    /*"Qwen/Qwen2-72B-Instruct",*/
+    /*"microsoft/Phi-3-medium-4k-instruct",*/
     /*"google/gemini-pro",*/
     /*"cohere/command-r",*/
     /*"qwen/qwen-72b-chat",*/
