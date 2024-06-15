@@ -370,6 +370,15 @@ generateButton.addEventListener("click", async function() {
     setFinalVeredict(finalAnswerText);
     const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
     document.getElementById("finalAnswer").textContent = verifyFinalAnswer;
+    if (verifyFinalAnswer == "Nenhuma solução foi selecionada.") {
+      document.getElementById("finalAnswer").textContent = "Reavaliando...";
+      let  messages = initializeChat("Você atuará como um avaliador de respostas, escolhendo a melhor solução para o problema/pergunta/etc...Você utilizará códigos para avaliar a melhor solução.");
+      const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
+      const finalAnswerText = lastMessage(finalAnswer);
+      setFinalVeredict(finalAnswerText);
+      const verifyFinalAnswer = getVerifyFinalAnswer(finalAnswerText,answersAttempts);
+      document.getElementById("finalAnswer").textContent = verifyFinalAnswer;
+    }
     enableButtonById("generate");
     changeButtonTextById("Gerar respostas", "generate");
 });
