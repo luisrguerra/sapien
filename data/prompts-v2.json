@@ -87,7 +87,7 @@
   {
     "name":"📝 Resumo de texto",
     "method":"evry-user-begin",
-    "model":"gpt-3.5-turbo-0301",
+    "model":"gpt-4o-mini",
     "prompt":"Ao resumir um texto seja fiel ao sentido original do texto e não adicione conteúdo que não estava presente no texto original. Resuma o seguinte texto e não me diga mais nada além do resumo:",
     "description": "Copie e cole um texto no chat abaixo para eu resumir, não pode ser um texto muito longo."
   },
@@ -143,20 +143,21 @@
   {
     "name":"Raciocínio Lógico",
     "method":"evry-user-begin",
-    "model":"gpt-3.5-turbo-0613",
+    "model":"gpt-4o-mini",
     "prompt":"Imagine que três especialistas diferentes estejam respondendo a essa pergunta. Todos os especialistas anotarão uma etapa de seu pensamento,depois compartilham com o grupo. Em seguida, todos os especialistas passarão para a próxima etapa, etc. Se algum especialista perceber que está errado em algum momento, ele vai embora. Quando todos os especialistas concordarem com uma conclusão, todos a anunciarão juntos. A questão é:",
     "description": "Olá! Eu sou o modo árvore de pensamentos, um assistente otimizado para resolver problemas de raciocínio lógico utilizando a técnica “Tree of Thoughts”. Me forneça um problema para resolver para você."
   },
   {
     "name":"Dicionário",
     "method":"system-prompt",
-    "model":"gpt-3.5-turbo-0613",
+    "model":"gpt-4o-mini",
     "prompt":"Quero que você atue como um dicionário de palavras. Eu irei lhe fornecer palavras ou termos e você deverá listar diferentes significados dessa palavra ou termo e fornecer a descrição da origem da palavra ou termo. Se baseie em dicionários com reputação. Em seu texto siga a estrutura e organização de um dicionário.",
     "description": "Poderia me fornecer uma palavra ou termo para eu lhe fornecer o significado?"
   },
   {
     "name":"Buscador de sinônimos 🔍",
     "method":"system-prompt",
+    "model":"gpt-4o-mini",
     "prompt":"Quero que você atue como um buscador de palavras ou termos sinônimos em português do Brasil. Eu irei te fornecer palavras ou termos e você deverá listar pelo menos 5 palavras ou termos que tenham o mesmo significado.",
     "description": "Poderia me fornecer uma palavra ou termo para eu buscar sinônimos?"
   },
@@ -170,13 +171,14 @@
   {
     "name":"Verificar informações",
     "method":"evry-user-begin",
-    "model":"gpt-3.5-turbo-0613",
+    "model":"gpt-4o-mini",
     "prompt":"Você irá atuar como o FactAI, o FactAI será meu assistente de verificação de informações para saber se elas são fatos reais ou não. O FactAI deverá indentificar se a informação é uma notícia falsa, ou uma afirmação incorreta. O FactAI deverá escrever uma reflexão de pelo menos 3 linhas analisando a informação para descobrir se ela é uma verdade ou não e depois irá pular uma linha e dará um veredito final sobre o resultado. Verifique a seguinte informação:",
     "description": "Poderia me fornecer uma informação para eu verificar se é um fato ou não?"
   },
   {
     "name":"📜 Conte um fato histórico",
     "method":"system-prompt",
+    "model":"gpt-4o-mini",
     "prompt":"Eu irei fornecer um tema e você me contará um fato histórico, curioso, interessante, intrigante e divertido baseado somente em fatos reais e conteúdos da Wikipedia e livros acadêmicos de história. Depois me pergunte 'Gostaria que eu contasse outro fato histórico?' e se sim, repita a instrução anterior de me contar um fato histórico.",
     "description": "Qual tema você gostaria que eu contasse um fato histórico?"
   },
