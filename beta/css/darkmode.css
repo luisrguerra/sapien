@@ -130,5 +130,4 @@ button.list-group-item{
   background-color: var(--chat-background-color);
   color:var(--font-color);
   border: 1px solid var(--prompt-border-color);
-  font-size: 20px;
 }

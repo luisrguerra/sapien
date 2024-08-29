@@ -679,6 +679,10 @@ function loadPromptListOptions(ID,optionList){
     promptSelectionItemButton.classList.add("list-group-item");
     promptSelectionItemButton.classList.add("list-group-action");
     promptSelectionItemButton.innerText = name;
+    promptSelectionItemButton.setAttribute("data-bs-dismiss", "modal");
+    promptSelectionItemButton.onclick = function() {
+      initializeAsPrompt(i);
+    };
     promptListDiv.appendChild(promptSelectionItemButton);
   }
 };

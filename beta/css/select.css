@@ -38,6 +38,11 @@ select.theme:focus,select.theme:active{
     box-shadow: none;
 }
 
+button.list-group-item{
+  font-size: 20px;
+  padding-block: 1em;
+}
+
 @media only screen and (min-width: 600px) {
     button#promptMenuButton{
       margin-inline: 0.25em;
