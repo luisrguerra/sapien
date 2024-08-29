@@ -44,7 +44,6 @@
   <br>
   
   <div class="selectors">
-  <select class="form-select form-select-lg mb-3 theme" id="promptSelect"></select>
   <button id="promptMenuSelectorButton" class="btn btn-outline-light promptMenuButton" data-bs-toggle="modal" data-bs-target="#promptMenuSelectorWindow">Prompts</button>
   <button id="promptMenuButton" class="btn btn-outline-light promptMenuButton" data-bs-toggle="modal" data-bs-target="#promptMenuWindow">Opções</button>
   </div>
@@ -308,7 +307,6 @@ function ztoa(x){
   return atob(atob(x));
 }
 
-loadPromptSelectOptions('promptSelect',currentPromptList);
 loadSelectOptions('modelSelect',modelList);
 loadSelectOptions('modelMode',modeList);
 loadSelectOptions('voiceModelSelect',voiceModelList);
@@ -356,6 +354,7 @@ async function initializeAsPrompt(number){
     promptMethod = "system-prompt";
     mensagesObject = await configurar(currentPrompt);
   }
+  document.getElementById('promptMenuSelectorButton').innerText = promptName;
   console.log("Current prompt method:", promptMethod);
 }
 
@@ -860,14 +859,6 @@ function enableTextToSpeech(){
 
 /* Event listener functions */
 
-async function onChangePromptSelect(){
-  const promptSelect = document.getElementById('promptSelect');
-  promptSelect.addEventListener('change', async () => {
-    promptSelectUpdateBehavior();
-  });
-}
-onChangePromptSelect();
-
 async function onChangeModelSelect(){
   const element = document.getElementById('modelSelect');
   element.addEventListener('change', async () => {
@@ -916,16 +907,6 @@ async function onClickClearChatButton(){
   });
 }
 onClickClearChatButton();
-
-async function onClickGenerateArt(){
-  const button = document.getElementById('btnArtGeneration');
-  button.addEventListener('click', async () => {
-    if(confirm("Deseja acessar a tela de apps? Sua conversa será apagada.")){
-      window.location.href = "https://luisrguerra.github.io/sapien/apps/index.html";
-    };
-  });
-}
-onClickGenerateArt();
 
 async function onClickRegenerateLastMessageButton(){
   const button = document.getElementById('btnRegenerate');
