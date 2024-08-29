@@ -2,6 +2,7 @@
   --font-color: #c9d3e3;
   --font-color2: white;
   --prompt-border-color: hsla(0, 0%, 100%, 0.09);
+  --button-border-color: #ffffff40;
   --prompt-background-color: hsl(218, 14%, 16%);
   --chat-background-color: hsl(213, 13%, 14%);
 }
@@ -127,7 +128,11 @@ div.theme.modal-content{
 }
 
 button.list-group-item{
-  background-color: var(--chat-background-color);
+  background-color: var(--prompt-background-color);
   color:var(--font-color);
-  border: 1px solid var(--prompt-border-color);
+  border: 1px solid var(--button-border-color);
+}
+
+button.list-group-item:hover{
+  background-color: var(--chat-background-color)
 }
