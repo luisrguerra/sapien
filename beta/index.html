@@ -314,7 +314,7 @@ async function initializeAsPrompt(number){
   const redirect = promptObj.redirect;
   const defaultPromptModel = promptObj.model;
 
-  if (redirect == "" || redirect == undefined){
+  if (redirect !== "" || redirect !== undefined){
       window.open(redirect,"_self")
   }
 
