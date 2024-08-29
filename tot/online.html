@@ -80,7 +80,7 @@
 import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.10.0/+esm';
 
 let openai;
-let modelName = "gpt-3.5-turbo-0125";
+let modelName = "gpt-4o-mini";
 let gptTemperature = 1;
 
 function ztoa(x){
@@ -124,7 +124,7 @@ async function completionsChatTextModel(messages) {
       modelName == "anthropic/claude-3-haiku" ||
       modelName == "google/gemini-pro" ||
       modelName == "cohere/command-r" ||
-      modelName == "perplexity/pplx-70b-online" ||
+      modelName == "perplexity/llama-3.1-sonar-large-128k-online" ||
       modelName == "qwen/qwen-72b-chat"
     ){
     //openrouter
@@ -242,7 +242,7 @@ function getFinalAnswerPrompt(answersAttempts,question){
 
 function randomModel(){
   const models = [
-    "perplexity/pplx-70b-online",
+    "perplexity/llama-3.1-sonar-large-128k-online",
   ];
   const randomIndex = Math.floor(Math.random() * models.length);
   modelName = models[randomIndex];
@@ -263,7 +263,7 @@ generateButton.addEventListener("click", async function() {
     }
     const finalAnswerPrompt = getFinalAnswerPrompt(answersAttempts, getInputText());
     let  messages = initializeChat("Você atuará como um resolvedor de problemas/perguntas e etc..., que poderá utilizar algumas propostas de resultados de buscas na internet para ajudar com a sua resposta, você deve utilizar essas propostas de resultado de busca somente se ela fizer sentido para a resolução do problema.");
-    modelName = "gpt-3.5-turbo-0125";
+    modelName = "gpt-4o-mini";
     const finalAnswer = await generateChatMessages(finalAnswerPrompt, messages);
     document.getElementById("finalAnswer").textContent = lastMessage(finalAnswer);
     enableButtonById("generate");
