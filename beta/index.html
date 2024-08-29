@@ -45,7 +45,8 @@
   
   <div class="selectors">
   <select class="form-select form-select-lg mb-3 theme" id="promptSelect"></select>
-  <button id="promptMenuButton" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#promptMenuWindow">Opções</button>
+  <button id="promptMenuSelectorButton" class="btn btn-outline-light promptMenuButton" data-bs-toggle="modal" data-bs-target="#promptMenuSelectorWindow">Prompts</button>
+  <button id="promptMenuButton" class="btn btn-outline-light promptMenuButton" data-bs-toggle="modal" data-bs-target="#promptMenuWindow">Opções</button>
   </div>
 
   <!-- terminal text -->
@@ -119,7 +120,7 @@
   </div> <!-- modal-dialog -->
 </div> <!-- modal -->
 
- <!-- Full screen window of the menu selector prompts -->
+<!-- Full screen window of the menu selector prompts -->
 <div class="modal fade" id="promptMenuWindow" tabindex="-1">
  <!-- "modal-fullscreen" sets the modal to full screen -->
  <div class="modal-dialog modal-fullscreen">
@@ -147,6 +148,29 @@
   </div> <!-- modal-content -->
  </div> <!-- modal-dialog -->
 </div> <!-- modal -->
+
+<!-- Full screen window of the menu to select prompts -->
+<div class="modal fade" id="promptMenuSelectorWindow" tabindex="-1">
+  <!-- "modal-fullscreen" sets the modal to full screen -->
+  <div class="modal-dialog modal-fullscreen">
+   <div class="theme modal-content">
+     
+   <!-- modal dialog window header -->
+   <div class="theme modal-header">
+   <!-- Title at the top of the window on the left side -->
+    <!-- "fs-5" defines the text size -->
+    <h1 class="modal-title fs-5">Prompts</h1>
+    <!-- "X" close button on the right side -->
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+   </div>
+    <!-- modal body, main content of modal -->
+   <div class="modal-body">
+     <div class="list-group" id="promptListAtWindow">
+     </div>
+   </div>
+   </div> <!-- modal-content -->
+  </div> <!-- modal-dialog -->
+ </div> <!-- modal -->
 
 <script type="module">
 import openailib from 'https://cdn.jsdelivr.net/npm/openai@4.20.1/+esm';
@@ -288,6 +312,7 @@ loadPromptSelectOptions('promptSelect',currentPromptList);
 loadSelectOptions('modelSelect',modelList);
 loadSelectOptions('modelMode',modeList);
 loadSelectOptions('voiceModelSelect',voiceModelList);
+loadPromptListOptions('promptListAtWindow',currentPromptList);
 updateTemperature();
 initializeAsPrompt(defaultPrompt);
 
@@ -637,6 +662,24 @@ function loadSelectOptions(ID,optionList){
     }
     const option = createSelectOption(name, value, selected);
     Selectelement.appendChild(option);
+  }
+};
+
+function loadPromptListOptions(ID,optionList){
+  const maxItems = optionList.length;
+  const promptListDiv = document.getElementById(ID);
+  for (let i = 0; i < maxItems; i++) {
+    const name = optionList[i].name;
+    const value = optionList[i].value;
+    let selected = false;
+    if(i==0){
+      selected = true;
+    }
+    const promptSelectionItemButton = document.createElement("button");
+    promptSelectionItemButton.classList.add("list-group-item");
+    promptSelectionItemButton.classList.add("list-group-action");
+    promptSelectionItemButton.innerText = name;
+    promptListDiv.appendChild(promptSelectionItemButton);
   }
 };
 

@@ -1,4 +1,4 @@
-button#promptMenuButton, button#promptMenuButton:disabled{
+button#promptMenuButton,button#promptMenuSelectorButton, button#promptMenuButton:disabled,button#promptMenuSelectorButton:disabled{
   /* display:none; */
   color: initial;
   border-color: initial;
