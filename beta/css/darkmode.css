@@ -3,6 +3,7 @@
   --font-color2: white;
   --prompt-border-color: hsla(0, 0%, 100%, 0.09);
   --button-border-color: #ffffff40;
+  --button-border-color-selected: #ffffff7e;
   --prompt-background-color: hsl(218, 14%, 16%);
   --chat-background-color: hsl(213, 13%, 14%);
 }
@@ -134,5 +135,6 @@ button.list-group-item{
 }
 
 button.list-group-item:hover{
-  background-color: var(--chat-background-color)
+  background-color: var(--chat-background-color);
+  border: 1px solid var(--button-border-color-selected);
 }

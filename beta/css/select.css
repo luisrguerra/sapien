@@ -43,6 +43,12 @@ button.list-group-item{
   padding-block: 1em;
 }
 
+div.list-group{
+  max-width: 100%;
+  margin-inline: auto;
+  border-radius: 0px;
+}
+
 @media only screen and (min-width: 600px) {
     button#promptMenuButton{
       margin-inline: 0.25em;
@@ -59,5 +65,8 @@ button.list-group-item{
     }
     select.form-select,select.form-select:disabled{
       margin-inline: 0.25em;
+    }
+    div.list-group{
+      max-width: 35em;
     }
 }
