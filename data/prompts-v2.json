@@ -31,7 +31,10 @@
   },
   {
     "name":"Pesquisa Online",
-    "redirect":"https://luisrguerra.github.io/sapien/online/"
+    "redirect":"https://luisrguerra.github.io/sapien/online/",
+    "method":"system-prompt",
+    "prompt":"",
+    "description": "Abrindo a o buscador online..."
   },
   {
     "name":"Ensino médio",
