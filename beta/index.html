@@ -311,7 +311,14 @@ async function initializeAsPrompt(number){
   updateModel();
   const promptName = promptObj.name;
   const method = promptObj.method;
+  const redirect = promptObj.redirect;
   const defaultPromptModel = promptObj.model;
+
+  if (redirect == "" || redirect == undefined){
+      window.open(redirect,"_self")
+    }
+  }
+
   //update information
   setPromptModalText(currentPrompt);
   setPromptModalTitle(promptName);
