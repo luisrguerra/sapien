@@ -185,6 +185,7 @@ let expandedChatInput = false;
 let textToSpeechEnabled = false;
 let promptMethod = "system-prompt";
 let currentPrompt='';
+let currentPromptNumber='';
 let promptPreferedModel = "";
 /* end of global variables */
 /* global constants */
@@ -198,28 +199,18 @@ const modelList = [
   {name:"GPT 3.5 25/1/24",value:"gpt-3.5-turbo-0125",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-0613",architecture:'openai',maxLength: 4000},
-  {name:"GPT 3.5 1/3/23 - MMLU: 71.1",value:"gpt-3.5-turbo-0301",architecture:'openai',maxLength: 4000},
   {name:"GPT 3.5 16k - MMLU: 71.9",value:"gpt-3.5-turbo-16k",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 6/11/23 - MMLU: 71.3",value:"gpt-3.5-turbo-1106",architecture:'openai',maxLength: 16000},
   {name:"GPT 3.5 16k 13/6/23 - MMLU: 71.9",value:"gpt-3.5-turbo-16k-0613",architecture:'openai',maxLength: 16000},
   {name:"Claude 3 Haiku - MMLU: 75.2",value:"anthropic/claude-3-haiku",architecture:'openrouter',maxLength: 100000},
-  {name:"Claude Instant v1.2",value:"anthropic/claude-instant-1.2",architecture:'openrouter',maxLength: 100000},
-  {name:"Claude Instant v1.1",value:"anthropic/claude-instant-1.1",architecture:'openrouter',maxLength: 9000},
-  {name:"Claude Instant v1.0 - MMLU: 73.4",value:"anthropic/claude-instant-1",architecture:'openrouter',maxLength: 100000},
-  {name:"Mistral Large",value:"mistralai/mistral-large",architecture:'openrouter',maxLength: 128000},
+  {name:"Cohere: Command R (08-2024)",value:"cohere/command-r-08-2024",architecture:'openrouter',maxLength: 128000},
   {name:"Llama 3.1 405b instruct",value:"meta-llama/Meta-Llama-3.1-405B-Instruct",architecture:'deepinfra',maxLength: 32000},
   {name:"Llama 3.1 Sonar Large 128k online",value:"perplexity/llama-3.1-sonar-large-128k-online",architecture:'openrouter',maxLength: 128000},
   {name:"Llama 3.1 70b instruct",value:"meta-llama/Meta-Llama-3.1-70B-Instruct",architecture:'deepinfra',maxLength: 128000},
   {name:"Dolphin 2.9.1 Llama 3 70b",value:"cognitivecomputations/dolphin-2.9.1-llama-3-70b",architecture:'deepinfra',maxLength: 8000},
   {name:"L3 70B Euryale v2.1",value:"Sao10K/L3-70B-Euryale-v2.1",architecture:'deepinfra',maxLength: 8000},
   {name:"Llama 3 70b instruct",value:"meta-llama/Meta-Llama-3-70B-Instruct",architecture:'deepinfra',maxLength: 8000},
-  {name:"Sapien IA 1.0",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8umFawLA",architecture:'openai',maxLength: 4000},
-  {name:"Sapien IA 1.1",value:"ft:gpt-3.5-turbo-0613:sapien-ia::8vcpPD8I",architecture:'openai',maxLength: 4000},
-  {name:"Física 180 GPT3.5 25/1/24",value:"ft:gpt-3.5-turbo-0125:sapien-ia:fisica-180-haiku:98sGG330",architecture:'openai',maxLength: 16000},
-  {name:"Graph Theory 42 GPT3.5 25/1/24",value:"ft:gpt-3.5-turbo-0125:sapien-ia:graph-theory-42:9FVsToAD",architecture:'openai',maxLength: 16000},
-  {name:"Graph Theory 42 Steps 84 GPT3.5 25/1/24",value:"ft:gpt-3.5-turbo-0125:sapien-ia:graph-theory-42:9FVsTBqr:ckpt-step-84",architecture:'openai',maxLength: 16000},
-  {name:"Graph Theory 42 Steps 42 GPT3.5 25/1/24",value:"ft:gpt-3.5-turbo-0125:sapien-ia:graph-theory-42:9FVsTLHU:ckpt-step-42",architecture:'openai',maxLength: 16000},
-  {name:"mathcode-gpt-4o-mini-2024-07-18",value:"ft:gpt-4o-mini-2024-07-18:sapien-ia:mathcode:A1MudjBI",architecture:'openai',maxLength: 128000},
+  {name:"mathcode-gpt-4o-mini",value:"ft:gpt-4o-mini-2024-07-18:sapien-ia:mathcode:A1MudjBI",architecture:'openai',maxLength: 128000},
 ];
 
 const modeList = [
@@ -282,6 +273,7 @@ async function initializeAsPrompt(number){
   cleanChat();
   const promptObj= currentPromptList[number];
   currentPrompt = promptObj.prompt;
+  currentPromptNumber = number;
   promptPreferedModel = promptObj.model;
   updateModel();
   const promptName = promptObj.name;
@@ -358,7 +350,7 @@ function updatePromptSelectList(){
 function promptSelectUpdateBehavior(){
   interruptTextToSpeech();
   updateTemperature();
-  const promptSelected = getValueByID('promptSelect');
+  const promptSelected = currentPromptNumber;
   initializeAsPrompt(promptSelected);
 }
 
