@@ -56,7 +56,7 @@
 <!-- text input field -->
 <div id="prompt-container" class="contracted">
 <div style="margin-inline: 1em;">
- <button class="btn btn-outline-light prompt-button unnecessary-text" style="margin-right: 0.25em;"  data-bs-toggle="modal" data-bs-target="#promptViewWindow">
+ <button id="showPromptSelectorButton" class="btn btn-outline-light prompt-button unnecessary-text" style="margin-right: 0.25em;"  data-bs-toggle="modal" data-bs-target="#promptViewWindow">
   <span class="mdi mdi-text-account"> <span class="unnecessary-text">Prompt</span></span>
  </button>
  <!-- button activate text to speech -->
@@ -730,7 +730,7 @@ function clearInput(){
 
 function disableUserInteraction(){
   disableByID("btnSendUserInput");
-  disableByID("promptSelect");
+  disableByID("showPromptSelectorButton");
   disableByID("modelSelect");
   disableByID("modelMode");
   disableByID("btnRegenerate");
@@ -743,7 +743,7 @@ function disableUserInteraction(){
 
 function enableUserInteraction(){
   enableByID("btnSendUserInput");
-  enableByID("promptSelect");
+  enableByID("showPromptSelectorButton");
   enableByID("modelSelect");
   enableByID("modelMode");
   enableByID("btnRegenerate");
